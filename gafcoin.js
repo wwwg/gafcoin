@@ -105,7 +105,6 @@ class NetNode extends EventEmitter {
         let key = peer.peerType + 'Peers';
         for (let i = 0; i < this[key].length; ++i) {
             if (this[key][i].id === peer.id) {
-                console.log('removing peer');
                 this[key].splice(i, 1);
             }
         }
@@ -123,8 +122,4 @@ setTimeout(() => {
     // do the connect
     n1.log('connecting to node 2');
     n1.connectPeer('ws://127.0.0.1:' + P2P_TEST_PORT);
-    setTimeout(() => {
-        // do the disconnect
-        n2.shutdown(n2.inPeers[0]);
-    }, 100);
 }, 200);
