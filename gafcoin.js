@@ -63,8 +63,7 @@ class NetNode extends EventEmitter {
             me.emit('newPeer', ws);
             ws.on('message', msg => {
                 me.recv(ws, msg);
-            });
-            ws.on('close', () => {
+            }).on('close', () => {
                 me.handleClose(ws);
             });
         });
