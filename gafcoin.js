@@ -216,4 +216,5 @@ setTimeout(() => {
             }
         }
     }
+    let mnode = network[0]; // The master node holds the genesis block
 }, 300);
