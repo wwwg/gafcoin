@@ -20,7 +20,10 @@ class NetNode {
         let ws = new uws(address),
             me = this;
         ws.on('open', () => {
-            // todo
+            // make life a little easier
+            ws.ip = ws._socket.remoteAddress;
+            ws.port = ws._socket.remotePort;
+            ws.family = ws._socket.remoteFamily;
         }).on('close', () => {
             // also todo
         }).on('message', msg => {
@@ -40,6 +43,11 @@ class NetNode {
         let s = this.server,
             me = this;
         s.on('connection', ws => {
+            // make life a little easier
+            ws.ip = ws._socket.remoteAddress;
+            ws.port = ws._socket.remotePort;
+            ws.family = ws._socket.remoteFamily;
+            
             console.log('recieved new connection from socket:');
             console.log(ws._socket);
         });
