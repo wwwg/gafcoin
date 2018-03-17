@@ -80,7 +80,7 @@ class NetNode extends EventEmitter {
             console.log(e);
             return;
         }
-        this.log('i got a msg', msg);
+        this.log('i got a msg', obj);
     }
 }
 
