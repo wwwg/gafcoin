@@ -250,7 +250,7 @@ class Transaction {
     }
 }
 class Block {
-    constructor(time, lastHash, transactions, pos, nonce) {
+    constructor(time, lastHash, transactions, pos, nonce, extHash) {
         this.pos = pos; // position on the chain
         this.time = time;
         this.lastHash = lastHash;
@@ -260,11 +260,15 @@ class Block {
             this.nonce = 0;
         }
         this.transactions = transactions;
-        this.calcHash();
+        if (extHash) {
+            this.hash = extHash;
+        } else {
+            this.hash = this.calcHash();
+        }
     }
     calcHash() {
         let body = JSON.stringify(this.transactions);
-        this.hash = keccak(this.lastHash + this.time + body + this.nonce);
+        return keccak(this.lastHash + this.time + body + this.nonce);
     }
     mine(diff) { // Mine at difficulty
         let subhash = this.hash.substring(0, diff),
@@ -276,7 +280,7 @@ class Block {
         }
     }
     serialize() {
-        this.calcHash(); // just in case
+        this.hash = this.calcHash(); // just in case
         let txs = [];
         for (let i = 0; i < this.transactions.length; ++i) {
             let stx = this.transactions[i].serialize();
