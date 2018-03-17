@@ -24,14 +24,17 @@ class NetNode {
             ws.ip = ws._socket.remoteAddress;
             ws.port = ws._socket.remotePort;
             ws.family = ws._socket.remoteFamily;
+            this.log(`new outbound peer '${ws.ip}:${ws.port}'`)
         }).on('close', () => {
             // also todo
         }).on('message', msg => {
-            // ALSO todo
+            me.recv(ws, msg);
         }).on('error', err => {
-            // todo
+            console.log('WARN: got an outbound peer socket error:');
+            console.log(err);
         });
         this.outPeers.push(ws);
+        ws.peerIndex = this.outPeers.length - 1;
     }
     constructor(listenPort) {
         this._port = listenPort;
