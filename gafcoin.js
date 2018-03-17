@@ -47,6 +47,6 @@ class NetNode {
 
 let n1 = new NetNode(P2P_PORT),
     n2 = new NetNode(P2P_TEST_PORT);
-setInterval(() => {
+setTimeout(() => {
     n1.log('connecting to node 2');
 }, 200);
