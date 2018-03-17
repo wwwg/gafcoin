@@ -6,10 +6,11 @@ const P2P_PORT = 9284,
 const crypto = require('crypto'),
     net = require('net'),
     uws = require("uws"),
-    keccak = require("keccak");
+    keccak = require("keccak"),
+    EventEmitter = require('events');
 
 // net
-class NetNode {
+class NetNode extends EventEmitter {
     log(...args) {
         args.unshift((this.name || 'very sad node without a name'));
         args[0] += ' : ';
@@ -37,6 +38,7 @@ class NetNode {
         ws.peerIndex = this.outPeers.length - 1;
     }
     constructor(listenPort) {
+        super();
         this._port = listenPort;
         this.outPeers = []; // sockets we connect to
         this.inPeers = []; // sockets that connect to us
