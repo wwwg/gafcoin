@@ -63,7 +63,7 @@ class NetNode extends EventEmitter {
         if (typeof data !== 'object') {
             throw new Error('can only send json to peers');
         }
-        peer.send(JSON.parse(data));
+        peer.send(JSON.stringify(data));
     }
     // inbound data
     recv(peer, msg) {
