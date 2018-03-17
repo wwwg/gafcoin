@@ -330,14 +330,12 @@ const WALLET_ADDR = '042c94b69058e64ac58ef442919f45415a8f5fcf5e939f69ffba9b80848
 const WALLET_PRIV = 'c594922381eaf44babe7b96906a49acbf913507a0372b55cde4d68622c00aaba';
 let network = [];
 const NETWORK_SIZE = 6;
-let genesisBlock = new Block(Date.now(), '', [
-    new Transaction('genesis', WALLET_ADDR, 5),
-    new Transaction('genesis', WALLET_ADDR, 6),
-    new Transaction('genesis', WALLET_ADDR, 7),
-    new Transaction('genesis', WALLET_ADDR, 8),
-    new Transaction('genesis', WALLET_ADDR, 9),
-    new Transaction('genesis', WALLET_ADDR, 10)
-]);
+let genesisTxs = [];
+for (let i = 0; i < BLOCK_SIZE; ++i) {
+    let tx = new Transaction('genesis', WALLET_ADDR, 1);
+    genesisTxs.push(tx);
+}
+let genesisBlock = new Block(Date.now(), '', genesisTxs);
 
 for (let i = 0; i < NETWORK_SIZE; ++i) {
     // create nodes for the network
