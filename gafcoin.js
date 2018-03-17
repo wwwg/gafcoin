@@ -207,20 +207,6 @@ class BlockChain {
         if (!this.chain.length) return null;
         return this.chain[i];
     }
-    /*
-    add(block) {
-        if (!this.chain.length) {
-            // genisis block, no way to verify
-            this.chain.push(block);
-            return;
-        }
-        if (!block instanceof Block)
-            throw new Error("you can only add blocks to a block chain");
-        block.lastHash = this.top().hash; // update previous hash
-        block.mine(this.globalDiff); // mine it
-        this.chain.push(block); // TODO : add real block verification
-    }
-    */
     mine(rewardAddr) {
         let b = new Block(Date.now(), this.pending, this.top().hash);
         b.mine(this.globalDiff);
