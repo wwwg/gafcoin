@@ -204,15 +204,32 @@ class Wallet {
 }
 // components of a blockchain
 class Transaction {
+    static fromData(txData) {
+        return new Transaction(txData.i, txData.o, txData.value, txData.sig);
+    }
     constructor(sourceAddr, destAddr, value, signature) {
         this.source = sourceAddr;
         this.dest = destAddr;
         this.value = value;
-        this.hash = this.calcHash();
         this.sig = signature;
+        this.hash = this.calcHash();
+        this.isValid = this.validate();
     }
     calcHash() {
         return keccak(this.source + this.dest + this.value);
+    }
+    validate() {
+        // Source address is the public key
+        return ECVerify(this.source, this.hash, this.sig);
+    }
+    serialize() {
+        return {
+            'i': this.source,
+            'o': this.dest,
+            'value': this.value,
+            'hash': this.hash,
+            'sig': this.sig
+        }
     }
 }
 class Block {
