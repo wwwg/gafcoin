@@ -10,6 +10,10 @@ const crypto = require('crypto'),
 
 // net
 class NetNode {
+    log(...args) {
+        args.unshift((this.name || 'very sad node without a name : '));
+        console.log.apply(console, args);
+    }
     connectPeer(address) {
         // create an outgoing websocket connection to address
         let ws = new uws(address),
@@ -40,3 +44,6 @@ class NetNode {
         });
     }
 }
+
+let n1 = new NetNode(P2P_PORT),
+    n2 = new NetNode(P2P_TEST_PORT);
