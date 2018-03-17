@@ -82,7 +82,8 @@ class NetNode extends EventEmitter {
     // inbound data
     recv(peer, msg) {
         // validate incoming data
-        let obj;
+        let obj,
+            me = this;
         try {
             obj = JSON.parse(msg);
         } catch(e) {
@@ -93,6 +94,24 @@ class NetNode extends EventEmitter {
         if (!obj.op || !obj.data) {
             console.log('WARN : recieved malformed packet');
             return;
+        }
+        // handle data accordingly
+        switch (obj.op) {
+            case 'getaddr':
+                // Get all connected peers and send to client
+                let peerList = [];
+                let totalPeers = this.outPeers.concat(this.inPeers);
+                for (let i = 0; i < totalPeers.length; ++i) {
+                    const strPeer = totalPeers[i].ip + ':' + totalPeers[i].port;
+                    if (!peerList.includes(strPeer)) {
+                        peerList.push(strPeer);
+                    }
+                }
+                me.send(peer, 'gotaddr', peerList);
+                break;
+            default:
+                console.warn('Recieved unknown protocol operation "' + obj.op + '"');
+                break;
         }
     }
     // force close peer
