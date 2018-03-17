@@ -250,11 +250,15 @@ class Transaction {
     }
 }
 class Block {
-    constructor(time, lastHash, transactions, pos) {
+    constructor(time, lastHash, transactions, pos, nonce) {
         this.pos = pos; // position on the chain
         this.time = time;
         this.lastHash = lastHash;
-        this.nonce = 0;
+        if (nonce) {
+            this.nonce = nonce;
+        } else {
+            this.nonce = 0;
+        }
         this.transactions = transactions;
         this.calcHash();
     }
