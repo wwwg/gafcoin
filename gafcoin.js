@@ -89,6 +89,8 @@ class NetNode extends EventEmitter {
             console.log('WARN : recieved malformed packet');
             return;
         }
+        this.log('INBOUND:');
+        console.log(obj);
     }
 }
 
