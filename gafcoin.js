@@ -204,7 +204,7 @@ class Wallet {
 }
 // components of a blockchain
 class Transaction {
-    static fromData(txData) {
+    static from(txData) {
         return new Transaction(txData.i, txData.o, txData.value, txData.sig);
     }
     constructor(sourceAddr, destAddr, value, signature) {
