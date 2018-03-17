@@ -26,6 +26,11 @@ class NetNode {
     }
 }
 
+let nnode;
 if (IS_TEST) {
     console.log('im a test node yay');
+    nnode = new NetNode(P2P_TEST_PORT);
+} else {
+    console.log('im not a test not yay');
+    nnode = new NetNode(P2P_PORT);
 }
