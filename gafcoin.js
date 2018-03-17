@@ -271,6 +271,22 @@ class Block {
             subhash = this.hash.substring(0, diff);
         }
     }
+    serialize() {
+        this.calcHash(); // just in case
+        let txs = [];
+        for (let i = 0; i < this.transactions.length; ++i) {
+            let stx = this.transactions[i].serialize();
+            txs.push(stx);
+        }
+        return {
+            'pos': this.pos,
+            'ts': this.time,
+            'last': this.lastHash,
+            'nonce': this.nonce,
+            'txs': txs,
+            'hash': this.hash
+        }
+    }
 }
 class BlockChain {
     constructor(originChain) {
