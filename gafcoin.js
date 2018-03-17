@@ -103,7 +103,7 @@ class NetNode extends EventEmitter {
     handleClose(peer) {
         // remove peer from it's respective array
         let key = peer.peerType + 'Peers';
-        for (let i = 0; i < this[key]; ++i) {
+        for (let i = 0; i < this[key].length; ++i) {
             if (this[key][i].id === peer.id) {
                 console.log('removing peer');
                 this[key].splice(i, 1);
