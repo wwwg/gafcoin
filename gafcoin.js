@@ -21,7 +21,8 @@ class NetNode {
         let s = this.server,
             me = this;
         s.on('connection', ws => {
-            // todo
+            console.log('recieved new connection from socket:');
+            console.log(ws._socket);
         });
     }
 }
