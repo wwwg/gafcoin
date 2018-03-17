@@ -309,15 +309,17 @@ class GafNode {
 
 // create a virtual network for testing stuff
 console.log('creating virtual testnet...');
+const WALLET_ADDR = '042c94b69058e64ac58ef442919f45415a8f5fcf5e939f69ffba9b80848ed24d75df64305d98ce690d50988e763d83163269aac0162a8e9a35cd46593d594b21fa';
+const WALLET_PRIV = 'c594922381eaf44babe7b96906a49acbf913507a0372b55cde4d68622c00aaba';
 let network = [];
 const NETWORK_SIZE = 6;
 let genesisBlock = new Block(Date.now(), '', [
-    new Transaction('wallet1', 'wallet2', 5),
-    new Transaction('wallet1', 'wallet2', 6),
-    new Transaction('wallet1', 'wallet2', 7),
-    new Transaction('wallet1', 'wallet2', 8),
-    new Transaction('wallet1', 'wallet2', 9),
-    new Transaction('wallet1', 'wallet2', 10)
+    new Transaction('genesis', WALLET_ADDR, 5),
+    new Transaction('genesis', WALLET_ADDR, 6),
+    new Transaction('genesis', WALLET_ADDR, 7),
+    new Transaction('genesis', WALLET_ADDR, 8),
+    new Transaction('genesis', WALLET_ADDR, 9),
+    new Transaction('genesis', WALLET_ADDR, 10)
 ]);
 
 for (let i = 0; i < NETWORK_SIZE; ++i) {
@@ -325,7 +327,7 @@ for (let i = 0; i < NETWORK_SIZE; ++i) {
     let node;
     if (i == 0) {
         // master node
-        node = new GafNode(9301 + i, 'c594922381eaf44babe7b96906a49acbf913507a0372b55cde4d68622c00aaba');
+        node = new GafNode(9301 + i, WALLET_PRIV);
     } else {
         node = new GafNode(9301 + i);
     }
