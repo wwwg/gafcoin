@@ -163,7 +163,7 @@ let n1 = new NetNode(P2P_PORT),
 n1.name = 'node1';
 n2.name = 'node2';
 n1.on('newPeer', peer => {
-    // maybe ill put something else here later
+    n1.send(n1.outPeers[0], 'getaddr', {});
 });
 setTimeout(() => {
     // do the connect
