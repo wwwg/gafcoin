@@ -11,7 +11,8 @@ const crypto = require('crypto'),
 // net
 class NetNode {
     log(...args) {
-        args.unshift((this.name || 'very sad node without a name : '));
+        args.unshift((this.name || 'very sad node without a name'));
+        args[0] += ' : ';
         console.log.apply(console, args);
     }
     connectPeer(address) {
