@@ -250,7 +250,8 @@ class Transaction {
     }
 }
 class Block {
-    constructor(time, lastHash, transactions) {
+    constructor(time, lastHash, transactions, pos) {
+        this.pos = pos; // position on the chain
         this.time = time;
         this.lastHash = lastHash;
         this.nonce = 0;
