@@ -72,6 +72,14 @@ class NetNode extends EventEmitter {
     }
     // inbound data
     recv(peer, msg) {
+        let obj;
+        try {
+            obj = JSON.parse(msg);
+        } catch(e) {
+            console.log('WARN : failed to parse inbound data:');
+            console.log(e);
+            return;
+        }
         this.log('i got a msg', msg);
     }
 }
