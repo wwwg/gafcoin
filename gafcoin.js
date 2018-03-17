@@ -164,10 +164,14 @@ class NetNode extends EventEmitter {
 }
 // components of a blockchain
 class Transaction {
-    constructor(input, output, value) {
-        this.input = input;
-        this.output = output;
+    constructor(sourceAddr, destAddr, value) {
+        this.source = sourceAddr;
+        this.dest = destAddr;
         this.value = value;
+        this.hash = this.calcHash();
+    }
+    calcHash() {
+        return keccak(this.source + this.dest + this.value);
     }
 }
 class Block {
