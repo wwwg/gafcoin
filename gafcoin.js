@@ -171,11 +171,17 @@ class Transaction {
     }
 }
 class Block {
-    constructor(time, pos, lastHash) {
+    constructor(time, pos, lastHash, transactions) {
         this.position = pos;
         this.time = time;
         this.lastHash = lastHash;
         this.nonce = 0;
+        this.transactions = transactions;
+        this.calcHash();
+    }
+    calcHash() {
+        let body = JSON.stringify(this.transactions);
+        this.hash = keccak(this.lastHash + this.time + this.nonce + body);
     }
 }
 
