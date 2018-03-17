@@ -17,16 +17,16 @@ const keccak = str => {
     let hash = createKeccakHash('keccak256');
     hash.update(str);
     return hash.digest('hex');
-}, genEllipticKeypair = () => {
+}, genECKeypair = () => {
     let key = ec.genKeyPair();
     return {
         pub: key.getPublic().encode('hex'),
         priv: key.getPrivate('hex')
     }
-}, ellipticSign = (privKey, msg) => {
+}, ECSign = (privKey, msg) => {
     let key = ec.keyFromPrivate(privKey, 'hex');
     return key.sign(msg).toDER('hex');
-}, ellipticVerify = (pubKey, msg, signature) => {
+}, ECVerify = (pubKey, msg, signature) => {
     let key = ec.keyFromPublic(pubKey, 'hex');
     return key.verify(msg, signature);
 }
