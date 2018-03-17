@@ -118,8 +118,6 @@ class NetNode extends EventEmitter {
             case 'gotaddr':
                 // handle getaddr response
                 // connect to all peers in the list. todo MAKE THIS BETTER OR SOMETHING
-                this.log('i gotaddr:');
-                console.log(data);
                 if (data instanceof Array) {
                     for (let i = 0; i < data.length; ++i) {
                         let addr = 'ws://' + data[i];
@@ -163,7 +161,7 @@ let n1 = new NetNode(P2P_PORT),
 n1.name = 'node1';
 n2.name = 'node2';
 n1.on('newPeer', peer => {
-    n1.send(n1.outPeers[0], 'getaddr', {});
+    // n1.send(n1.outPeers[0], 'getaddr', {});
 });
 setTimeout(() => {
     // do the connect
