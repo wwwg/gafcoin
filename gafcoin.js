@@ -193,6 +193,38 @@ class Block {
         }
     }
 }
+class BlockChain {
+    constructor(originChain) {
+        if (!originChain || !(originChain instanceof Array) || !originChain.length) {
+            throw new Error('originChain needs to have a block in it!');
+        }
+        this.chain = [];
+        this.globalDiff = 1;
+    }
+    top() {
+        return this.chain[this.chain.length - 1];
+    }
+    at(i) {
+        return this.chain[i];
+    }
+    add(block) {
+        if (!block instanceof Block) {
+            throw new Error("you can only add blocks to a block chain");
+        }
+        block.lastHash = this.top().hash;
+        block.mine(this.globalDiff);
+        this.chain.push(block); // TODO : add real block verification
+    }
+    validate() {
+        for (let i = 1; i < this.chain.length; ++i) {
+            let thisBlock = this.chain[i],
+                lastBlock = this.chain[i - 1];
+            if (thisBlock.hash !== thisBlock.calcHash()) return false;
+            if (thisBlock.lastHash !== lastBlock.hash) return false;
+        }
+        return true;
+    }
+}
 
 // create a virtual network for testing stuff
 console.log('creating virtual testnet...');
