@@ -55,7 +55,12 @@ class NetNode extends EventEmitter {
             ws.family = ws._socket.remoteFamily;
             
             this.log(`new inbound peer '${ws.ip}:${ws.port}'`);
+            this.inPeers.push(ws);
+            ws.peerIndex = this.outPeers.length - 1;
             me.emit('newPeer', ws);
+            ws.on('message', msg => {
+                me.recv(ws, msg);
+            });
         });
     }
     // outbound data
