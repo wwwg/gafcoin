@@ -52,4 +52,5 @@ n1.name = 'node1';
 n2.name = 'node2';
 setTimeout(() => {
     n1.log('connecting to node 2');
+    n1.connectPeer('ws://127.0.0.1:' + P2P_TEST_PORT);
 }, 200);
