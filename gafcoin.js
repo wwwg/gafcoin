@@ -118,6 +118,8 @@ class NetNode extends EventEmitter {
             case 'gotaddr':
                 // handle getaddr response
                 // connect to all peers in the list. todo MAKE THIS BETTER OR SOMETHING
+                this.log('i gotaddr:');
+                console.log(data);
                 if (data instanceof Array) {
                     for (let i = 0; i < data.length; ++i) {
                         let addr = 'ws://' + data[i];
