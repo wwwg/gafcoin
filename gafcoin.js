@@ -33,12 +33,6 @@ class NetNode {
         });
         this.outPeers.push(ws);
     }
-    send(peer, data) {
-        if (typeof data !== 'object') {
-            throw new Error('can only send json to peers');
-        }
-        peer.send(JSON.parse(data));
-    }
     constructor(listenPort) {
         this._port = listenPort;
         this.outPeers = []; // sockets we connect to
@@ -56,6 +50,17 @@ class NetNode {
             
             this.log(`new inbound peer '${ws.ip}:${ws.port}'`);
         });
+    }
+    // outbound data
+    send(peer, data) {
+        if (typeof data !== 'object') {
+            throw new Error('can only send json to peers');
+        }
+        peer.send(JSON.parse(data));
+    }
+    // inbound data
+    recv(peer, msg) {
+        this.log('i got a message lol');
     }
 }
 
