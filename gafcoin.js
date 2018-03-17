@@ -102,11 +102,19 @@ class NetNode extends EventEmitter {
     // handle peer close
     handleClose(peer) {
         // remove peer from it's respective array
+        let found = false;
         let key = peer.peerType + 'Peers';
         for (let i = 0; i < this[key].length; ++i) {
             if (this[key][i].id === peer.id) {
                 this[key].splice(i, 1);
+                found = true;
+                break;
             }
+        }
+        if (found) {
+            this.emit('lostPeer', peer);
+        } else {
+            console.log('WARN : could not identify peer to close');
         }
     }
 }
