@@ -24,3 +24,7 @@ class NetNode {
         });
     }
 }
+
+if (IS_TEST) {
+    console.log('im a test node yay');
+}
