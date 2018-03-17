@@ -1,0 +1,7 @@
+{
+    "name": "gafcoin",
+    "description": "magical internet money",
+    "dependencies": {
+        "uws": "*"
+    }
+}
