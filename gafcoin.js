@@ -241,19 +241,11 @@ class GafNode {
 console.log('creating virtual testnet...');
 let network = [];
 const NETWORK_SIZE = 6;
-// setup node
-let setupNode = node => {
-    node.on('newPeer', peer => {
-        //
-    }).on('lostPeer', peer => {
-        //
-    });
-}
+
 for (let i = 0; i < NETWORK_SIZE; ++i) {
     // create nodes for the network
-    let node = new NetNode(9301 + i);
-    node.name = 'node' + i;
-    setupNode(node);
+    let node = new GafNode(9301 + i);
+    node.net.name = 'node' + i;
     network.push(node);
 }
 // connect all the nodes to each other after the network is created
@@ -263,8 +255,8 @@ setTimeout(() => {
         let currNode = network[i];
         for (let i2 = 0; i2 < NETWORK_SIZE; ++i2) {
             let currPort = 9301 + i2;
-            if (currPort != currNode._port) { // dont connect a node to itself
-                currNode.connectPeer('ws://127.0.0.1:' + currPort);
+            if (currPort != currNode.port) { // dont connect a node to itself
+                currNode.net.connectPeer('ws://127.0.0.1:' + currPort);
             }
         }
     }
