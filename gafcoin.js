@@ -77,7 +77,11 @@ class NetNode extends EventEmitter {
             op: op,
             data: data
         });
-        peer.send(packet);
+        try {
+            peer.send(packet);
+        } catch (e) {
+            console.log('WARN : failed to send packet to peer');
+        }
     }
     // inbound data
     recv(peer, msg) {
