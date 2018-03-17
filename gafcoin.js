@@ -124,4 +124,8 @@ setTimeout(() => {
     // do the connect
     n1.log('connecting to node 2');
     n1.connectPeer('ws://127.0.0.1:' + P2P_TEST_PORT);
+    setTimeout(() => {
+        // do the disconnect
+        n2.shutdown(n2.inPeers[0]);
+    }, 100);
 }, 200);
