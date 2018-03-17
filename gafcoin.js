@@ -181,7 +181,16 @@ class Block {
     }
     calcHash() {
         let body = JSON.stringify(this.transactions);
-        this.hash = keccak(this.lastHash + this.time + this.nonce + body);
+        this.hash = keccak(this.lastHash + this.time + body + this.nonce);
+    }
+    mine(diff) { // Mine at difficulty
+        let subhash = this.hash.substring(0, diff),
+            target = "0".repeat(diff);
+        while (subhash !== target) {
+            this.nonce++;
+            this.hash = this.calcHash();
+            subhash = this.hash.substring(0, diff);
+        }
     }
 }
 
