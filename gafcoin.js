@@ -169,6 +169,7 @@ class Block {
         this.position = pos;
         this.time = time;
         this.lastHash = lastHash;
+        this.nonce = 0;
     }
 }
 
