@@ -64,11 +64,15 @@ class NetNode extends EventEmitter {
         });
     }
     // outbound data
-    send(peer, data) {
+    send(peer, op, data) {
         if (typeof data !== 'object') {
             throw new Error('can only send json to peers');
         }
-        peer.send(JSON.stringify(data));
+        let packet = JSON.stringify({
+            op: op,
+            data: data
+        });
+        peer.send(packet);
     }
     // inbound data
     recv(peer, msg) {
