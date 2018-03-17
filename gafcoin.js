@@ -204,11 +204,12 @@ class Wallet {
 }
 // components of a blockchain
 class Transaction {
-    constructor(sourceAddr, destAddr, value) {
+    constructor(sourceAddr, destAddr, value, signature) {
         this.source = sourceAddr;
         this.dest = destAddr;
         this.value = value;
         this.hash = this.calcHash();
+        this.sig = signature;
     }
     calcHash() {
         return keccak(this.source + this.dest + this.value);
