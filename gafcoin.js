@@ -7,6 +7,7 @@ const crypto = require('crypto'),
     net = require('net'),
     uws = require("uws"),
     keccak = require("keccak"),
+    uuidv4 = require('uuid/v4'),
     EventEmitter = require('events');
 
 // net

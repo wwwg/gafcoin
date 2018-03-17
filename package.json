@@ -3,6 +3,7 @@
     "description": "magical internet money",
     "dependencies": {
         "uws": "*",
-        "keccak": "*"
+        "keccak": "*",
+        "uuid": "*"
     }
 }
