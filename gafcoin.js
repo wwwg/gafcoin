@@ -37,6 +37,7 @@ class NetNode extends EventEmitter {
         });
         this.outPeers.push(ws);
         ws.peerIndex = this.outPeers.length - 1;
+        ws.peerType = 'out';
     }
     constructor(listenPort) {
         super();
@@ -57,6 +58,7 @@ class NetNode extends EventEmitter {
             this.log(`new inbound peer '${ws.ip}:${ws.port}'`);
             this.inPeers.push(ws);
             ws.peerIndex = this.outPeers.length - 1;
+            ws.peerType = 'in';
             me.emit('newPeer', ws);
             ws.on('message', msg => {
                 me.recv(ws, msg);
@@ -89,6 +91,10 @@ class NetNode extends EventEmitter {
             console.log('WARN : recieved malformed packet');
             return;
         }
+    }
+    // say bye bye to a peer
+    shutdown(peer) {
+        peer.close();
     }
 }
 
