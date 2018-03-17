@@ -11,12 +11,25 @@ const crypto = require('crypto'),
     uuidv4 = require('uuid/v4'),
     EventEmitter = require('events'),
     EC = require('elliptic').ec;
+let ec = new EC('secp256k1')
 // make crypto easier
 const keccak = str => {
     let hash = createKeccakHash('keccak256');
     hash.update(str);
     return hash.digest('hex');
-};
+}, genEllipticKeypair = () => {
+    let key = ec.genKeyPair();
+    return {
+        pub: key.getPublic().encode('hex'),
+        priv: key.getPrivate('hex')
+    }
+}, ellipticSign = (privKey, msg) => {
+    let key = ec.keyFromPrivate(privKey, 'hex');
+    return key.sign(msg).toDER('hex');
+}, ellipticVerify = (pubKey, msg, signature) => {
+    let key = ec.keyFromPublic(pubKey, 'hex');
+    return key.verify(msg, signature);
+}
 
 // net
 class NetNode extends EventEmitter {
