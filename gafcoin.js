@@ -171,8 +171,7 @@ class Transaction {
     }
 }
 class Block {
-    constructor(time, pos, lastHash, transactions) {
-        this.position = pos;
+    constructor(time, lastHash, transactions) {
         this.time = time;
         this.lastHash = lastHash;
         this.nonce = 0;
@@ -241,6 +240,14 @@ class GafNode {
 console.log('creating virtual testnet...');
 let network = [];
 const NETWORK_SIZE = 6;
+let genesisBlock = new Block(Date.now(), '', [
+    new Transaction('wallet1', 'wallet2', 5),
+    new Transaction('wallet1', 'wallet2', 6),
+    new Transaction('wallet1', 'wallet2', 7),
+    new Transaction('wallet1', 'wallet2', 8),
+    new Transaction('wallet1', 'wallet2', 9),
+    new Transaction('wallet1', 'wallet2', 10)
+]);
 
 for (let i = 0; i < NETWORK_SIZE; ++i) {
     // create nodes for the network
@@ -248,6 +255,7 @@ for (let i = 0; i < NETWORK_SIZE; ++i) {
     node.net.name = 'node' + i;
     network.push(node);
 }
+let mnode = network[0]; // master node
 // connect all the nodes to each other after the network is created
 setTimeout(() => {
     console.log('connecting nodes to each other...');
@@ -260,5 +268,8 @@ setTimeout(() => {
             }
         }
     }
-    let mnode = network[0]; // The master node holds the genesis block
-}, 300);
+    setTimeout(() => {
+        console.log('spawning genesis block with master node..');
+        mnode.bc.add(genesisBlock);
+    }, 200);
+}, 50);
