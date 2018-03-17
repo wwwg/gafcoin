@@ -96,9 +96,7 @@ let n1 = new NetNode(P2P_PORT),
     n2 = new NetNode(P2P_TEST_PORT);
 n1.name = 'node1';
 n1.on('newPeer', peer => {
-    n1.send(peer, {
-        'h': 'i'
-    });
+    n1.send(peer, 'hi', {});
 });
 n2.name = 'node2';
 setTimeout(() => {
