@@ -72,6 +72,7 @@ class NetNode extends EventEmitter {
     }
     // inbound data
     recv(peer, msg) {
+        // validate incoming data
         let obj;
         try {
             obj = JSON.parse(msg);
@@ -80,7 +81,10 @@ class NetNode extends EventEmitter {
             console.log(e);
             return;
         }
-        this.log('i got a msg', obj);
+        if (!obj.op || !obj.data) {
+            console.log('WARN : recieved malformed packet');
+            return;
+        }
     }
 }
 
