@@ -4,6 +4,7 @@
     "dependencies": {
         "uws": "*",
         "keccak": "*",
-        "uuid": "*"
+        "uuid": "*",
+        "elliptic": "*"
     }
 }
