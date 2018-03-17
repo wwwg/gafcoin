@@ -195,27 +195,31 @@ class Block {
 }
 class BlockChain {
     constructor(originChain) {
-        if (!originChain || !(originChain instanceof Array) || !originChain.length) {
-            throw new Error('originChain needs to have a block in it!');
-        }
-        this.chain = [];
+        this.chain = (originChain || []);
         this.globalDiff = 1;
     }
     top() {
+        if (!this.chain.length) return null;
         return this.chain[this.chain.length - 1];
     }
     at(i) {
+        if (!this.chain.length) return null;
         return this.chain[i];
     }
     add(block) {
-        if (!block instanceof Block) {
-            throw new Error("you can only add blocks to a block chain");
+        if (!this.chain.length) {
+            // genisis block, no way to verify
+            this.chain.push(block);
+            return;
         }
-        block.lastHash = this.top().hash;
-        block.mine(this.globalDiff);
+        if (!block instanceof Block)
+            throw new Error("you can only add blocks to a block chain");
+        block.lastHash = this.top().hash; // update previous hash
+        block.mine(this.globalDiff); // mine it
         this.chain.push(block); // TODO : add real block verification
     }
     validate() {
+        if (this.chain.length < 2) return true; // Can't validate a blockchain that small
         for (let i = 1; i < this.chain.length; ++i) {
             let thisBlock = this.chain[i],
                 lastBlock = this.chain[i - 1];
@@ -223,6 +227,12 @@ class BlockChain {
             if (thisBlock.lastHash !== lastBlock.hash) return false;
         }
         return true;
+    }
+}
+class GafNode {
+    constructor(port) {
+        this.port = port;
+        this.net = new NetNode(port);
     }
 }
 
