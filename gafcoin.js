@@ -185,15 +185,35 @@ class Block {
     }
 }
 
-let n1 = new NetNode(P2P_PORT),
-    n2 = new NetNode(P2P_TEST_PORT);
-n1.name = 'node1';
-n2.name = 'node2';
-n1.on('newPeer', peer => {
-    // n1.send(n1.outPeers[0], 'getaddr', {});
-});
+// create a virtual network for testing stuff
+console.log('creating virtual testnet...');
+let network = [];
+const NETWORK_SIZE = 6;
+// setup node
+let setupNode = node => {
+    node.on('newPeer', peer => {
+        //
+    }).on('lostPeer', peer => {
+        //
+    });
+}
+for (let i = 0; i < NETWORK_SIZE; ++i) {
+    // create nodes for the network
+    let node = new NetNode(9301 + i);
+    node.name = 'testnet' + i;
+    setupNode(node);
+    network.push(node);
+}
+// connect all the nodes to each other after the network is created
 setTimeout(() => {
-    // do the connect
-    n1.log('connecting to node 2');
-    n1.connectPeer('ws://127.0.0.1:' + P2P_TEST_PORT);
-}, 200);
+    console.log('connecting nodes to each other...');
+    for (let i = 0; i < NETWORK_SIZE; ++i) {
+        let currNode = network[i];
+        for (let i2 = 0; i2 < NETWORK_SIZE; ++i2) {
+            let currPort = 9301 + i2;
+            if (currPort != currNode._port) { // dont connect a node to itself
+                currNode.connectPeer('ws://127.0.0.1:' + currPort);
+            }
+        }
+    }
+}, 300);
