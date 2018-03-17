@@ -89,19 +89,18 @@ class NetNode extends EventEmitter {
             console.log('WARN : recieved malformed packet');
             return;
         }
-        this.log('INBOUND:');
-        console.log(obj);
     }
 }
 
 let n1 = new NetNode(P2P_PORT),
     n2 = new NetNode(P2P_TEST_PORT);
 n1.name = 'node1';
-n1.on('newPeer', peer => {
-    n1.send(peer, 'hi', {});
-});
 n2.name = 'node2';
+n1.on('newPeer', peer => {
+    // maybe ill put something else here later
+});
 setTimeout(() => {
+    // do the connect
     n1.log('connecting to node 2');
     n1.connectPeer('ws://127.0.0.1:' + P2P_TEST_PORT);
 }, 200);
