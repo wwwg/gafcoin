@@ -7,9 +7,15 @@ const P2P_PORT = 9284,
 const crypto = require('crypto'),
     net = require('net'),
     uws = require("uws"),
-    keccak = require("keccak"),
+    createKeccakHash = require("keccak"),
     uuidv4 = require('uuid/v4'),
     EventEmitter = require('events');
+// make hashing easier
+const keccak = str => {
+    let hash = createKeccakHash('keccak256');
+    hash.update(str);
+    return hash.digest('hex');
+}
 
 // net
 class NetNode extends EventEmitter {
