@@ -200,7 +200,7 @@ let setupNode = node => {
 for (let i = 0; i < NETWORK_SIZE; ++i) {
     // create nodes for the network
     let node = new NetNode(9301 + i);
-    node.name = 'testnet' + i;
+    node.name = 'node' + i;
     setupNode(node);
     network.push(node);
 }
