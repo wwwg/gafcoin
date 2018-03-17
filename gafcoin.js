@@ -164,6 +164,13 @@ class Transaction {
         this.value = value;
     }
 }
+class Block {
+    constructor(time, pos, lastHash) {
+        this.position = pos;
+        this.time = time;
+        this.lastHash = lastHash;
+    }
+}
 
 let n1 = new NetNode(P2P_PORT),
     n2 = new NetNode(P2P_TEST_PORT);
