@@ -213,7 +213,7 @@ class Transaction {
         this.value = value;
         this.sig = signature;
         this.hash = this.calcHash();
-        this.isValid = this.validate();
+        // this.isValid = this.validate();
     }
     calcHash() {
         return keccak(this.source + this.dest + this.value);
@@ -347,6 +347,6 @@ setTimeout(() => {
     }
     setTimeout(() => {
         console.log('spawning genesis block with master node..');
-        mnode.bc.add(genesisBlock);
+        //
     }, 200);
 }, 50);
