@@ -11,6 +11,21 @@ const crypto = require('crypto'),
 
 // net
 class NetNode {
+    connectPeer(address) {
+        // create an outgoing websocket connection to address
+        let ws = new uws(address),
+            me = this;
+        ws.on('open', () => {
+            // todo
+        }).on('close', () => {
+            // also todo
+        }).on('message', msg => {
+            // ALSO todo
+        }).on('error', err => {
+            // todo
+        });
+        this.outPeers.push(ws);
+    }
     constructor(listenPort) {
         this._port = listenPort;
         this.outPeers = []; // sockets we connect to
