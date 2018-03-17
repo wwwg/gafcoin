@@ -37,8 +37,8 @@ class NetNode extends EventEmitter {
             console.log(err);
         });
         this.outPeers.push(ws);
-        ws.peerIndex = this.outPeers.length - 1;
         ws.peerType = 'out';
+        ws.id = uuidv4();
     }
     constructor(listenPort) {
         super();
@@ -58,7 +58,7 @@ class NetNode extends EventEmitter {
             
             this.log(`new inbound peer '${ws.ip}:${ws.port}'`);
             this.inPeers.push(ws);
-            ws.peerIndex = this.outPeers.length - 1;
+            ws.id = uuidv4();
             ws.peerType = 'in';
             me.emit('newPeer', ws);
             ws.on('message', msg => {
@@ -93,9 +93,20 @@ class NetNode extends EventEmitter {
             return;
         }
     }
-    // say bye bye to a peer
+    // force close peer
     shutdown(peer) {
         peer.close();
+    }
+    // handle peer close
+    handleClose(peer) {
+        // remove peer from it's respective array
+        let key = peer.peerType + 'Peers';
+        for (let i = 0; i < this[key]; ++i) {
+            if (this[key][i].id === peer.id) {
+                console.log('removing peer');
+                this[key].splice(i, 1);
+            }
+        }
     }
 }
 
