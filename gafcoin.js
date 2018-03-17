@@ -336,7 +336,7 @@ for (let i = 0; i < BLOCK_SIZE; ++i) {
     let tx = new Transaction('genesis', WALLET_ADDR, 1);
     genesisTxs.push(tx);
 }
-let genesisBlock = new Block(Date.now(), '', genesisTxs);
+let genesisBlock = new Block(Date.now(), '', genesisTxs, 0);
 
 for (let i = 0; i < NETWORK_SIZE; ++i) {
     // create nodes for the network
