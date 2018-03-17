@@ -233,6 +233,7 @@ class GafNode {
     constructor(port) {
         this.port = port;
         this.net = new NetNode(port);
+        this.bc = new BlockChain();
     }
 }
 
