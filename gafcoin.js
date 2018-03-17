@@ -211,14 +211,20 @@ class Transaction {
         this.source = sourceAddr;
         this.dest = destAddr;
         this.value = value;
-        this.sig = signature;
         this.hash = this.calcHash();
-        // this.isValid = this.validate();
+        if (signature) {
+            this.sig = signature;
+            this.signed = true;
+        } else {
+            this.sig = null;
+            this.signed = false;
+        }
     }
     calcHash() {
         return keccak(this.source + this.dest + this.value);
     }
     validate() {
+        if (!this.sig) throw new Error("Unable to validate unsigned transaction");
         // Source address is the public key
         return ECVerify(this.source, this.hash, this.sig);
     }
@@ -229,6 +235,17 @@ class Transaction {
             'value': this.value,
             'hash': this.hash,
             'sig': this.sig
+        }
+    }
+    sign(privKey) {
+        if (this.signed) throw new Error("Transaction is already signed");
+        // Sign with wallet private key
+        try {
+            this.sig = ECSign(privKey, this.hash);
+            this.signed = true;
+        } catch(e) {
+            console.log('WARN : failed to sign transaction:');
+            console.log(e);
         }
     }
 }
