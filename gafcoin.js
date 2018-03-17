@@ -10,11 +10,20 @@ const crypto = require('crypto'),
     createKeccakHash = require("keccak"),
     uuidv4 = require('uuid/v4'),
     EventEmitter = require('events');
-// make hashing easier
+// make crypto easier
 const keccak = str => {
     let hash = createKeccakHash('keccak256');
     hash.update(str);
     return hash.digest('hex');
+}, ecdhKeyPair = () => {
+    ecdh = crypto.createECDH('secp521r1');
+    ecdh.generateKeys();
+    let priv = ecdh.getPrivateKey('hex'),
+        pub = ecdh.getPublicKey('hex');
+    return {
+        public: pub,
+        private: priv
+    }
 }
 
 // net
