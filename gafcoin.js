@@ -155,6 +155,14 @@ class NetNode extends EventEmitter {
         }
     }
 }
+// components of a blockchain
+class Transaction {
+    constructor(input, output, value) {
+        this.input = input;
+        this.output = output;
+        this.value = value;
+    }
+}
 
 let n1 = new NetNode(P2P_PORT),
     n2 = new NetNode(P2P_TEST_PORT);
