@@ -273,10 +273,11 @@ class BlockChain {
     }
 }
 class GafNode {
-    constructor(port) {
+    constructor(port, privateKey = null) {
         this.port = port;
         this.net = new NetNode(port);
         this.bc = new BlockChain();
+        this.wallet = new Wallet(privateKey);
     }
 }
 
