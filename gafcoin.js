@@ -99,8 +99,10 @@ class NetNode extends EventEmitter {
             console.log('WARN : recieved malformed packet');
             return;
         }
+        let op = obj.op,
+            data = obj.data;
         // handle data accordingly
-        switch (obj.op) {
+        switch (op) {
             case 'getaddr':
                 // Get all connected peers and send to client
                 let peerList = [];
@@ -112,6 +114,18 @@ class NetNode extends EventEmitter {
                     }
                 }
                 me.send(peer, 'gotaddr', peerList);
+                break;
+            case 'gotaddr':
+                // handle getaddr response
+                // connect to all peers in the list. todo MAKE THIS BETTER OR SOMETHING
+                if (data instanceof Array) {
+                    for (let i = 0; i < data.length; ++i) {
+                        let addr = 'ws://' + data[i];
+                        me.connectPeer(addr);
+                    }
+                } else {
+                    console.log('got bad getaddr response');
+                }
                 break;
             default:
                 console.warn('Recieved unknown protocol operation "' + obj.op + '"');
