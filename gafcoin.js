@@ -63,7 +63,7 @@ class NetNode {
     }
     // inbound data
     recv(peer, msg) {
-        this.log('i got a message lol');
+        this.log('i got a msg', msg);
     }
 }
 
