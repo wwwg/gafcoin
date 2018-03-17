@@ -48,8 +48,7 @@ class NetNode {
             ws.port = ws._socket.remotePort;
             ws.family = ws._socket.remoteFamily;
             
-            console.log('recieved new connection from socket:');
-            console.log(ws._socket);
+            this.log(`new inbound peer '${ws.ip}:${ws.port}'`);
         });
     }
 }
