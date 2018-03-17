@@ -176,6 +176,31 @@ class NetNode extends EventEmitter {
         }
     }
 }
+// wallet
+class Wallet {
+    constructor(privateKey) {
+        this.address = null; // Public key
+        this.private = null; // Private key
+        if (!privateKey) {
+            // A new wallet has to be generated
+            let pair = genECKeypair();
+            this.address = pair.pub;
+            this.private = pair.priv;
+        } else {
+            let key;
+            try {
+                key = ec.keyFromPublic(privateKey);
+            } catch (e) {
+                console.log('Invalid wallet private key!');
+                return;
+            }
+            this.private = privateKey;
+            key = ec.keyFromPrivate(privateKey, 'hex');
+            // Get address from private key
+            this.address = key.getPublic().encode('hex');
+        }
+    }
+}
 // components of a blockchain
 class Transaction {
     constructor(sourceAddr, destAddr, value) {
