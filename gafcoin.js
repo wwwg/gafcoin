@@ -189,9 +189,10 @@ class Wallet {
         } else {
             let key;
             try {
-                key = ec.keyFromPublic(privateKey);
+                key = ec.keyFromPrivate(privateKey);
             } catch (e) {
-                console.log('Invalid wallet private key!');
+                console.log('Invalid wallet private key:');
+                console.log(e);
                 return;
             }
             this.private = privateKey;
@@ -301,7 +302,13 @@ let genesisBlock = new Block(Date.now(), '', [
 
 for (let i = 0; i < NETWORK_SIZE; ++i) {
     // create nodes for the network
-    let node = new GafNode(9301 + i);
+    let node;
+    if (i == 0) {
+        // master node
+        node = new GafNode(9301 + i, 'c594922381eaf44babe7b96906a49acbf913507a0372b55cde4d68622c00aaba');
+    } else {
+        node = new GafNode(9301 + i);
+    }
     node.net.name = 'node' + i;
     network.push(node);
 }
