@@ -29,7 +29,7 @@ class NetNode extends EventEmitter {
             this.log(`new outbound peer '${ws.ip}:${ws.port}'`);
             me.emit('newPeer', ws);
         }).on('close', () => {
-            // also todo
+            me.handleClose(ws);
         }).on('message', msg => {
             me.recv(ws, msg);
         }).on('error', err => {
@@ -63,6 +63,9 @@ class NetNode extends EventEmitter {
             me.emit('newPeer', ws);
             ws.on('message', msg => {
                 me.recv(ws, msg);
+            });
+            ws.on('close', () => {
+                me.handleClose(ws);
             });
         });
     }
