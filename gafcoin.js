@@ -11,11 +11,12 @@ const crypto = require('crypto'),
 
 // net
 class NetNode {
-    constructor() {
+    constructor(listenPort) {
+        this._port = listenPort;
         this.outPeers = []; // sockets we connect to
         this.inPeers = []; // sockets that connect to us
         this.server = new uws.Server({
-            port: P2P_PORT
+            port: listenPort
         });
         let s = this.server,
             me = this;
