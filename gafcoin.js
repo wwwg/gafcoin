@@ -687,7 +687,7 @@ node = new GafNode(port, pkey);
 console.log('\nsuccessfully opened wallet "' + node.wallet.address + '"');
 
 process.on('uncaughtException', err => {
-    console.err(err);
+    console.error(err);
     process.exit(1);
 });
 
