@@ -571,6 +571,13 @@ class GafNode {
         // syncronize node with the network
         this.net.reqBlockChain(); // asks every connected peer for their copy of the blockchain
     }
+    isTxPending(tx) {
+        let sig = tx.sig;
+        for (let i = 0; i < this.pendingTxs.length; ++i) {
+            if (sig == this.pendingTxs[i].sig) return true;
+        }
+        return false;
+    }
     constructor(port, privateKey = null) {
         let me = this;
         this.port = port;
