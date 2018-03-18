@@ -572,8 +572,11 @@ class GafNode {
             }
         }).on('blockchain', bc => {
             if (bc.height() > me.bc.height()) {
-                // this blockchain is superior and we need to update ours
-                me.bc = bc;
+                let isChainValid = bc.validate(); // validate the integrity of the chain
+                if (isChainValid) {
+                    // this blockchain is superior and we need to update ours
+                    me.bc = bc;
+                }
             }
         });
     }
