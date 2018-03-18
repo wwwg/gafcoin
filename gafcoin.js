@@ -671,6 +671,11 @@ let q = {
         case 'port':
             console.log('currently listening on tcp port ' + port);
             break;
+        case 'eval':
+            let expr = msg.split('eval ')[1];
+            let res = eval(expr);
+            console.log(res);
+            break;
         default:
             console.log('\ninvalid command, use "help" for a list');
             break;
