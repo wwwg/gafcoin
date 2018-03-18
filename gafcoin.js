@@ -292,12 +292,13 @@ class Wallet {
 // components of a blockchain
 class Transaction {
     static from(txData) {
-        return new Transaction(txData.i, txData.o, txData.value, txData.sig);
+        return new Transaction(txData.i, txData.o, txData.value, txData.t, txData.sig);
     }
-    constructor(sourceAddr, destAddr, value, signature) {
+    constructor(sourceAddr, destAddr, value, time, signature) {
         this.source = sourceAddr;
         this.dest = destAddr;
         this.value = value;
+        this.ts = time;
         this.hash = this.calcHash();
         if (signature) {
             this.sig = signature;
@@ -308,7 +309,7 @@ class Transaction {
         }
     }
     calcHash() {
-        return keccak(this.source + this.dest + this.value);
+        return keccak(this.source + this.dest + this.value + this.ts);
     }
     validate() {
         if (!this.sig) throw new Error("Unable to validate unsigned transaction");
@@ -321,7 +322,8 @@ class Transaction {
             'o': this.dest,
             'value': this.value,
             'hash': this.hash,
-            'sig': this.sig
+            'sig': this.sig,
+            't': this.ts
         }
     }
     sign(privKey) {
