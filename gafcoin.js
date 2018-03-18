@@ -695,11 +695,18 @@ let handleCmd = msg => {
             let res = eval(expr);
             console.log(res);
             break;
-        case 'export_blockchain':
+        case 'export':
             let path = smsg[1];
             console.log('writing blockchain to file "' + path + '"');
-            fs.writeFileSync(path, node.bc.serialize(), 'utf8');
+            fs.writeFileSync(path, JSON.stringify(node.bc.serialize()), 'utf8');
             console.log('write complete');
+            break;
+        case 'import':
+            let path = smsg[1];
+            console.log('reading blockchain from file "' + path + '"');
+            const bc = fs.readFileSync(path, 'utf8');
+            node.bc = BlockChain.from(JSON.parse(bc));
+            console.log('blockchain imported successfully.');
             break;
         default:
             console.log('\ninvalid command, use "help" for a list');
