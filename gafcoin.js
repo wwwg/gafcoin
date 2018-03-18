@@ -396,7 +396,22 @@ class BlockChain {
             blk.transactions[0].value !== this.blockReward) {
             return 'wrong coinbase transaction';
         }
-        // todo : validate transactions in block
+        // transaction validation
+        for (let i = 1; i < blk.transactions.length; ++i) {
+            let tx = blk.transactions[i];
+            if (tx.value <= 0) {
+                return 'invalid transaction value';
+            }
+            // check if the tx signature is valid
+            if (!tx.validate()) {
+                return 'transaction improperly signed';
+            }
+            // check if the source has sufficient balance
+            let balance = this.balance(tx.source) - tx.value;
+            if (balance < 0) {
+                return 'transaction withdrawing too much';
+            }
+        }
         
         return true;
     }
