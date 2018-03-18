@@ -468,6 +468,7 @@ for (let i = 0; i < NETWORK_SIZE; ++i) {
     network.push(node);
 }
 let mnode = network[0]; // master node
+let miner = network[1]; // miner node
 // connect all the nodes to each other after the network is created
 setTimeout(() => {
     console.log('connecting nodes to each other...');
