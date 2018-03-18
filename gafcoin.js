@@ -505,5 +505,6 @@ setTimeout(() => {
             return;
         }
         mnode.transfer(dest, 1);
+        ++i;
     }, 50);
 }, 150);
