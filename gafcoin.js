@@ -443,19 +443,12 @@ class BlockChain {
             return 'too big';
         }
         // last hash verification
-        if (this.isExternal) {
-            // validate block before top
-            if (blk.lastHash !== this.at(this.height() - 2).calcHash()) {
-                // this block doesnt go on the top
-                return 'wrong last hash';
-            }
-        } else {
-            // validate top block
-            if (blk.lastHash !== this.top().calcHash()) {
-                // this block doesnt go on the top
-                return 'wrong last hash';
-            }
+        let blk2 = this.at(blk.pos - 1);
+        if (blk.lastHash !== blk2.hash) {
+            // this block doesnt go on the top
+            return 'wrong last hash "' + blk.lastHash + '"';
         }
+        
         if (blk.transactions[0].source !== 'reward' ||
             blk.transactions[0].value !== this.blockReward) {
             return 'wrong coinbase transaction';
