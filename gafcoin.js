@@ -495,12 +495,13 @@ setTimeout(() => {
 }, 100);
 setTimeout(() => {
     console.log('broadcasting transactions');
+    let dest = network[3].wallet.address; // send to third node in network
     let i = 0;
     setInterval(() => {
         if (i > BLOCK_SIZE) {
             clearInterval(this);
             return;
         }
-        
+        mnode.transfer(dest, 1);
     }, 50);
 }, 150);
