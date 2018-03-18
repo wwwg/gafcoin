@@ -653,6 +653,7 @@ if (pkey) {
     console.log(`\t- no private key provided, will generate new wallet.`);
 }
 node = new GafNode(port, pkey);
+console.log('\nsuccessfully opened wallet "' + node.wallet.address + '"');
 
 /*
 
