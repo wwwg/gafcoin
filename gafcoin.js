@@ -419,8 +419,6 @@ class BlockChain {
         for (let i = 1; i < this.chain.length; ++i) {
             let validation = this.validateBlock(this.chain[i]);
             if (validation !== true) {
-                console.log('blockchain verification failed at block ' + i + ":");
-                console.log(validation);
                 return false;
             }
         }
@@ -567,55 +565,52 @@ class GafNode {
             let valid = me.bc.validateBlock(blk);
             if (valid === true) {
                 me.bc.add(blk);
-                console.log(`validated and added new block #${me.bc.chain.length}`);
+                console.log(chalk.green.bold(`validated and added block #${me.bc.chain.length}`));
             } else {
-                console.log('=== INVALID BLOCK ===');
-                console.log(' reason: ' + valid);
-                console.log(' blockchain height: ' + me.bc.chain.length + ' (rejected block ' + (me.bc.chain.length + 1) + ')');
-                console.log(' diff: ' + me.bc.globalDiff);
-                console.log(' port: ' + me.port);
-                console.log('=====================\n');
+                console.log(chalk.red.bold('WARN : Recieved invalid block from peer!'));
+                console.log(chalk.red.bold('Reason block is invalid: ') + valid);
+                console.log(chalk.red.bold('block number: ') + (me.bc.chain.length + 1));
             }
         }).on('tx', tx => {
             // we dont care about new transactions if we're not a miner
             if (!me.isMiner) return;
             if (!tx.validate()) {
-                console.log('rejected invalid tx');
+                console.log(chalk.red.bold('WARN : Recieved invalid transaction from peer!'));
                 return;
             }
             me.pendingTxs.push(tx);
             if (me.pendingTxs.length === (BLOCK_SIZE - 1)) {
-                console.log(`found new block ${me.bc.chain.length + 1}, mining...`);
+                console.log(chalk.yellow.bold(`found new block ${me.bc.chain.length + 1}, mining...`));
                 // create coinbase transaction and add it
                 let coinbaseTx = new Transaction('reward', me.wallet.address, me.bc.blockReward);
                 me.pendingTxs.unshift(coinbaseTx);
                 // create a new block and mine it
                 let newBlk = new Block(Date.now(), me.bc.top().calcHash(), me.pendingTxs, me.bc.chain.length);
                 newBlk.mine(me.bc.globalDiff);
-                console.log(`block ${me.bc.chain.length + 1} mined successfully. resyncronizing in a few seconds..`);
+                console.log(chalk.green.bold(`block ${me.bc.chain.length + 1} mined successfully. resyncronizing in a few seconds..`));
                 me.net.announceBlock(newBlk);
                 // clear pending transactions
                 me.pendingTxs = [];
                 setTimeout(() => {
                     me.sync();
-                }, 10000);
+                }, 20000);
             }
         }).on('blockchain', bc => {
             if (bc.height() > me.bc.height()) {
                 let isChainValid = bc.validate(); // validate the integrity of the chain
                 if (isChainValid) {
                     // this blockchain is superior and we need to update ours
-                    console.log('recieved new more valid blockchain, updated current blockchain.');
+                    console.log(chalk.green.bold('Switched to newer valid blockchain recieved from peer'));
                     me.bc = bc;
                 } else {
-                    console.log('recieved and discarded invalid blockchain');
+                    console.log(chalk.red.bold('Rejected invalid blockchain from peer.'));
                 }
             }
         }).on('newPeer', () => {
             me.peerCount++;
             if (!me.gotFirstPeer) {
                 me.gotFirstPeer = true;
-                console.log('connected to first peer, syncing with network..');
+                console.log(chalk.green.bold('connected to first peer, syncing with network..'));
                 me.sync();
             }
         }).on('lostPeer', () => {
@@ -659,44 +654,42 @@ let handleCmd = msg => {
             break;
         case 'mine':
             node.isMiner = !node.isMiner;
-            console.log('\nwill mine new blocks: ' + node.isMiner);
+            console.log(chalk.yellow('mining set to ' + node.isMiner));
             break;
         case 'height':
-            console.log('\ncurrent blockchain height: ' + node.bc.chain.length);
+            console.log(chalk.yellow('current blockchain height: ' + node.bc.chain.length));
             break;
         case 'connect':
         case 'conn':
             let ip = smsg[1];
             if (!ip.startsWith('ws://')) ip = 'ws://' + ip;
-            console.log('\nattempting to connect to peer "' + ip + '"');
+            console.log(chalk.yellow('attempting to connect to peer "' + ip + '"'));
             node.net.connectPeer(ip);
             break;
         case 'peers':
-            console.log('\ncurrent active peers: ' + (node.net.outPeers.concat(node.net.inPeers)).length);
+            console.log(chalk.yellow('current active peers: ' + (node.net.outPeers.concat(node.net.inPeers)).length));
             break;
         case 'sync':
-            console.log('\nstarting node syncronization..');
+            console.log(chalk.yellow('starting node syncronization..'));
             node.sync();
             break;
         case 'address':
-            console.log('\nyour wallet address:');
-            console.log(node.wallet.address);
+            console.log(chalk.green(node.wallet.address));
             break;
         case 'private_key':
-            console.log('\nyour wallet private key:');
-            console.log(node.wallet.private);
+            console.log(chalk.green(node.wallet.private));
             break;
         case 'balance':
-            console.log('\nyour wallet balance: ' + node.bc.balance(node.wallet.address));
+            console.log(chalk.yellow(node.bc.balance(node.wallet.address)));
             break;
         case 'transfer':
             let amount = parseFloat(smsg[1]),
                 dest = smsg[2];
             if (node.bc.balance(node.wallet.address) - amount > 0) {
-                console.log('\ntrasfering ' + amount + ' to "' + dest + '"');
+                console.log(chalk.green('trasfering ' + amount + ' to "' + dest + '"'));
                 node.transfer(dest, amount);
             } else {
-                console.log('\nyou cant afford that');
+                console.log(chalk.red('you cant afford that'));
             }
             break;
         case 'port':
@@ -721,7 +714,7 @@ let handleCmd = msg => {
             console.log('blockchain imported successfully.');
             break;
         default:
-            console.log('\ninvalid command, use "help" for a list');
+            console.log(chalk.red('invalid command, use "help" for a list'));
             break;
     }
 }
