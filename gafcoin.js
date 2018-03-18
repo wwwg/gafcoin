@@ -729,3 +729,5 @@ if (pkey) {
 node = new GafNode(port, pkey);
 console.log('\nsuccessfully opened wallet "' + node.wallet.address + '"');
 question();
+
+module.exports = GafNode;
