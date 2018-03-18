@@ -10,7 +10,6 @@ const crypto = require('crypto'),
     createKeccakHash = require("keccak"),
     uuidv4 = require('uuid/v4'),
     EventEmitter = require('events'),
-    inquirer = require("inquirer"),
     minimist = require("minimist"),
     chalk = require("chalk"),
     EC = require('elliptic').ec;
@@ -621,17 +620,8 @@ if (isNaN(port)) {
 if (args['k']) {
     pkey = args['k'];
 }
-let q = {
-    'type': 'input',
-    'name': 'prompt',
-    'message': 'gaf>',
-    'prefix': '',
-    'suffix': '',
-    'default': ''
-}, node, prompt = ans => {
-    inquirer.prompt([q]).then(prompt);
-    let msg = ans.prompt,
-        smsg = msg.split(' '),
+let handleCmd = msg => {
+    let smsg = msg.split(' '),
         cmd = smsg[0];
     switch (cmd) {
         case 'help':
@@ -696,7 +686,6 @@ let q = {
             break;
     }
 }
-inquirer.prompt([q]).then(prompt);
 console.log('initializing gafcoin..');
 console.log(`\t- listening on tcp port ${port}`);
 if (pkey) {
