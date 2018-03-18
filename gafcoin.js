@@ -502,6 +502,7 @@ class GafNode {
         });
     }
 }
+/*
 
 // create a virtual network for testing stuff
 const WALLET_ADDR = '042c94b69058e64ac58ef442919f45415a8f5fcf5e939f69ffba9b80848ed24d75df64305d98ce690d50988e763d83163269aac0162a8e9a35cd46593d594b21fa';
@@ -551,3 +552,5 @@ setTimeout(() => {
         ++i;
     }, 10);
 }, 150);
+
+*/
