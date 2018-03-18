@@ -104,6 +104,12 @@ class NetNode extends EventEmitter {
             console.log('WARN : failed to send packet to peer');
         }
     }
+    broadcast(op, data) {
+        let totalPeers = this.outPeers.concat(this.inPeers);
+        for (let i = 0; i < totalPeers.length; ++i) {
+            this.send(totalPeers[i], op, data);
+        }
+    }
     // inbound data
     recv(peer, msg) {
         // validate incoming data
