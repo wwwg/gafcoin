@@ -428,6 +428,11 @@ class BlockChain {
         }
         return total;
     }
+    calcDiff() {
+        // calculate what the difficulty should be
+        // todo
+        return 1;
+    }
 }
 class GafNode {
     transfer(dest, amount) {
