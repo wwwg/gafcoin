@@ -392,8 +392,11 @@ class BlockChain {
             // this block doesnt go on the top
             return 'wrong last hash';
         }
+        if (blk.transactions[0].source !== 'reward' ||
+            blk.transactions[0].value !== this.blockReward) {
+            return 'wrong coinbase transaction';
+        }
         // todo : validate transactions in block
-        // todo : validate coinbase transaction
         
         return true;
     }
@@ -446,7 +449,7 @@ class GafNode {
             let valid = me.bc.validateBlock(blk);
             if (valid === true) {
                 me.bc.add(blk);
-                console.log('added new valid block to chain.');
+                console.log(`validated and added new block #${me.bc.chain.length + 1}`);
             } else {
                 console.log('=== INVALID BLOCK ===');
                 console.log(' reason: ' + valid);
@@ -481,7 +484,6 @@ class GafNode {
 }
 
 // create a virtual network for testing stuff
-console.log('creating virtual testnet...');
 const WALLET_ADDR = '042c94b69058e64ac58ef442919f45415a8f5fcf5e939f69ffba9b80848ed24d75df64305d98ce690d50988e763d83163269aac0162a8e9a35cd46593d594b21fa';
 const WALLET_PRIV = 'c594922381eaf44babe7b96906a49acbf913507a0372b55cde4d68622c00aaba';
 let network = [];
@@ -504,7 +506,7 @@ let mnode = network[0]; // master node
 let miner = network[1]; // miner node
 // connect all the nodes to each other after the network is created
 setTimeout(() => {
-    console.log('connecting nodes to each other...');
+    console.log('connecting nodes...');
     for (let i = 1; i < NETWORK_SIZE; ++i) {
         let currNode = network[i];
         for (let i2 = 0; i2 < NETWORK_SIZE; ++i2) {
@@ -516,12 +518,12 @@ setTimeout(() => {
     }
 }, 50);
 setTimeout(() => {
-    console.log('broadcasting transactions');
+    console.log('- broadcasting transactions');
     let dest = network[3].wallet.address; // send to third node in network
     let i = 0;
     let intv = setInterval(() => {
         if (i > (BLOCK_SIZE - 1)) {
-            console.log('finished tx broadcasting');
+            console.log('- finished tx broadcasting');
             clearInterval(intv);
             return;
         }
