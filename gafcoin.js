@@ -538,7 +538,7 @@ let q = {
     switch (cmd) {
         case 'help':
             console.log('commands:');
-            console.log('clear, mine, height');
+            console.log('clear, mine, height, connect');
             break;
         case 'clear':
             console.clear();
@@ -549,6 +549,11 @@ let q = {
             break;
         case 'height':
             console.log('current blockchain height: ' + node.bc.chain.length);
+            break;
+        case 'connect':
+            let ip = smsg[1];
+            console.log('attempting to connect to peer "' + ip + '"');
+            node.net.connectPeer(ip);
             break;
         default:
             console.log('invalid command, use "help" for a list');
