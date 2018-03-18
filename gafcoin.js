@@ -549,6 +549,7 @@ class GafNode {
         this.isSyncronized = false;
         this.pendingTxs = [];
         this.chains = []; // for syncronization
+        this.peerCount = 0;
         /*
         if (!privateKey) {
             console.log(`Generated new wallet for node ${port - 9301}:`);
@@ -609,6 +610,10 @@ class GafNode {
                     console.log('recieved and discarded invalid blockchain');
                 }
             }
+        }).on('newPeer', () => {
+            me.peerCount++;
+        }).on('lostPeer', () => {
+            me.peerCount--;
         });
     }
 }
