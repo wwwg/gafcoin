@@ -635,6 +635,7 @@ let q = {
             break;
         case 'connect':
             let ip = smsg[1];
+            if (!ip.startsWith('ws://')) ip = 'ws://' + ip;
             console.log('\nattempting to connect to peer "' + ip + '"');
             node.net.connectPeer(ip);
             break;
