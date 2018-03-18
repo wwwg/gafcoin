@@ -523,6 +523,24 @@ if (isNaN(port)) {
 if (args['k']) {
     pkey = args['k'];
 }
+let q = {
+    'type': 'input',
+    'name': 'prompt',
+    'message': 'gaf>',
+    'default': ''
+}
+let prompt = ans => {
+    inquirer.prompt([q]).then(prompt);
+    let msg = ans.prompt,
+        smsg = msg.split(' '),
+        cmd = smsg[0];
+    switch (cmd) {
+        case 'clear':
+            console.clear();
+            break;
+    }
+}
+inquirer.prompt([q]).then(prompt);
 console.log('initializing gafcoin..');
 console.log(`\t- listening on tcp port ${port}`);
 if (pkey) {
@@ -530,6 +548,7 @@ if (pkey) {
 } else {
     console.log(`\t- no private key provided, will generate new wallet.`);
 }
+
 /*
 
 // create a virtual network for testing stuff
