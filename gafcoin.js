@@ -536,6 +536,10 @@ let q = {
         smsg = msg.split(' '),
         cmd = smsg[0];
     switch (cmd) {
+        case 'help':
+            console.log('commands:');
+            console.log('clear, mine, height');
+            break;
         case 'clear':
             console.clear();
             break;
