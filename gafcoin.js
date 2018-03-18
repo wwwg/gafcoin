@@ -599,6 +599,8 @@ class GafNode {
             if (valid === true) {
                 me.bc.add(blk);
                 console.log(chalk.green.bold(`validated and added block #${me.bc.chain.length}`));
+                me.bc.globalDiff = me.bc.calcDiff();
+                me.bc.blockReward = me.bc.calcReward();
             } else {
                 console.log(chalk.red.bold('WARN : Recieved invalid block from peer!'));
                 console.log(chalk.red.bold('Reason block is invalid: ') + valid);
