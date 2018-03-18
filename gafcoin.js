@@ -504,6 +504,18 @@ class GafNode {
         });
     }
 }
+// make the node actually usable
+let args = minimist(process.argv.slice(2), {
+    '--': true
+});
+if (args['help']) {
+    console.log('usage:');
+    console.log('node gafcoin.js  [ -k <key> ] -p <port>');
+    console.log('where <port> is a tcp port to listen on');
+    console.log('and <key> is optionally a private key to use for your wallet.');
+    process.exit(0);
+}
+
 /*
 
 // create a virtual network for testing stuff
