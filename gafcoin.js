@@ -406,6 +406,9 @@ class BlockChain {
             let validation = this.validateBlock(this.chain[i]);
             if (validation !== true) {
                 return false;
+            } else {
+                console.log('blockchain verification failed at block ' + i + ":");
+                console.log(validation);
             }
         }
         return true;
