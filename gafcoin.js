@@ -691,7 +691,11 @@ let handleCmd = msg => {
             node.net.connectPeer(ip);
             break;
         case 'peers':
-            console.log(chalk.yellow('current active peers: ' + (node.net.outPeers.concat(node.net.inPeers)).length));
+            let totalPeers = node.net.outPeers.concat(node.net.inPeers);
+            console.log(chalk.yellow('current active peers: ' + (totalPeers).length) + ':');
+            for (let i = 0; i < totalPeers.length; ++i) {
+                console.log(chalk.white(totalPeers[i].ip + ':' + totalPeers[i].port));
+            }
             break;
         case 'sync':
             console.log(chalk.yellow('starting node syncronization..'));
