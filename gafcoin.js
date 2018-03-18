@@ -635,7 +635,6 @@ class GafNode {
         }).on('lostPeer', () => {
             me.peerCount--;
         }).on('peerList', list => {
-            console.log(list);
             console.log(chalk.green.bold('recieved list of nodes from peer, attempting to connect to all of them.'));
             for (let i = 0; i < list.length; ++i) {
                 if (!me.net.isConnectedTo(list[i])) {
