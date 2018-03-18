@@ -527,6 +527,8 @@ let q = {
     'type': 'input',
     'name': 'prompt',
     'message': 'gaf>',
+    'prefix': '',
+    'suffix': '',
     'default': ''
 }, node, prompt = ans => {
     inquirer.prompt([q]).then(prompt);
@@ -543,6 +545,9 @@ let q = {
             break;
         case 'height':
             console.log('current blockchain height: ' + node.bc.chain.length);
+            break;
+        default:
+            console.log('invalid command, use "help" for a list');
             break;
     }
 }
