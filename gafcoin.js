@@ -437,7 +437,7 @@ class BlockChain {
             // block too big
             return 'too big';
         }
-        if (blk.lastHash !== this.top().hash) {
+        if (blk.lastHash !== this.at(this.height() - 1)) {
             // this block doesnt go on the top
             return 'wrong last hash';
         }
