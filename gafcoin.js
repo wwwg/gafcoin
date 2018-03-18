@@ -629,6 +629,10 @@ class GafNode {
                 let ip = 'ws://' + list[i];
                 me.net.connectPeer(ip);
             }
+            setTimeout(() => {
+                console.log(chalk.green.bold('syncing with network'));
+                me.sync();
+            }, 5000);
         })
     }
 }
