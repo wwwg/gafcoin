@@ -365,7 +365,7 @@ class Block {
 // create genesis block, which is hardcoded into every client
 let genesisTxs = [];
 for (let i = 0; i < BLOCK_SIZE; ++i) {
-    let tx = new Transaction('genesis', '042c94b69058e64ac58ef442919f45415a8f5fcf5e939f69ffba9b80848ed24d75df64305d98ce690d50988e763d83163269aac0162a8e9a35cd46593d594b21fa', 10);
+    let tx = new Transaction('genesis', '042c94b69058e64ac58ef442919f45415a8f5fcf5e939f69ffba9b80848ed24d75df64305d98ce690d50988e763d83163269aac0162a8e9a35cd46593d594b21fa', 100);
     genesisTxs.push(tx);
 }
 const GENESIS_BLOCK = new Block(Date.now(), '', genesisTxs, 0);
