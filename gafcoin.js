@@ -382,7 +382,11 @@ class BlockChain {
     }
     constructor(originChain) {
         this.chain = (originChain || [GENESIS_BLOCK]);
-        this.isExternal = !!(originChain);
+        if (originChain) {
+            this.isExternal = true;
+        } else {
+            this.isExternal = false;
+        }
         this.globalDiff = this.calcDiff();
         this.blockReward = this.calcReward();
     }
@@ -447,7 +451,7 @@ class BlockChain {
             }
         } else {
             // validate top block
-            if (blk.lastHash !== this.top()) {
+            if (blk.lastHash !== this.top().calcHash()) {
                 // this block doesnt go on the top
                 return 'wrong last hash';
             }
