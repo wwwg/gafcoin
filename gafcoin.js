@@ -591,6 +591,7 @@ class GafNode {
         this.pendingTxs = [];
         this.peerCount = 0;
         this.gotFirstPeer = false;
+        this.lastMinedBlock = null;
         this.net.on('block', blk => {
             if (blk.pos < me.bc.chain.length) { // this block old and should be ignored
                 return;
@@ -619,6 +620,10 @@ class GafNode {
             }
             me.pendingTxs.push(tx);
             if (me.pendingTxs.length === (BLOCK_SIZE - 1)) {
+                if (me.lastMinedBlock && me.lastMinedBlock == me.bc.chain.length + 1) {
+                    // we've already mined this block
+                    return;
+                }
                 console.log(chalk.yellow.bold(`found new block ${me.bc.chain.length + 1}, mining...`));
                 // create coinbase transaction and add it
                 let coinbaseTx = new Transaction('reward', me.wallet.address, me.bc.blockReward, Date.now());
@@ -630,6 +635,7 @@ class GafNode {
                 me.net.announceBlock(newBlk);
                 // clear pending transactions
                 me.pendingTxs = [];
+                me.lastMinedBlock = me.bc.chain.length + 1;
                 setTimeout(() => {
                     me.sync();
                 }, 5000);
