@@ -609,7 +609,7 @@ class GafNode {
             me.peerCount++;
             if (!me.gotFirstPeer) {
                 me.gotFirstPeer = true;
-                console.log(chalk.green.bold('connected to first peer, syncing with network..'));
+                console.log(chalk.green.bold('connected to first peer, syncing with network'));
                 me.sync();
             }
         }).on('lostPeer', () => {
