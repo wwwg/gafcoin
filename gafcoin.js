@@ -387,6 +387,9 @@ class BlockChain {
         if (!this.chain.length) return null;
         return this.chain[i];
     }
+    height() {
+        return this.chain.length;
+    }
     add(blk) {
         this.chain.push(blk);
     }
@@ -567,6 +570,8 @@ class GafNode {
                 // clear pending transactions
                 me.pendingTxs = [];
             }
+        }).on('blockchain', bc => {
+            //
         });
     }
 }
