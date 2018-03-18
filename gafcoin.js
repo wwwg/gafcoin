@@ -686,6 +686,11 @@ if (pkey) {
 node = new GafNode(port, pkey);
 console.log('\nsuccessfully opened wallet "' + node.wallet.address + '"');
 
+process.on('uncaughtException', err => {
+    console.err(err);
+    process.exit(1);
+});
+
 /*
 
 // create a virtual network for testing stuff
