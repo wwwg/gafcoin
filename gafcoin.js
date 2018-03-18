@@ -528,8 +528,7 @@ let q = {
     'name': 'prompt',
     'message': 'gaf>',
     'default': ''
-}
-let prompt = ans => {
+}, node, prompt = ans => {
     inquirer.prompt([q]).then(prompt);
     let msg = ans.prompt,
         smsg = msg.split(' '),
@@ -537,6 +536,10 @@ let prompt = ans => {
     switch (cmd) {
         case 'clear':
             console.clear();
+            break;
+        case 'mine':
+            node.isMiner = !node.isMiner;
+            console.log('will mine new blocks: ' + node.isMiner);
             break;
     }
 }
@@ -548,6 +551,7 @@ if (pkey) {
 } else {
     console.log(`\t- no private key provided, will generate new wallet.`);
 }
+node = new GafNode(port, pkey);
 
 /*
 
