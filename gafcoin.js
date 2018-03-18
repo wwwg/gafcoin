@@ -398,6 +398,10 @@ class BlockChain {
     }
 }
 class GafNode {
+    broadcastNewBlock(blk) {
+        if (!blk instanceof Block) throw new Error("broadcastNewBlock only broadcasts blocks");
+        this.net.announceBlock(blk);
+    }
     constructor(port, privateKey = null) {
         this.port = port;
         this.net = new NetNode(port);
