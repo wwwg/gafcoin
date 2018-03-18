@@ -495,6 +495,10 @@ class GafNode {
         if (!blk instanceof Block) throw new Error("broadcastNewBlock only broadcasts blocks");
         this.net.announceBlock(blk);
     }
+    sync() {
+        // syncronize node with the network
+        this.net.reqBlockChain(); // asks every connected peer for their copy of the block chain
+    }
     constructor(port, privateKey = null) {
         let me = this;
         this.port = port;
@@ -502,6 +506,7 @@ class GafNode {
         this.bc = new BlockChain();
         this.wallet = new Wallet(privateKey);
         this.isMiner = true;
+        this.isSyncronized = false;
         this.pendingTxs = [];
         /*
         if (!privateKey) {
