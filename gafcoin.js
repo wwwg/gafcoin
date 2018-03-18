@@ -333,6 +333,9 @@ class BlockChain {
         if (!this.chain.length) return null;
         return this.chain[i];
     }
+    add(blk) {
+        this.chain.push(blk);
+    }
     mine(rewardAddr) {
         let b = new Block(Date.now(), this.pending, this.top().hash);
         b.mine(this.globalDiff);
