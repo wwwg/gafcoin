@@ -456,7 +456,7 @@ let network = [];
 const NETWORK_SIZE = 6;
 let genesisTxs = [];
 for (let i = 0; i < BLOCK_SIZE; ++i) {
-    let tx = new Transaction('genesis', WALLET_ADDR, 1);
+    let tx = new Transaction('genesis', WALLET_ADDR, 10);
     genesisTxs.push(tx);
 }
 let genesisBlock = new Block(Date.now(), '', genesisTxs, 0);
