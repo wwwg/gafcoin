@@ -452,7 +452,7 @@ setTimeout(() => {
         }
     }
     setTimeout(() => {
-        console.log('spawning genesis block with master node..');
+        mnode.log('propagating genesis block');
         //
     }, 200);
 }, 50);
