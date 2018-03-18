@@ -561,7 +561,7 @@ class BlockChain {
 class GafNode {
     transfer(dest, amount) {
         let me = this,
-            tx = new Transaction(me.wallet.address, dest, amount);
+            tx = new Transaction(me.wallet.address, dest, amount, Date.now());
         tx.sign(me.wallet.private); // sign tx to verify we made it
         this.net.announceTx(tx); // propagate tx throughout the network
     }
