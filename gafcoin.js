@@ -605,12 +605,12 @@ class GafNode {
                 console.log(chalk.red.bold('block number: ') + (me.bc.chain.length + 1));
             }
         }).on('tx', tx => {
-            // we dont care about new transactions if we're not a miner
-            if (!me.isMiner) return;
             if (!tx.validate()) {
                 console.log(chalk.red.bold('WARN : Recieved invalid transaction from peer!'));
                 return;
             }
+            me.net.announceTx(tx); // let everyone know about this new transaction
+            if (!me.isMiner) return; // we dont care about new transactions if we're not a miner
             if (me.isTxPending(tx)) {
                 // duplicate transaction, ignore
                 return;
