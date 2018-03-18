@@ -614,7 +614,7 @@ let q = {
     switch (cmd) {
         case 'help':
             // todo make this helpful
-            console.log('commands:');
+            console.log('\ncommands:');
             console.log('clear, mine, height, connect, peers');
             break;
         case 'clear':
@@ -622,47 +622,47 @@ let q = {
             break;
         case 'mine':
             node.isMiner = !node.isMiner;
-            console.log('will mine new blocks: ' + node.isMiner);
+            console.log('\nwill mine new blocks: ' + node.isMiner);
             break;
         case 'height':
-            console.log('current blockchain height: ' + node.bc.chain.length);
+            console.log('\ncurrent blockchain height: ' + node.bc.chain.length);
             break;
         case 'connect':
             let ip = smsg[1];
-            console.log('attempting to connect to peer "' + ip + '"');
+            console.log('\nattempting to connect to peer "' + ip + '"');
             node.net.connectPeer(ip);
             break;
         case 'peers':
-            console.log('current active peers: ' + (node.net.outPeers.concat(node.net.inPeers)).length);
+            console.log('\ncurrent active peers: ' + (node.net.outPeers.concat(node.net.inPeers)).length);
             break;
         case 'sync':
-            console.log('starting node syncronization..');
+            console.log('\nstarting node syncronization..');
             node.sync();
             break;
         case 'address':
-            console.log('your wallet address:');
+            console.log('\nyour wallet address:');
             console.log(node.wallet.address);
             break;
         case 'private_key':
-            console.log('your wallet private key:');
+            console.log('\nyour wallet private key:');
             console.log(node.wallet.private);
             break;
         case 'balance':
-            console.log('your wallet balance:');
+            console.log('\nyour wallet balance:');
             console.log(node.bc.balance(node.wallet.address));
             break;
         case 'transfer':
             let amount = parseInt(smsg[1]),
                 dest = smsg[2];
             if (node.bc.balance(node.wallet.address) - amount > 0) {
-                console.log('trasfering ' + amount + ' to "' + dest + '"');
+                console.log('\ntrasfering ' + amount + ' to "' + dest + '"');
                 node.transfer(dest, amount);
             } else {
-                console.log('you cant afford that');
+                console.log('\nyou cant afford that');
             }
             break;
         default:
-            console.log('invalid command, use "help" for a list');
+            console.log('\ninvalid command, use "help" for a list');
             break;
     }
 }
