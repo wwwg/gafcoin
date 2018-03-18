@@ -654,6 +654,7 @@ let handleCmd = msg => {
             console.log('\ncurrent blockchain height: ' + node.bc.chain.length);
             break;
         case 'connect':
+        case 'conn':
             let ip = smsg[1];
             if (!ip.startsWith('ws://')) ip = 'ws://' + ip;
             console.log('\nattempting to connect to peer "' + ip + '"');
