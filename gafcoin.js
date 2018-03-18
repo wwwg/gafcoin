@@ -660,6 +660,9 @@ let q = {
                 console.log('\nyou cant afford that');
             }
             break;
+        case 'port':
+            console.log('currently listening on tcp port ' + port);
+            break;
         default:
             console.log('\ninvalid command, use "help" for a list');
             break;
