@@ -397,6 +397,19 @@ class BlockChain {
         
         return true;
     }
+    balance(addr) {
+        let total = 0;
+        for (const blk of this.chain) {
+            for (const tx of blk.transactions) {
+                if (tx.source == addr) {
+                    total -= tx.value;
+                } else if (tx.dest == addr) {
+                    total += tx.value;
+                }
+            }
+        }
+        return total;
+    }
 }
 class GafNode {
     transfer(dest, amount) {
