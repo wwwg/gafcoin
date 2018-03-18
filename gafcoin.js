@@ -460,7 +460,7 @@ let mnode = network[0]; // master node
 // connect all the nodes to each other after the network is created
 setTimeout(() => {
     console.log('connecting nodes to each other...');
-    for (let i = 0; i < NETWORK_SIZE; ++i) {
+    for (let i = 1; i < NETWORK_SIZE; ++i) {
         let currNode = network[i];
         for (let i2 = 0; i2 < NETWORK_SIZE; ++i2) {
             let currPort = 9301 + i2;
