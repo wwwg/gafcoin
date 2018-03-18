@@ -476,7 +476,7 @@ class BlockChain {
         let blk2 = this.at(blk.pos - 1);
         if (blk.lastHash !== blk2.hash) {
             // this block doesnt go on the top
-            return 'wrong last hash "' + blk.lastHash + '"';
+            return 'wrong last hash';
         }
         
         if (blk.transactions[0].source !== 'reward' ||
