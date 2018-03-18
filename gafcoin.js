@@ -473,6 +473,18 @@ class BlockChain {
         }
         return out;
     }
+    hash() {
+        // hash blockchain for easy comparison
+        let khash = createKeccakHash('keccak256');
+        for (const blk in this.chain) {
+            khash.update(blk.hash);
+        }
+        return khash.digest('hex');
+    }
+    equals(bc2) {
+        // compare two block chains using their hashes
+        return this.hash() === bc2.hash();
+    }
     calcDiff() {
         // calculate what the difficulty should be
         // todo
