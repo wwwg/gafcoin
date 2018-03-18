@@ -64,8 +64,9 @@ class NetNode extends EventEmitter {
         ws.peerType = 'out';
         ws.id = uuidv4();
     }
-    constructor(listenPort) {
+    constructor(listenPort, node) {
         super();
+        this.node = node;
         this._port = listenPort;
         this.outPeers = []; // sockets we connect to
         this.inPeers = []; // sockets that connect to us
@@ -477,7 +478,7 @@ class GafNode {
     constructor(port, privateKey = null) {
         let me = this;
         this.port = port;
-        this.net = new NetNode(port);
+        this.net = new NetNode(port, this);
         this.bc = new BlockChain();
         this.wallet = new Wallet(privateKey);
         this.isMiner = true;
