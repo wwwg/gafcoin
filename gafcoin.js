@@ -59,6 +59,9 @@ class NetNode extends EventEmitter {
             ws.family = ws._socket.remoteFamily;
             console.log(chalk.green.bold('new outboud peer "' + ws.ip + ":" + ws.port + '"'));
             me.emit('newPeer', ws);
+            me.send(ws, 'listenport', {
+                port: me._port
+            });
         }).on('close', () => {
             me.handleClose(ws);
         }).on('message', msg => {
@@ -168,13 +171,17 @@ class NetNode extends EventEmitter {
             data = obj.data;
         // handle data accordingly
         switch (op) {
+            case 'listenport':
+                peer.listenPort = data.port;
+                break;
             case 'getaddr':
                 // Get all connected peers and send to client
                 let peerList = [];
                 let totalPeers = this.outPeers.concat(this.inPeers);
                 for (let i = 0; i < totalPeers.length; ++i) {
-                    const strPeer = totalPeers[i].ip + ':' + totalPeers[i].port;
-                    if (totalPeers[i].ip == peer.ip && totalPeers[i].port == peer.port) continue;
+                    const port = (totalPeers[i].listenPort || totalPeers[i].port);
+                    const strPeer = totalPeers[i].ip + ':' + port;
+                    if (totalPeers[i].ip == peer.ip && port == peer.port) continue;
                     if (!peerList.includes(strPeer)) {
                         peerList.push(strPeer);
                     }
