@@ -487,3 +487,14 @@ setTimeout(() => {
     console.log('propagating genesis block');
     mnode.broadcastNewBlock(genesisBlock);
 }, 100);
+setTimeout(() => {
+    console.log('broadcasting transactions');
+    let i = 0;
+    setInterval(() => {
+        if (i > BLOCK_SIZE) {
+            clearInterval(this);
+            return;
+        }
+        
+    }, 50);
+}, 150);
