@@ -424,6 +424,7 @@ class GafNode {
                 console.log(' reason: ' + valid);
                 console.log(' blockchain height: ' + me.bc.chain.length);
                 console.log(' diff: ' + me.bc.globalDiff);
+                console.log(' port: ' + me.port);
                 console.log('=====================');
             }
         });
