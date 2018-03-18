@@ -433,6 +433,10 @@ class GafNode {
         }).on('tx', tx => {
             // we dont care about new transactions if we're not a miner
             if (!me.isMiner) return;
+            if (!tx.validate()) {
+                console.log('rejected invalid tx');
+                return;
+            }
             me.pendingTxs.push(tx);
             if (me.pendingTxs.length === BLOCK_SIZE) {
                 console.log('i found a new block! mining..');
