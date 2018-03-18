@@ -140,6 +140,14 @@ class NetNode extends EventEmitter {
     getPeerPeers(peer) {
         this.send(peer, 'getaddr', {});
     }
+    isConnectedTo(ip) {
+        let totalPeers = this.outPeers.concat(this.inPeers);
+        for (let i = 0; i < totalPeers.length; ++i) {
+            const strPeer = totalPeers[i].ip + ':' + totalPeers[i].port;
+            if (ip == strPeer) return true;
+        }
+        return false;
+    }
     // inbound data
     recv(peer, msg) {
         // validate incoming data
