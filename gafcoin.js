@@ -453,8 +453,9 @@ class BlockChain {
             // the hash is wrong
             return 'hash mismatch';
         }
-        let validBits = '0'.repeat(this.globalDiff),
-            hashBits = blk.hash.substring(0, this.globalDiff);
+        let thisDiff = this.calcDiffAt(blk.pos);
+        let validBits = '0'.repeat(thisDiff),
+            hashBits = blk.hash.substring(0, thisDiff);
         if (hashBits !== validBits) {
             // block wasnt mined correctly or at all
             return 'not properly mined';
@@ -476,7 +477,7 @@ class BlockChain {
         }
         
         if (blk.transactions[0].source !== 'reward' ||
-            blk.transactions[0].value !== this.calcRewardAtHeight(blk.pos)) {
+            blk.transactions[0].value !== this.calcRewardAt(blk.pos)) {
             return 'wrong coinbase transaction';
         }
         // transaction validation
@@ -495,7 +496,6 @@ class BlockChain {
                 return 'transaction withdrawing too much';
             }
         }
-        
         return true;
     }
     balance(addr) {
