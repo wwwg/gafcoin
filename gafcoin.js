@@ -500,6 +500,7 @@ setTimeout(() => {
     let i = 0;
     setInterval(() => {
         if (i > BLOCK_SIZE) {
+            console.log('finished tx broadcasting');
             clearInterval(this);
             return;
         }
