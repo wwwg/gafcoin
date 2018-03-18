@@ -195,7 +195,6 @@ class NetNode extends EventEmitter {
                 break;
             case 'gotaddr':
                 // handle getaddr response
-                // connect to all peers in the list. todo MAKE THIS BETTER OR SOMETHING
                 if (data instanceof Array) {
                     me.emit('peerList', data);
                 } else {
