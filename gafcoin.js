@@ -353,13 +353,13 @@ class BlockChain {
         this.chain.push(blk);
     }
     validate() {
-        // todo : validate transactions as well
         if (this.chain.length < 2) return true; // Can't validate a blockchain that small
+        // check the validity of every block in the chain
         for (let i = 1; i < this.chain.length; ++i) {
-            let thisBlock = this.chain[i],
-                lastBlock = this.chain[i - 1];
-            if (thisBlock.hash !== thisBlock.calcHash()) return false;
-            if (thisBlock.lastHash !== lastBlock.hash) return false;
+            let validation = this.validateBlock(this.chain[i]);
+            if (validation !== true) {
+                return false;
+            }
         }
         return true;
     }
