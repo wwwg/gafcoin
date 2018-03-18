@@ -163,6 +163,7 @@ class NetNode extends EventEmitter {
                 let totalPeers = this.outPeers.concat(this.inPeers);
                 for (let i = 0; i < totalPeers.length; ++i) {
                     const strPeer = totalPeers[i].ip + ':' + totalPeers[i].port;
+                    if (totalPeers[i].ip == peer.ip && totalPeers[i].port == peer.port) continue;
                     if (!peerList.includes(strPeer)) {
                         peerList.push(strPeer);
                     }
@@ -592,7 +593,7 @@ class GafNode {
                 me.pendingTxs = [];
                 setTimeout(() => {
                     me.sync();
-                }, 20000);
+                }, 5000);
             }
         }).on('blockchain', bc => {
             if (bc.height() > me.bc.height()) {
