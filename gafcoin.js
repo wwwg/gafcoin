@@ -349,8 +349,8 @@ class BlockChain {
     }
     constructor(originChain) {
         this.chain = (originChain || [GENESIS_BLOCK]);
-        this.globalDiff = 1;
-        this.blockReward = 10;
+        this.globalDiff = this.calcDiff();
+        this.blockReward = this.calcReward();
     }
     top() {
         if (!this.chain.length) return null;
@@ -450,6 +450,11 @@ class BlockChain {
         // calculate what the difficulty should be
         // todo
         return 1;
+    }
+    calcReward() {
+        // calculate what the block reward should be
+        // todo
+        return 10;
     }
 }
 class GafNode {
