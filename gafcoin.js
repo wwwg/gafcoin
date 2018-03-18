@@ -12,6 +12,7 @@ const crypto = require('crypto'),
     EventEmitter = require('events'),
     inquirer = require("inquirer"),
     minimist = require("minimist"),
+    chalk = require("chalk"),
     EC = require('elliptic').ec;
 let ec = new EC('secp256k1');
 // make crypto easier
