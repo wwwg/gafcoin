@@ -611,6 +611,10 @@ class GafNode {
                 console.log(chalk.red.bold('WARN : Recieved invalid transaction from peer!'));
                 return;
             }
+            if (me.isTxPending(tx)) {
+                // duplicate transaction, ignore
+                return;
+            }
             me.pendingTxs.push(tx);
             if (me.pendingTxs.length === (BLOCK_SIZE - 1)) {
                 console.log(chalk.yellow.bold(`found new block ${me.bc.chain.length + 1}, mining...`));
