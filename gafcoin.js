@@ -240,6 +240,7 @@ class NetNode extends EventEmitter {
     }
     // force close peer
     shutdown(peer) {
+        console.log(chalk.red.bold("shutting down remote peer '" + peer.ip + ':' + peer.port + "'"));
         peer.close();
     }
     // handle peer close
