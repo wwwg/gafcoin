@@ -115,7 +115,7 @@ class NetNode extends EventEmitter {
         this.broadcast('newblk', blk);
     }
     announceTx(tx) {
-        let stx = stx.serialize();
+        let stx = tx.serialize();
         this.broadcast('tx', stx);
     }
     // inbound data
