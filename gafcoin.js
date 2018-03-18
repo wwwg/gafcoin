@@ -424,7 +424,8 @@ class GafNode {
             if (!isBlkValid) {
                 console.log('block invalid lol');
             } else {
-                console.log('block is valid!');
+                me.bc.add(blk);
+                console.log('block is valid! added to chain.');
             }
         });
     }
