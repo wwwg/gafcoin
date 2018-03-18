@@ -10,6 +10,8 @@ const crypto = require('crypto'),
     createKeccakHash = require("keccak"),
     uuidv4 = require('uuid/v4'),
     EventEmitter = require('events'),
+    inquirer = require("inquirer"),
+    minimist = require("minimist"),
     EC = require('elliptic').ec;
 let ec = new EC('secp256k1');
 // make crypto easier
