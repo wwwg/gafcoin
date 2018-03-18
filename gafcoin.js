@@ -11,7 +11,7 @@ const crypto = require('crypto'),
     uuidv4 = require('uuid/v4'),
     EventEmitter = require('events'),
     EC = require('elliptic').ec;
-let ec = new EC('secp256k1')
+let ec = new EC('secp256k1');
 // make crypto easier
 const keccak = str => {
     let hash = createKeccakHash('keccak256');
