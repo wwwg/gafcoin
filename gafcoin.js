@@ -703,13 +703,25 @@ if (args['k']) {
     pkey = args['k'];
 }
 let handleCmd = msg => {
+    // todo : prevent people from raising exceptions on their own nodes
     let smsg = msg.split(' '),
         cmd = smsg[0];
     switch (cmd) {
         case 'help':
-            // todo make this helpful
-            console.log('\ncommands:');
-            console.log('clear, mine, height, connect, peers');
+            console.log(chalk.white('commands:'));
+            console.log('clear - clears the screen');
+            console.log('mine - toggles new block mining');
+            console.log('height - displays current blockchain height');
+            console.log('conn / connect [address] - connect to node listening on [address]');
+            console.log('peers - list all active peers');
+            console.log('sync - update blockchain with the network');
+            console.log('address - display wallet address');
+            console.log('private_key - display wallet private key');
+            console.log('balance - display your balance');
+            console.log('transfer [amount] [dest] - transfer [amount] to wallet address [dest]');
+            console.log('port - log the current port the node is listening on');
+            console.log('export [filename] - export blockchain to [filename]');
+            console.log('import [filename] - import blockchain from [filename]');
             break;
         case 'clear':
             console.clear();
