@@ -628,9 +628,11 @@ class GafNode {
         }).on('lostPeer', () => {
             me.peerCount--;
         }).on('peerList', list => {
+            console.log(list);
             console.log(chalk.green.bold('recieved list of nodes from peer, attempting to connect to all of them.'));
             for (let i = 0; i < list.length; ++i) {
                 if (!me.net.isConnectedTo(list[i])) {
+                    if (list[i].startsWith('::1')) list[i] = list[i].replace('::1', '127.0.0.1');
                     let ip = 'ws://' + list[i];
                     me.net.connectPeer(ip);
                 }
