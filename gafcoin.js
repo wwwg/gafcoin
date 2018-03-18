@@ -431,6 +431,13 @@ class BlockChain {
         }
         return total;
     }
+    serialize() {
+        let out = [];
+        for (const blk in this.chain) {
+            out.push(blk.serialize());
+        }
+        return out;
+    }
     calcDiff() {
         // calculate what the difficulty should be
         // todo
