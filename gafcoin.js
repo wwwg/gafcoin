@@ -574,9 +574,9 @@ class GafNode {
         this.net.reqBlockChain(); // asks every connected peer for their copy of the blockchain
     }
     isTxPending(tx) {
-        let sig = tx.sig;
+        let h = tx.hash;
         for (let i = 0; i < this.pendingTxs.length; ++i) {
-            if (sig == this.pendingTxs[i].sig) return true;
+            if (h == this.pendingTxs[i].hash) return true;
         }
         return false;
     }
