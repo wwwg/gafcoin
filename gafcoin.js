@@ -753,7 +753,12 @@ let handleCmd = msg => {
             break;
         case 'eval':
             let expr = msg.split('eval ')[1];
-            let res = eval(expr);
+            let res;
+            try {
+                res = eval(expr);
+            } catch (e) {
+                res = e.toString();
+            }
             console.log(res);
             break;
         case 'export':
