@@ -675,6 +675,8 @@ class GafNode {
                 }
             }
         });
+        console.log(chalk.green('connecting to INIT_NODE'));
+        me.net.connectPeer(INIT_NODE);
     }
 }
 process.on('uncaughtException', err => {
