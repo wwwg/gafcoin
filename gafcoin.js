@@ -445,7 +445,7 @@ class BlockChain {
         // last hash verification
         if (this.isExternal) {
             // validate block before top
-            if (blk.lastHash !== this.at(this.height() - 2)) {
+            if (blk.lastHash !== this.at(this.height() - 2).calcHash()) {
                 // this block doesnt go on the top
                 return 'wrong last hash';
             }
