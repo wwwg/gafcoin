@@ -415,12 +415,12 @@ class GafNode {
         */
         this.net.on('block', blk => {
             console.log('recieved new block! validating...');
-            let isBlkValid = me.bc.validateBlock(blk);
-            if (!isBlkValid) {
-                console.log('block invalid lol');
-            } else {
+            let valid = me.bc.validateBlock(blk);
+            if (isBlkValid === true) {
                 me.bc.add(blk);
                 console.log('block is valid! added to chain.');
+            } else {
+                console.log('block is invalid. reason: ' + valid);
             }
         });
     }
