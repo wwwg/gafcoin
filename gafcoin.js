@@ -1,5 +1,6 @@
 // constants (may make configurable later)
-const BLOCK_SIZE = 3; // number of transactions that make a block
+const BLOCK_SIZE = 3, // number of transactions that make a block
+    BLOCK_REWARD_HALF_AT = 100; // block reward will half every x blocks
 
 // imports
 const crypto = require('crypto'),
@@ -536,8 +537,8 @@ class BlockChain {
     calcReward() {
         let baseReward = 100;
         for (let i = 0; i < this.chain.length; ++i) {
-            if (i % 10 == 0) {
-                baseReward /= 2; // half every 10 blocks
+            if (i % BLOCK_REWARD_HALF_AT == 0) {
+                baseReward /= 2; // half every BLOCK_REWARD_HALF_AT blocks
             }
         }
         return Math.ceil(baseReward);
@@ -545,8 +546,8 @@ class BlockChain {
     calcRewardAtHeight(height) {
         let baseReward = 100;
         for (let i = 0; i < height; ++i) {
-            if (i % 10 == 0) {
-                baseReward /= 2; // half every 10 blocks
+            if (i % BLOCK_REWARD_HALF_AT == 0) {
+                baseReward /= 2; // half every BLOCK_REWARD_HALF_AT blocks
             }
         }
         return Math.ceil(baseReward);
