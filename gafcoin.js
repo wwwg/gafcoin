@@ -541,6 +541,9 @@ let q = {
             node.isMiner = !node.isMiner;
             console.log('will mine new blocks: ' + node.isMiner);
             break;
+        case 'height':
+            console.log('current blockchain height: ' + node.bc.chain.length);
+            break;
     }
 }
 inquirer.prompt([q]).then(prompt);
