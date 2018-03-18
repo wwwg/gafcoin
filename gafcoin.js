@@ -620,6 +620,10 @@ class GafNode {
                 me.gotFirstPeer = true;
                 console.log(chalk.green.bold('connected to first peer, requesting for more peers'));
                 me.net.getPeerPeers(peer);
+                setTimeout(() => {
+                    console.log(chalk.green.bold('syncing with network'));
+                    me.sync();
+                }, 500);
             }
         }).on('lostPeer', () => {
             me.peerCount--;
