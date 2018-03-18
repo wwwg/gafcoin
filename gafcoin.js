@@ -418,18 +418,17 @@ class GafNode {
         }
         */
         this.net.on('block', blk => {
-            console.log('recieved new block! validating...');
             let valid = me.bc.validateBlock(blk);
             if (valid === true) {
                 me.bc.add(blk);
-                console.log('block is valid! added to chain.');
+                console.log('added new valid block to chain.');
             } else {
                 console.log('=== INVALID BLOCK ===');
                 console.log(' reason: ' + valid);
                 console.log(' blockchain height: ' + me.bc.chain.length);
                 console.log(' diff: ' + me.bc.globalDiff);
                 console.log(' port: ' + me.port);
-                console.log('=====================');
+                console.log('=====================\n');
             }
         }).on('tx', tx => {
             // we dont care about new transactions if we're not a miner
