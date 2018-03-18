@@ -750,6 +750,9 @@ let handleCmd = msg => {
             node.bc = BlockChain.from(JSON.parse(bc));
             console.log('blockchain imported successfully.');
             break;
+        case 'broadconn':
+            node.net.broadcast('getaddr', {});
+            break;
         default:
             console.log(chalk.red('invalid command, use "help" for a list'));
             break;
