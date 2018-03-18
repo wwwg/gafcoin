@@ -401,6 +401,7 @@ class GafNode {
         this.bc = new BlockChain();
         this.wallet = new Wallet(privateKey);
         this.isMiner = true;
+        this.pendingTxs = [];
         /*
         if (!privateKey) {
             console.log(`Generated new wallet for node ${port - 9301}:`);
@@ -427,7 +428,16 @@ class GafNode {
         }).on('tx', tx => {
             // we dont care about new transactions if we're not a miner
             if (!me.isMiner) return;
-            //
+            me.pendingTxs.push(tx);
+            if (me.pendingTxs.length === BLOCK_SIZE) {
+                console.log('i found a new block! mining..');
+                // create a new block and mine it
+                let newBlk = new Block(Date.now(), me.bc.top().hash, me.pendingTxs, me.bc.chain.length);
+                newBlk.mine(me.bc.globalDiff);
+                console.log(`block ${me.bc.chain.length} mined! broadcasting to network..`);
+                me.bc.add(newBlk);
+                me.net.announceBlock(newBlk);
+            }
         });
     }
 }
