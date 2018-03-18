@@ -530,10 +530,17 @@ class BlockChain {
         // compare two block chains using their hashes
         return this.hash() === bc2.hash();
     }
+    calcDiffAt(height) {
+        let baseDiff = 100;
+        for (let i = 0; i < height; ++i) {
+            if (i % DIFF_DOUBLE_AT == 0) {
+                baseDiff *= 2; // half every BLOCK_REWARD_HALF_AT blocks
+            }
+        }
+        return Math.ceil(baseDiff);
+    }
     calcDiff() {
-        // calculate what the difficulty should be
-        // todo
-        return 3;
+        return this.calcDiffAt(this.height());
     }
     calcReward() {
         let baseReward = 100;
