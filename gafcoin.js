@@ -359,40 +359,33 @@ class BlockChain {
         return true;
     }
     validateBlock(blk) {
-        let failureReason = ''; // just incase verification fails
         if (this.chain.length < 1) return true; // Can't validate genesis block
         if (!blk.transactions.length) {
             // the entire point of a block is that it holds transactions
-            failureReason = 'empty block';
-            return false;
+            return 'empty block';
         }
         if (blk.hash !== blk.calcHash()) {
             // the hash is wrong
-            failureReason = 'hash mismatch';
-            return false;
+            return 'hash mismatch';
         }
         let validBits = '0'.repeat(this.globalDiff),
             hashBits = blk.hash.substring(0, this.globalDiff);
         if (hashBits !== validBits) {
             // block wasnt mined correctly or at all
-            failureReason = 'not properly mined';
-            return false;
+            return 'not properly mined';
         }
         let validDate = Date.now() + 7200; // 2 hours into the future
         if (blk.time > validDate) {
             // too far into the future
-            failureReason = 'from the future';
-            return false;
+            return 'from the future';
         }
         if (blk.transactions.length > BLOCK_SIZE) {
             // block too big
-            failureReason = 'too big';
-            return false;
+            return 'too big';
         }
         if (blk.lastHash !== this.top().hash) {
             // this block doesnt go on the top
-            failureReason = 'wrong last hash';
-            return false;
+            return 'wrong last hash';
         }
         // todo : validate transactions in block
         // todo : validate coinbase transaction
