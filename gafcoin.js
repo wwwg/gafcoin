@@ -382,6 +382,7 @@ class BlockChain {
     }
     constructor(originChain) {
         this.chain = (originChain || [GENESIS_BLOCK]);
+        this.isExternal = !!(originChain);
         this.globalDiff = this.calcDiff();
         this.blockReward = this.calcReward();
     }
@@ -437,9 +438,19 @@ class BlockChain {
             // block too big
             return 'too big';
         }
-        if (blk.lastHash !== this.at(this.height() - 1)) {
-            // this block doesnt go on the top
-            return 'wrong last hash';
+        // last hash verification
+        if (this.isExternal) {
+            // validate block before top
+            if (blk.lastHash !== this.at(this.height() - 1)) {
+                // this block doesnt go on the top
+                return 'wrong last hash';
+            }
+        } else {
+            // validate top block
+            if (blk.lastHash !== this.top()) {
+                // this block doesnt go on the top
+                return 'wrong last hash';
+            }
         }
         if (blk.transactions[0].source !== 'reward' ||
             blk.transactions[0].value !== this.blockReward) {
