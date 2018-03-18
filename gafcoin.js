@@ -648,8 +648,7 @@ let q = {
             console.log(node.wallet.private);
             break;
         case 'balance':
-            console.log('\nyour wallet balance:');
-            console.log(node.bc.balance(node.wallet.address));
+            console.log('\nyour wallet balance: ' + node.bc.balance(node.wallet.address));
             break;
         case 'transfer':
             let amount = parseInt(smsg[1]),
