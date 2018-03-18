@@ -556,6 +556,9 @@ let q = {
             console.log('attempting to connect to peer "' + ip + '"');
             node.net.connectPeer(ip);
             break;
+        case 'peers':
+            console.log('current active peers: ' + (node.net.outPeers.concat(node.net.inPeers).length);
+            break;
         default:
             console.log('invalid command, use "help" for a list');
             break;
