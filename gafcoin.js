@@ -176,6 +176,9 @@ class NetNode extends EventEmitter {
                 let tx = Transaction.from(data);
                 me.emit('tx', tx);
                 break;
+            case 'getbc':
+                // todo
+                break;
             default:
                 console.warn('Recieved unknown protocol operation "' + obj.op + '"');
                 break;
