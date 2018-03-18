@@ -374,8 +374,8 @@ delete genesisTxs;
 class BlockChain {
     static from(data) {
         let chain = [];
-        for (const sblk in data) {
-            let blk = Block.from(sblk);
+        for (let i = 0; i < data.length; ++i) {
+            let blk = Block.from(data[i]);
             chain.push(blk);
         }
         return new BlockChain(chain);
