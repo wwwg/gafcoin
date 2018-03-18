@@ -724,15 +724,15 @@ let question = () => {
         question();
     });
 }
-console.log('initializing gafcoin..');
-console.log(`\t- listening on tcp port ${port}`);
+console.log(chalk.white.bold('initializing gafcoin..'));
+console.log(chalk.white.bold(`listening on tcp port ${port}`));
 if (pkey) {
-    console.log(`\t- using private key "${pkey}"`);
+    console.log(chalk.white.bold(`using private key "${pkey}"`));
 } else {
-    console.log(`\t- no private key provided, will generate new wallet.`);
+    console.log(chalk.white.bold(`no private key provided, will generate new wallet.`));
 }
 node = new GafNode(port, pkey);
-console.log('\nsuccessfully opened wallet "' + node.wallet.address + '"');
+console.log(chalk.green('successfully opened wallet "' + node.wallet.address + '"'));
 question();
 
 module.exports = GafNode;
