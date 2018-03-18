@@ -550,6 +550,7 @@ class GafNode {
         this.pendingTxs = [];
         this.chains = []; // for syncronization
         this.peerCount = 0;
+        this.gotFirstPeer = false;
         /*
         if (!privateKey) {
             console.log(`Generated new wallet for node ${port - 9301}:`);
@@ -612,6 +613,11 @@ class GafNode {
             }
         }).on('newPeer', () => {
             me.peerCount++;
+            if (!me.gotFirstPeer) {
+                me.gotFirstPeer = true;
+                console.log('connected to first peer, syncing with network..');
+                me.sync();
+            }
         }).on('lostPeer', () => {
             me.peerCount--;
         });
