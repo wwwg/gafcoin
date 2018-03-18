@@ -472,5 +472,10 @@ setTimeout(() => {
     setTimeout(() => {
         console.log('propagating genesis block');
         mnode.broadcastNewBlock(genesisBlock);
+        let mpeers = mnode.net.outPeers.concat(mnode.net.inPeers);
+        for (let i = 0; i < mpeers.length; ++i) {
+            let addr = mpeers[i].ip + ":" + mpeers[i].port;
+            console.log(`peer #${i}: ${addr}`);
+        }
     }, 200);
 }, 50);
