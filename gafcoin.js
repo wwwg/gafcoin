@@ -640,12 +640,16 @@ let q = {
             node.sync();
             break;
         case 'address':
-            console.log('Your wallet address:');
+            console.log('your wallet address:');
             console.log(node.wallet.address);
             break;
         case 'private_key':
-            console.log('Your wallet private key:');
+            console.log('your wallet private key:');
             console.log(node.wallet.private);
+            break;
+        case 'balance':
+            console.log('your wallet balance:');
+            console.log(node.bc.balance(node.wallet.address));
             break;
         default:
             console.log('invalid command, use "help" for a list');
