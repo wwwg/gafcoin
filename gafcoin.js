@@ -339,6 +339,14 @@ const GENESIS_BLOCK = new Block(Date.now(), '', genesisTxs, 0);
 delete genesisTxs;
 
 class BlockChain {
+    static from(data) {
+        let chain = [];
+        for (const sblk in data) {
+            let blk = Block.from(sblk);
+            chain.push(blk);
+        }
+        return new BlockChain(chain);
+    }
     constructor(originChain) {
         this.chain = (originChain || [GENESIS_BLOCK]);
         this.globalDiff = 1;
