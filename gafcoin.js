@@ -420,7 +420,11 @@ class GafNode {
                 me.bc.add(blk);
                 console.log('block is valid! added to chain.');
             } else {
-                console.log('block is invalid. reason: ' + valid);
+                console.log('=== INVALID BLOCK ===');
+                console.log(' reason: ' + valid);
+                console.log(' blockchain height: ' + me.bc.chain.length);
+                console.log(' diff: ' + me.bc.globalDiff);
+                console.log('=====================');
             }
         });
     }
