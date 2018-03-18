@@ -474,7 +474,7 @@ class BlockChain {
         }
         
         if (blk.transactions[0].source !== 'reward' ||
-            blk.transactions[0].value !== this.blockReward) {
+            blk.transactions[0].value !== this.calcRewardAtHeight(blk.pos)) {
             return 'wrong coinbase transaction';
         }
         // transaction validation
