@@ -16,6 +16,13 @@ const crypto = require('crypto'),
     chalk = require("chalk"),
     EC = require('elliptic').ec;
 let ec = new EC('secp256k1');
+// hook console.log to support my cool ass prompt
+let _log = console.log.bind(console);
+console.log = function() {
+    readline.cursorTo(process.stdout, 0);
+    _log.apply(console, arguments);
+    rl.prompt(true);
+}
 // make crypto easier
 const keccak = str => {
     let hash = createKeccakHash('keccak256');
