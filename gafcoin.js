@@ -639,7 +639,7 @@ class GafNode {
                 console.log(chalk.green.bold('syncing with network'));
                 me.sync();
             }, 5000);
-        })
+        });
     }
 }
 process.on('uncaughtException', err => {
