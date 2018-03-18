@@ -411,6 +411,7 @@ class GafNode {
         this.net = new NetNode(port);
         this.bc = new BlockChain();
         this.wallet = new Wallet(privateKey);
+        /*
         if (!privateKey) {
             console.log(`Generated new wallet for node ${port - 9301}:`);
             console.log('Address: "' + this.wallet.address + '"');
@@ -418,6 +419,7 @@ class GafNode {
         } else {
             console.log(`Using wallet address ${this.wallet.address} for node ${port - 9301}`);
         }
+        */
         this.net.on('block', blk => {
             console.log('recieved new block! validating...');
             let isBlkValid = me.bc.validateBlock(blk);
