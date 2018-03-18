@@ -179,8 +179,8 @@ class NetNode extends EventEmitter {
                 break;
             case 'getbc':
                 // send our copy of the blockchain
-                let bc = me.node.bc.serialize();
-                me.send(peer, 'gotbc', bc);
+                let sbc = me.node.bc.serialize();
+                me.send(peer, 'gotbc', sbc);
                 break;
             case 'gotbc':
                 let bc = BlockChain.from(data);
