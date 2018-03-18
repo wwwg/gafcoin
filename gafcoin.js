@@ -534,10 +534,17 @@ class BlockChain {
         return 3;
     }
     calcReward() {
-        // calculate what the block reward should be
-        // todo
         let baseReward = 100;
         for (let i = 0; i < this.chain.length; ++i) {
+            if (i % 10 == 0) {
+                baseReward / 2; // half every 10 blocks
+            }
+        }
+        return Math.ceil(baseReward);
+    }
+    calcRewardAtHeight(height) {
+        let baseReward = 100;
+        for (let i = 0; i < height; ++i) {
             if (i % 10 == 0) {
                 baseReward / 2; // half every 10 blocks
             }
