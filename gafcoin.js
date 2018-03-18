@@ -477,8 +477,8 @@ class BlockChain {
     }
     serialize() {
         let out = [];
-        for (const blk in this.chain) {
-            out.push(blk.serialize());
+        for (let i = 0; i < this.chain.length; ++i) {
+            out.push(this.chain[i].serialize());
         }
         return out;
     }
