@@ -537,8 +537,9 @@ let q = {
         cmd = smsg[0];
     switch (cmd) {
         case 'help':
+            // todo make this helpful
             console.log('commands:');
-            console.log('clear, mine, height, connect');
+            console.log('clear, mine, height, connect, peers');
             break;
         case 'clear':
             console.clear();
