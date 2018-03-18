@@ -452,7 +452,7 @@ setTimeout(() => {
         }
     }
     setTimeout(() => {
-        mnode.log('propagating genesis block');
+        console.log('propagating genesis block');
         //
     }, 200);
 }, 50);
