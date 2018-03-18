@@ -505,7 +505,8 @@ class GafNode {
     }
 }
 // make the node actually usable
-let args = minimist(process.argv.slice(2));
+let args = minimist(process.argv.slice(2)),
+    pkey = null;
 if (args['help'] || !args['p']) {
     console.log('usage:');
     console.log('node gafcoin.js  [ -k <key> ] -p <port>');
