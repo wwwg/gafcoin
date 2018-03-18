@@ -1,7 +1,7 @@
 // constants (may make configurable later)
 const P2P_PORT = 9284,
     P2P_TEST_PORT = 9285, // to run 2 nodes on one computer
-    BLOCK_SIZE = 11; // number of transactions that make a block
+    BLOCK_SIZE = 3; // number of transactions that make a block
 
 // imports
 const crypto = require('crypto'),
