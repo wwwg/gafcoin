@@ -531,7 +531,7 @@ class BlockChain {
     calcDiff() {
         // calculate what the difficulty should be
         // todo
-        return 1;
+        return 3;
     }
     calcReward() {
         // calculate what the block reward should be
