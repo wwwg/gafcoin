@@ -110,6 +110,10 @@ class NetNode extends EventEmitter {
             this.send(totalPeers[i], op, data);
         }
     }
+    announceBlock(block) {
+        let blk = block.serialize();
+        this.broadcast('newblk', blk);
+    }
     // inbound data
     recv(peer, msg) {
         // validate incoming data
