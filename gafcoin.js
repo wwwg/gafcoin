@@ -464,6 +464,7 @@ for (let i = 0; i < NETWORK_SIZE; ++i) {
     } else {
         node = new GafNode(9301 + i);
     }
+    if (i == 1) node.isMiner = true; // miner node
     node.net.name = 'node' + i;
     network.push(node);
 }
