@@ -158,6 +158,10 @@ class NetNode extends EventEmitter {
                     console.log('got bad getaddr response');
                 }
                 break;
+            case 'newblk':
+                let blk = Block.from(data);
+                me.emit('block', blk);
+                break;
             default:
                 console.warn('Recieved unknown protocol operation "' + obj.op + '"');
                 break;
