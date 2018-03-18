@@ -639,6 +639,14 @@ let q = {
             console.log('starting node syncronization..');
             node.sync();
             break;
+        case 'address':
+            console.log('Your wallet address:');
+            console.log(node.wallet.address);
+            break;
+        case 'private_key':
+            console.log('Your wallet private key:');
+            console.log(node.wallet.private);
+            break;
         default:
             console.log('invalid command, use "help" for a list');
             break;
