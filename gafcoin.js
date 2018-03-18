@@ -579,18 +579,8 @@ class GafNode {
         this.isMiner = true;
         this.isSyncronized = false;
         this.pendingTxs = [];
-        this.chains = []; // for syncronization
         this.peerCount = 0;
         this.gotFirstPeer = false;
-        /*
-        if (!privateKey) {
-            console.log(`Generated new wallet for node ${port - 9301}:`);
-            console.log('Address: "' + this.wallet.address + '"');
-            console.log('Private key: "' + this.wallet.private + '"');
-        } else {
-            console.log(`Using wallet address ${this.wallet.address} for node ${port - 9301}`);
-        }
-        */
         this.net.on('block', blk => {
             if (blk.pos < me.bc.chain.length) { // this block old and should be ignored
                 return;
