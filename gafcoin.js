@@ -659,7 +659,7 @@ let q = {
             console.log('\nyour wallet balance: ' + node.bc.balance(node.wallet.address));
             break;
         case 'transfer':
-            let amount = parseInt(smsg[1]),
+            let amount = parseFloat(smsg[1]),
                 dest = smsg[2];
             if (node.bc.balance(node.wallet.address) - amount > 0) {
                 console.log('\ntrasfering ' + amount + ' to "' + dest + '"');
