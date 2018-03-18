@@ -326,9 +326,17 @@ class Block {
         }
     }
 }
+// create genesis block, which is hardcoded into every client
+let genesisTxs = [];
+for (let i = 0; i < BLOCK_SIZE; ++i) {
+    let tx = new Transaction('genesis', '042c94b69058e64ac58ef442919f45415a8f5fcf5e939f69ffba9b80848ed24d75df64305d98ce690d50988e763d83163269aac0162a8e9a35cd46593d594b21fa', 10);
+    genesisTxs.push(tx);
+}
+const GENESIS_BLOCK = new Block(Date.now(), '', genesisTxs, 0);
+
 class BlockChain {
     constructor(originChain) {
-        this.chain = (originChain || []);
+        this.chain = (originChain || [GENESIS_BLOCK]);
         this.globalDiff = 1;
         this.blockReward = 10;
     }
@@ -458,12 +466,6 @@ const WALLET_ADDR = '042c94b69058e64ac58ef442919f45415a8f5fcf5e939f69ffba9b80848
 const WALLET_PRIV = 'c594922381eaf44babe7b96906a49acbf913507a0372b55cde4d68622c00aaba';
 let network = [];
 const NETWORK_SIZE = 6;
-let genesisTxs = [];
-for (let i = 0; i < BLOCK_SIZE; ++i) {
-    let tx = new Transaction('genesis', WALLET_ADDR, 10);
-    genesisTxs.push(tx);
-}
-let genesisBlock = new Block(Date.now(), '', genesisTxs, 0);
 
 for (let i = 0; i < NETWORK_SIZE; ++i) {
     // create nodes for the network
@@ -493,10 +495,6 @@ setTimeout(() => {
         }
     }
 }, 50);
-setTimeout(() => {
-    console.log('propagating genesis block');
-    mnode.broadcastNewBlock(genesisBlock);
-}, 100);
 setTimeout(() => {
     console.log('broadcasting transactions');
     let dest = network[3].wallet.address; // send to third node in network
