@@ -442,6 +442,8 @@ class GafNode {
                 console.log(`block ${me.bc.chain.length} mined! broadcasting to network..`);
                 me.bc.add(newBlk);
                 me.net.announceBlock(newBlk);
+                // clear pending transactions
+                me.pendingTxs = [];
             }
         });
     }
