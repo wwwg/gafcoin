@@ -546,7 +546,7 @@ class GafNode {
             let valid = me.bc.validateBlock(blk);
             if (valid === true) {
                 me.bc.add(blk);
-                console.log(`validated and added new block #${me.bc.chain.length + 1}`);
+                console.log(`validated and added new block #${me.bc.chain.length}`);
             } else {
                 console.log('=== INVALID BLOCK ===');
                 console.log(' reason: ' + valid);
