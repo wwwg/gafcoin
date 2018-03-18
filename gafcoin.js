@@ -651,6 +651,16 @@ let q = {
             console.log('your wallet balance:');
             console.log(node.bc.balance(node.wallet.address));
             break;
+        case 'transfer':
+            let amount = parseInt(smsg[1]),
+                dest = smsg[2];
+            if (node.bc.balance(node.wallet.address) - amount > 0) {
+                console.log('trasfering ' + amount + ' to "' + dest + '"');
+                node.transfer(dest, amount);
+            } else {
+                console.log('you cant afford that');
+            }
+            break;
         default:
             console.log('invalid command, use "help" for a list');
             break;
