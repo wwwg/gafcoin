@@ -172,8 +172,8 @@ class NetNode extends EventEmitter {
         // handle data accordingly
         switch (op) {
             case 'listenport':
+                if (me.isConnectedTo(peer.ip + ':' + data.port)) me.shutdown(peer);
                 peer.listenPort = data.port;
-                if (me.isConnectedTo(peer.ip + ':' + peer.listenPort)) me.shutdown(peer);
                 break;
             case 'getaddr':
                 // Get all connected peers and send to client
