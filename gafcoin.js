@@ -166,6 +166,10 @@ class NetNode extends EventEmitter {
                 let blk = Block.from(data);
                 me.emit('block', blk);
                 break;
+            case 'tx':
+                let tx = Transaction.from(data);
+                me.emit('tx', tx);
+                break;
             default:
                 console.warn('Recieved unknown protocol operation "' + obj.op + '"');
                 break;
