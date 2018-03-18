@@ -508,6 +508,7 @@ class GafNode {
         this.isMiner = true;
         this.isSyncronized = false;
         this.pendingTxs = [];
+        this.chains = []; // for syncronization
         /*
         if (!privateKey) {
             console.log(`Generated new wallet for node ${port - 9301}:`);
