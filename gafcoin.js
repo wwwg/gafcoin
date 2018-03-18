@@ -523,6 +523,13 @@ if (isNaN(port)) {
 if (args['k']) {
     pkey = args['k'];
 }
+console.log('initializing gafcoin..');
+console.log(`\t- listening on tcp port ${port}`);
+if (pkey) {
+    console.log(`\t- using private key "${pkey}"`);
+} else {
+    console.log(`\t- no private key provided, will generate new wallet.`);
+}
 /*
 
 // create a virtual network for testing stuff
