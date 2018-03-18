@@ -695,6 +695,12 @@ let handleCmd = msg => {
             let res = eval(expr);
             console.log(res);
             break;
+        case 'export_blockchain':
+            let path = smsg[1];
+            console.log('writing blockchain to file "' + path + '"');
+            fs.writeFileSync(path, node.bc.serialize(), 'utf8');
+            console.log('write complete');
+            break;
         default:
             console.log('\ninvalid command, use "help" for a list');
             break;
