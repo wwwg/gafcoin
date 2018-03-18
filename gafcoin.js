@@ -696,15 +696,15 @@ let handleCmd = msg => {
             console.log(res);
             break;
         case 'export':
-            let path = smsg[1];
-            console.log('writing blockchain to file "' + path + '"');
-            fs.writeFileSync(path, JSON.stringify(node.bc.serialize()), 'utf8');
+            let epath = smsg[1];
+            console.log('writing blockchain to file "' + epath + '"');
+            fs.writeFileSync(epath, JSON.stringify(node.bc.serialize()), 'utf8');
             console.log('write complete');
             break;
         case 'import':
-            let path = smsg[1];
-            console.log('reading blockchain from file "' + path + '"');
-            const bc = fs.readFileSync(path, 'utf8');
+            let ipath = smsg[1];
+            console.log('reading blockchain from file "' + ipath + '"');
+            const bc = fs.readFileSync(ipath, 'utf8');
             node.bc = BlockChain.from(JSON.parse(bc));
             console.log('blockchain imported successfully.');
             break;
