@@ -184,7 +184,13 @@ class NetNode extends EventEmitter {
                 break;
             case 'getbc':
                 // send our copy of the blockchain
-                let sbc = me.node.bc.serialize();
+                let sbc;
+                try {
+                    sbc = me.node.bc.serialize();
+                } catch (e) {
+                    console.log('Failed to serialize blockchain:');
+                    console.log(e);
+                }
                 me.send(peer, 'gotbc', sbc);
                 break;
             case 'gotbc':
