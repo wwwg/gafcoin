@@ -146,7 +146,7 @@ class NetNode extends EventEmitter {
     isConnectedTo(ip) {
         let totalPeers = this.outPeers.concat(this.inPeers);
         for (let i = 0; i < totalPeers.length; ++i) {
-            const strPeer = totalPeers[i].ip + ':' + totalPeers[i].port;
+            const strPeer = totalPeers[i].ip + ':' + totalPeers[i].listenPort;
             if (ip == strPeer) return true;
         }
         return false;
