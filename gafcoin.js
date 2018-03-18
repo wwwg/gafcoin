@@ -512,7 +512,7 @@ class GafNode {
     }
     sync() {
         // syncronize node with the network
-        this.net.reqBlockChain(); // asks every connected peer for their copy of the block chain
+        this.net.reqBlockChain(); // asks every connected peer for their copy of the blockchain
     }
     constructor(port, privateKey = null) {
         let me = this;
