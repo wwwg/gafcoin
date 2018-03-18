@@ -514,7 +514,11 @@ if (args['help'] || !args['p']) {
     console.log('and <key> is optionally a private key to use for your wallet.');
     process.exit(0);
 }
-
+let port = parseInt(args['p']);
+if (isNaN(port)) {
+    console.error('invalid tcp port');
+    process.exit(1);
+}
 /*
 
 // create a virtual network for testing stuff
