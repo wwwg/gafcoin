@@ -583,6 +583,8 @@ class GafNode {
                     // this blockchain is superior and we need to update ours
                     console.log('recieved new more valid blockchain, updated current blockchain.');
                     me.bc = bc;
+                } els e{
+                    console.log('recieved and discarded invalid blockchain');
                 }
             }
         });
