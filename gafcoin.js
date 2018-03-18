@@ -121,6 +121,9 @@ class NetNode extends EventEmitter {
         let stx = tx.serialize();
         this.broadcast('tx', stx);
     }
+    reqBlockChain() {
+        this.broadcast('getbc', {});
+    }
     // inbound data
     recv(peer, msg) {
         // validate incoming data
