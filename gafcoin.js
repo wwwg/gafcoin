@@ -185,10 +185,7 @@ class NetNode extends EventEmitter {
                 // handle getaddr response
                 // connect to all peers in the list. todo MAKE THIS BETTER OR SOMETHING
                 if (data instanceof Array) {
-                    for (let i = 0; i < data.length; ++i) {
-                        let addr = 'ws://' + data[i];
-                        me.connectPeer(addr);
-                    }
+                    me.emit('peerList', data);
                 } else {
                     console.log('got bad getaddr response');
                 }
