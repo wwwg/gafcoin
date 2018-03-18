@@ -333,6 +333,7 @@ for (let i = 0; i < BLOCK_SIZE; ++i) {
     genesisTxs.push(tx);
 }
 const GENESIS_BLOCK = new Block(Date.now(), '', genesisTxs, 0);
+delete genesisTxs;
 
 class BlockChain {
     constructor(originChain) {
