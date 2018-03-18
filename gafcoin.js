@@ -464,11 +464,11 @@ class GafNode {
             }
             me.pendingTxs.push(tx);
             if (me.pendingTxs.length === BLOCK_SIZE) {
-                console.log('i found a new block! mining..');
+                console.log(`found new block ${me.bc.chain.length}`);
                 // create a new block and mine it
                 let newBlk = new Block(Date.now(), me.bc.top().hash, me.pendingTxs, me.bc.chain.length);
                 newBlk.mine(me.bc.globalDiff);
-                console.log(`block ${me.bc.chain.length} mined! broadcasting to network..`);
+                console.log(`block ${me.bc.chain.length} mined`);
                 me.net.announceBlock(newBlk);
                 // clear pending transactions
                 me.pendingTxs = [];
