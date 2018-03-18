@@ -187,14 +187,18 @@ class NetNode extends EventEmitter {
                 let sbc = me.node.bc.serialize();
                 me.send(peer, 'gotbc', sbc);
                 break;
+            case 'gotbc':
+                let bc = BlockChain.from(data);
+                me.emit('blockchain', bc);
+                break;
             case 'getblk':
                 if (!data.n) break;
                 let requestedBlock = me.node.bc.at(data.n);
                 me.send(peer, 'gotblk', requestedBlock.serialize());
                 break;
-            case 'gotbc':
-                let bc = BlockChain.from(data);
-                me.emit('blockchain', bc);
+            case 'gotblk':
+                let recvBlock = Block.from(data);
+                me.emit('recievedBlock', recvBlock);
                 break;
             default:
                 console.warn('Recieved unknown protocol operation "' + obj.op + '"');
