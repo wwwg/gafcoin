@@ -5,6 +5,8 @@
         "uws": "*",
         "keccak": "*",
         "uuid": "*",
-        "elliptic": "*"
+        "elliptic": "*",
+        "minimist": "*",
+        "inquirer": "*"
     }
 }
