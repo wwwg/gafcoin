@@ -1,7 +1,7 @@
 // constants (may make configurable later)
 const BLOCK_SIZE = 3, // number of transactions that make a block
     BLOCK_REWARD_HALF_AT = 100, // block reward will half every x blocks
-    DIFF_DOUBLE_AT = 2; // network difficulty will double every x blocks
+    DIFF_DOUBLE_AT = 100; // network difficulty will double every x blocks
 
 // imports
 const crypto = require('crypto'),
