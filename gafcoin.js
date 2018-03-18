@@ -425,7 +425,7 @@ class GafNode {
             } else {
                 console.log('=== INVALID BLOCK ===');
                 console.log(' reason: ' + valid);
-                console.log(' blockchain height: ' + me.bc.chain.length + ' (rejected block ' + me.bc.chain.length + ')');
+                console.log(' blockchain height: ' + me.bc.chain.length + ' (rejected block ' + (me.bc.chain.length + 1) + ')');
                 console.log(' diff: ' + me.bc.globalDiff);
                 console.log(' port: ' + me.port);
                 console.log('=====================\n');
