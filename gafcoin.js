@@ -250,6 +250,14 @@ class Transaction {
     }
 }
 class Block {
+    static from(data) {
+        let txs = [];
+        for (let i = 0; i < data.txs.length; ++i) {
+            let tx = Transaction.from(data.txs[i]);
+            txs.push(tx);
+        }
+        return new Block(data.ts, data.last, txs, data.pos, data.nonce, data.hash);
+    }
     constructor(time, lastHash, transactions, pos, nonce, extHash) {
         this.pos = pos; // position on the chain
         this.time = time;
