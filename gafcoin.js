@@ -404,6 +404,7 @@ class GafNode {
         this.net = new NetNode(port);
         this.bc = new BlockChain();
         this.wallet = new Wallet(privateKey);
+        this.isMiner = true;
         /*
         if (!privateKey) {
             console.log(`Generated new wallet for node ${port - 9301}:`);
