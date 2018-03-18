@@ -569,7 +569,7 @@ class GafNode {
                 let coinbaseTx = new Transaction('reward', me.wallet.address, me.bc.blockReward);
                 me.pendingTxs.unshift(coinbaseTx);
                 // create a new block and mine it
-                let newBlk = new Block(Date.now(), me.bc.top().hash, me.pendingTxs, me.bc.chain.length);
+                let newBlk = new Block(Date.now(), me.bc.top().calcHash(), me.pendingTxs, me.bc.chain.length);
                 newBlk.mine(me.bc.globalDiff);
                 console.log(`block ${me.bc.chain.length} mined`);
                 me.net.announceBlock(newBlk);
