@@ -618,20 +618,22 @@ class GafNode {
             me.peerCount++;
             if (!me.gotFirstPeer) {
                 me.gotFirstPeer = true;
-                console.log(chalk.green.bold('connected to first peer, requesting for more peers'));
-                me.net.getPeerPeers(peer);
                 setTimeout(() => {
                     console.log(chalk.green.bold('syncing with network'));
                     me.sync();
                 }, 500);
             }
+            console.log(chalk.green.bold('connected to peer, requesting for more peers'));
+            me.net.getPeerPeers(peer);
         }).on('lostPeer', () => {
             me.peerCount--;
         }).on('peerList', list => {
             console.log(chalk.green.bold('recieved list of nodes from peer, attempting to connect to all of them.'));
             for (let i = 0; i < list.length; ++i) {
-                let ip = 'ws://' + list[i];
-                me.net.connectPeer(ip);
+                if (!me.net.isConnectedTo(list[i])) {
+                    let ip = 'ws://' + list[i];
+                    me.net.connectPeer(ip);
+                }
             }
             setTimeout(() => {
                 console.log(chalk.green.bold('syncing with network'));
