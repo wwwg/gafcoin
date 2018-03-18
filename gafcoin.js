@@ -16,6 +16,7 @@ const crypto = require('crypto'),
     chalk = require("chalk"),
     EC = require('elliptic').ec;
 let ec = new EC('secp256k1');
+const rl = readline.createInterface(process.stdin, process.stdout);
 // hook console.log to support my cool ass prompt
 let _log = console.log.bind(console);
 console.log = function() {
@@ -611,6 +612,10 @@ class GafNode {
         });
     }
 }
+process.on('uncaughtException', err => {
+    console.error(err);
+    process.exit(1);
+});
 // make the node actually usable
 let args = minimist(process.argv.slice(2)),
     pkey = null;
@@ -695,6 +700,12 @@ let handleCmd = msg => {
             break;
     }
 }
+let question = () => {
+    rl.question(chalk.yellow.bold('gaf> '), msg => {
+        handleCmd(msg);
+        question();
+    });
+}
 console.log('initializing gafcoin..');
 console.log(`\t- listening on tcp port ${port}`);
 if (pkey) {
@@ -704,12 +715,7 @@ if (pkey) {
 }
 node = new GafNode(port, pkey);
 console.log('\nsuccessfully opened wallet "' + node.wallet.address + '"');
-
-process.on('uncaughtException', err => {
-    console.error(err);
-    process.exit(1);
-});
-
+question();
 /*
 
 // create a virtual network for testing stuff
