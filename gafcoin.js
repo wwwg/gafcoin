@@ -1,7 +1,7 @@
 // constants (may make configurable later)
 const P2P_PORT = 9284,
     P2P_TEST_PORT = 9285, // to run 2 nodes on one computer
-    BLOCK_SIZE = 10; // number of transactions that make a block
+    BLOCK_SIZE = 11; // number of transactions that make a block
 
 // imports
 const crypto = require('crypto'),
@@ -463,7 +463,7 @@ class GafNode {
                 return;
             }
             me.pendingTxs.push(tx);
-            if (me.pendingTxs.length === BLOCK_SIZE) {
+            if (me.pendingTxs.length === (BLOCK_SIZE - 1)) {
                 console.log(`found new block ${me.bc.chain.length}`);
                 // create coinbase transaction and add it
                 let coinbaseTx = new Transaction('reward', me.wallet.address, me.bc.blockReward);
@@ -520,7 +520,7 @@ setTimeout(() => {
     let dest = network[3].wallet.address; // send to third node in network
     let i = 0;
     let intv = setInterval(() => {
-        if (i > BLOCK_SIZE) {
+        if (i > (BLOCK_SIZE - 1)) {
             console.log('finished tx broadcasting');
             clearInterval(intv);
             return;
