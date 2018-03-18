@@ -498,10 +498,10 @@ setTimeout(() => {
     console.log('broadcasting transactions');
     let dest = network[3].wallet.address; // send to third node in network
     let i = 0;
-    setInterval(() => {
+    let intv = setInterval(() => {
         if (i > BLOCK_SIZE) {
             console.log('finished tx broadcasting');
-            clearInterval(this);
+            clearInterval(intv);
             return;
         }
         mnode.transfer(dest, 1);
