@@ -614,12 +614,12 @@ class GafNode {
                     console.log(chalk.red.bold('Rejected invalid blockchain from peer.'));
                 }
             }
-        }).on('newPeer', () => {
+        }).on('newPeer', peer => {
             me.peerCount++;
             if (!me.gotFirstPeer) {
                 me.gotFirstPeer = true;
-                console.log(chalk.green.bold('connected to first peer, syncing with network'));
-                me.sync();
+                console.log(chalk.green.bold('connected to first peer, requesting for more peers'));
+                me.net.getPeerPeers(peer);
             }
         }).on('lostPeer', () => {
             me.peerCount--;
