@@ -581,6 +581,7 @@ class GafNode {
                 let isChainValid = bc.validate(); // validate the integrity of the chain
                 if (isChainValid) {
                     // this blockchain is superior and we need to update ours
+                    console.log('recieved new more valid blockchain, updated current blockchain.');
                     me.bc = bc;
                 }
             }
