@@ -469,8 +469,8 @@ setTimeout(() => {
             }
         }
     }
-    setTimeout(() => {
-        console.log('propagating genesis block');
-        mnode.broadcastNewBlock(genesisBlock);
-    }, 50);
 }, 50);
+setTimeout(() => {
+    console.log('propagating genesis block');
+    mnode.broadcastNewBlock(genesisBlock);
+}, 100);
