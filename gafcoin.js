@@ -427,6 +427,9 @@ class GafNode {
         }
         */
         this.net.on('block', blk => {
+            if (blk.pos < me.bc.chain.length) { // this block old and should be ignored
+                return;
+            }
             let valid = me.bc.validateBlock(blk);
             if (valid === true) {
                 me.bc.add(blk);
