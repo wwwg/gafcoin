@@ -543,15 +543,9 @@ class BlockChain {
         return this.calcDiffAt(this.height());
     }
     calcReward() {
-        let baseReward = 100;
-        for (let i = 0; i < this.chain.length; ++i) {
-            if (i % BLOCK_REWARD_HALF_AT == 0) {
-                baseReward /= 2; // half every BLOCK_REWARD_HALF_AT blocks
-            }
-        }
-        return Math.ceil(baseReward);
+        return this.calcRewardAt(this.height());
     }
-    calcRewardAtHeight(height) {
+    calcRewardAt(height) {
         let baseReward = 100;
         for (let i = 0; i < height; ++i) {
             if (i % BLOCK_REWARD_HALF_AT == 0) {
