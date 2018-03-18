@@ -571,7 +571,10 @@ class GafNode {
                 me.pendingTxs = [];
             }
         }).on('blockchain', bc => {
-            //
+            if (bc.height() > me.bc.height()) {
+                // this blockchain is superior and we need to update ours
+                me.bc = bc;
+            }
         });
     }
 }
