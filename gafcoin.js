@@ -519,6 +519,9 @@ if (isNaN(port)) {
     console.error('invalid tcp port');
     process.exit(1);
 }
+if (args['k']) {
+    pkey = args['k'];
+}
 /*
 
 // create a virtual network for testing stuff
