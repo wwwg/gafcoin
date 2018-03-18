@@ -472,5 +472,5 @@ setTimeout(() => {
     setTimeout(() => {
         console.log('propagating genesis block');
         mnode.broadcastNewBlock(genesisBlock);
-    }, 200);
+    }, 50);
 }, 50);
