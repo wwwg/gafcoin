@@ -137,6 +137,9 @@ class NetNode extends EventEmitter {
             n: blockNum
         });
     }
+    getPeerPeers(peer) {
+        this.send(peer, 'getaddr', {});
+    }
     // inbound data
     recv(peer, msg) {
         // validate incoming data
