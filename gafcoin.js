@@ -508,7 +508,7 @@ class GafNode {
 let args = minimist(process.argv.slice(2), {
     '--': true
 });
-if (args['help']) {
+if (args['help'] || !args['p']) {
     console.log('usage:');
     console.log('node gafcoin.js  [ -k <key> ] -p <port>');
     console.log('where <port> is a tcp port to listen on');
