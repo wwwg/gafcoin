@@ -635,6 +635,10 @@ let q = {
         case 'peers':
             console.log('current active peers: ' + (node.net.outPeers.concat(node.net.inPeers)).length);
             break;
+        case 'sync':
+            console.log('starting node syncronization..');
+            node.sync();
+            break;
         default:
             console.log('invalid command, use "help" for a list');
             break;
