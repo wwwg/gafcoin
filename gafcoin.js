@@ -531,7 +531,7 @@ class BlockChain {
         return this.hash() === bc2.hash();
     }
     calcDiffAt(height) {
-        let baseDiff = 100;
+        let baseDiff = 1;
         for (let i = 0; i < height; ++i) {
             if (i % DIFF_DOUBLE_AT == 0) {
                 baseDiff *= 2; // half every BLOCK_REWARD_HALF_AT blocks
