@@ -331,6 +331,7 @@ class BlockChain {
         this.pending.push(transaction);
     }
     validate() {
+        // todo : validate transactions as well
         if (this.chain.length < 2) return true; // Can't validate a blockchain that small
         for (let i = 1; i < this.chain.length; ++i) {
             let thisBlock = this.chain[i],
