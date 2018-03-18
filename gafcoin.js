@@ -226,6 +226,7 @@ class NetNode extends EventEmitter {
     }
     // handle peer close
     handleClose(peer) {
+        console.log(chalk.red('lost connection to peer "' + peer.ip + ':' + peer.port));
         // remove peer from it's respective array
         let found = false;
         let key = peer.peerType + 'Peers';
