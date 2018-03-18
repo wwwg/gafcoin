@@ -355,6 +355,47 @@ class BlockChain {
         }
         return true;
     }
+    validateBlock(blk) {
+        let failureReason = ''; // just incase verification fails
+        if (this.chain.length < 1) return true; // Can't validate genesis block
+        if (!blk.transactions.length) {
+            // the entire point of a block is that it holds transactions
+            failureReason = 'empty block';
+            return false;
+        }
+        if (blk.hash !== blk.calcHash()) {
+            // the hash is wrong
+            failureReason = 'hash mismatch';
+            return false;
+        }
+        let validBits = '0'.repeat(this.globalDiff),
+            hashBits = blk.hash.substring(0, this.globalDiff);
+        if (hashBits !== validBits) {
+            // block wasnt mined correctly or at all
+            failureReason = 'not properly mined';
+            return false;
+        }
+        let validDate = Date.now() + 7200; // 2 hours into the future
+        if (blk.time > validDate) {
+            // too far into the future
+            failureReason = 'from the future';
+            return false;
+        }
+        if (blk.transactions.length > BLOCK_SIZE) {
+            // block too big
+            failureReason = 'too big';
+            return false;
+        }
+        if (blk.lastHash !== this.top().hash) {
+            // this block doesnt go on the top
+            failureReason = 'wrong last hash';
+            return false;
+        }
+        // todo : validate transactions in block
+        // todo : validate coinbase transaction
+        
+        return true;
+    }
 }
 class GafNode {
     constructor(port, privateKey = null) {
