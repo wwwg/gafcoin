@@ -331,7 +331,6 @@ class BlockChain {
         this.chain = (originChain || []);
         this.globalDiff = 1;
         this.blockReward = 10;
-        this.pending = [];
     }
     top() {
         if (!this.chain.length) return null;
@@ -343,17 +342,6 @@ class BlockChain {
     }
     add(blk) {
         this.chain.push(blk);
-    }
-    mine(rewardAddr) {
-        let b = new Block(Date.now(), this.pending, this.top().hash);
-        b.mine(this.globalDiff);
-        this.chain.push(b);
-        this.pending = [
-            new Transaction('GOD', rewardAddr, this.blockReward)
-        ];
-    }
-    addTransaction(transaction) {
-        this.pending.push(transaction);
     }
     validate() {
         // todo : validate transactions as well
@@ -436,6 +424,10 @@ class GafNode {
                 console.log(' port: ' + me.port);
                 console.log('=====================');
             }
+        }).on('tx', tx => {
+            // we dont care about new transactions if we're not a miner
+            if (!me.isMiner) return;
+            //
         });
     }
 }
