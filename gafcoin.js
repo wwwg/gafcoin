@@ -277,6 +277,7 @@
                         let totalPeers = this.outPeers.concat(this.inPeers);
                         for (let i = 0; i < totalPeers.length; ++i) {
                             if (totalPeers[i].peerType == 'out' && !totalPeers[i].listenPort) continue;
+                            if (totalPeers[i].isWeb) continue; // web nodes can't listen for connections
                             const port = (totalPeers[i].listenPort || totalPeers[i].port);
                             let strPeer = totalPeers[i].ip + ':' + port;
                             strPeer = strPeer.replace('::ffff:', '');
