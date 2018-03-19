@@ -29,14 +29,13 @@ if (IS_NODEJS) {
     EC = require('elliptic').ec;
     ec = new EC('secp256k1');
     rl = readline.createInterface(process.stdin, process.stdout);
-}
-
-// hook console.log to support my cool ass prompt
-let _log = console.log.bind(console);
-console.log = function() {
-    readline.cursorTo(process.stdout, 0);
-    _log.apply(console, arguments);
-    rl.prompt(true);
+    // hook console.log to support my cool ass prompt
+    let _log = console.log.bind(console);
+    console.log = function() {
+        readline.cursorTo(process.stdout, 0);
+        _log.apply(console, arguments);
+        rl.prompt(true);
+    }
 }
 // make crypto easier
 const keccak = str => {
