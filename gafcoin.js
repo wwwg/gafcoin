@@ -763,6 +763,8 @@
                         me.bc.globalDiff = me.bc.calcDiff();
                         me.bc.blockReward = me.bc.calcReward();
                         me.emit('newBlock', blk);
+                        // share valid new block with rest of the network
+                        me.net.announceBlock(blk);
                     } else {
                         if (IS_NODEJS) console.log(chalk.red.bold('WARN : Recieved invalid block from peer!'));
                         if (IS_NODEJS) console.log(chalk.red.bold('Reason block is invalid: ') + valid);
