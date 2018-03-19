@@ -340,6 +340,11 @@ let init = () => {
                         return;
                     }
                     let bc = BlockChain.from(data);
+                    if (!bc) {
+                        // invalid data
+                        shutdown(peer);
+                        return;
+                    }
                     me.emit('blockchain', bc);
                     break;
                 case 'getblk':
@@ -524,6 +529,15 @@ let init = () => {
         static from(data) {
             let chain = [];
             for (let i = 0; i < data.length; ++i) {
+                if (!(data[i].ts ||
+                      data[i].last ||
+                      data[i].txs ||
+                      data[i].pos ||
+                      data[i].nonce ||
+                      data[i].hash)) {
+                        // invalid data
+                        return null;
+                }
                 let blk = Block.from(data[i]);
                 chain.push(blk);
             }
