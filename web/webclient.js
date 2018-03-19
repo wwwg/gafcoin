@@ -7,6 +7,7 @@ window.updateStats = () => {
     const stats = document.getElementById('stats');
     document.getElementById('peerCount').textContent = node.net.outPeers.length;
     document.getElementById('bcHeight').textContent = node.bc.height();
+    document.getElementById('balance').textContent = node.balance();
 }
 window.getprivate = () => {
     let oldKey = node.wallet.private;
