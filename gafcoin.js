@@ -76,29 +76,54 @@ let init = () => {
         }
         connectPeer(address) {
             // create an outgoing websocket connection to address
-            let ws = new uws(address),
-                me = this;
-            ws.on('open', () => {
-                // make life a little easier
-                ws.ip = ws._socket.remoteAddress;
-                ws.port = ws._socket.remotePort;
-                ws.family = ws._socket.remoteFamily;
-                console.log(chalk.green.bold('new outboud peer "' + ws.ip + ":" + ws.port + '"'));
-                me.emit('newPeer', ws);
-                me.send(ws, 'listenport', {
-                    port: me._port
+            if (IS_NODEJS) {
+                let ws = new uws(address),
+                    me = this;
+                ws.on('open', () => {
+                    // make life a little easier
+                    ws.ip = ws._socket.remoteAddress;
+                    ws.port = ws._socket.remotePort;
+                    ws.family = ws._socket.remoteFamily;
+                    console.log(chalk.green.bold('new outboud peer "' + ws.ip + ":" + ws.port + '"'));
+                    me.emit('newPeer', ws);
+                    me.send(ws, 'listenport', {
+                        port: me._port
+                    });
+                    this.outPeers.push(ws);
+                    ws.peerType = 'out';
+                    ws.id = uuidv4();
+                }).on('close', () => {
+                    me.handleClose(ws);
+                }).on('message', msg => {
+                    me.recv(ws, msg);
+                }).on('error', err => {
+                    console.log('WARN: got an outbound peer socket error:');
+                    console.log(err);
                 });
-            }).on('close', () => {
-                me.handleClose(ws);
-            }).on('message', msg => {
-                me.recv(ws, msg);
-            }).on('error', err => {
-                console.log('WARN: got an outbound peer socket error:');
-                console.log(err);
-            });
-            this.outPeers.push(ws);
-            ws.peerType = 'out';
-            ws.id = uuidv4();
+            } else {
+                let ws = new window.WebSocket(address),
+                    me = this;
+                ws.onopen = () => {
+                    ws.ip = ws._socket.remoteAddress;
+                    ws.port = ws._socket.remotePort;
+                    ws.family = ws._socket.remoteFamily;
+                    console.log(chalk.green.bold('new outboud peer "' + ws.ip + ":" + ws.port + '"'));
+                    me.emit('newPeer', ws);
+                    me.send(ws, 'listenport', {
+                        port: me._port
+                    });
+                    this.outPeers.push(ws);
+                    ws.peerType = 'out';
+                    ws.id = uuidv4();
+                }
+                ws.onclose = () => {
+                    me.handleClose(ws);
+                }
+                ws.onerror = e => {
+                    console.log('WARN: got an outbound peer socket error:');
+                    console.log(err);
+                }
+            }
         }
         constructor(listenPort, node) {
             super();
