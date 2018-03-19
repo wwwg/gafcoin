@@ -45,8 +45,10 @@ setTimeout(() => {
         write('mined a block');
     }).on('newTransaction', tx => {
         write('recieved new transaction "' + tx.hash + '"');
+        window.updateStats();
     }).on('newBlock', blk => {
         write('added new block "' + blk.hash + '"');
+        window.updateStats();
     }).on('syncFail', () => {
         write('sync failure');
     });
