@@ -42,9 +42,13 @@ let init = () => {
     let ec = new EC('secp256k1');
     // make crypto easier
     const keccak = str => {
-        let hash = createKeccakHash('keccak256');
-        hash.update(str);
-        return hash.digest('hex');
+        if (IS_NODEJS) {
+            let hash = createKeccakHash('keccak256');
+            hash.update(str);
+            return hash.digest('hex');
+        } else {
+            return window.keccak256(str);
+        }
     }, genECKeypair = () => {
         let key = ec.genKeyPair();
         return {
@@ -851,12 +855,13 @@ else {
     let scripts = [
         'https://cdn.rawgit.com/emn178/js-sha3/master/build/sha3.min.js',
         'https://cdn.rawgit.com/indutny/elliptic/master/dist/elliptic.min.js',
-        "http://wzrd.in/standalone/uuid%2Fv4@latest",
+        "https://wzrd.in/standalone/node-uuid@latest",
         'https://cdn.rawgit.com/Olical/EventEmitter/master/EventEmitter.min.js'
     ];
     for (let i = 0; i < scripts.length; ++i) {
         let scr = document.createElement('script');
         scr.src = scripts[i];
+        scr.type = 'text/javascript';
         document.head.appendChild(scr);
     }
 }
