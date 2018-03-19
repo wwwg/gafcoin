@@ -308,6 +308,17 @@ let init = () => {
                     me.emit('block', blk);
                     break;
                 case 'tx':
+                    if (!(
+                        data.i ||
+                        data.o ||
+                        data.value ||
+                        data.t ||
+                        data.sig
+                        )) {
+                            // invalid data
+                            shutdown(peer);
+                            return;
+                    }
                     let tx = Transaction.from(data);
                     me.emit('tx', tx);
                     break;
@@ -323,6 +334,11 @@ let init = () => {
                     me.send(peer, 'gotbc', sbc);
                     break;
                 case 'gotbc':
+                    if (!data instanceof Array) {
+                        // invalid data
+                        shutdown(peer);
+                        return;
+                    }
                     let bc = BlockChain.from(data);
                     me.emit('blockchain', bc);
                     break;
