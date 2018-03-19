@@ -626,7 +626,7 @@ let init = () => {
             return Math.ceil(baseReward);
         }
     }
-    class GafNode {
+    class GafNode extends EE {
         transfer(dest, amount) {
             let me = this,
                 tx = new Transaction(me.wallet.address, dest, amount, Date.now());
@@ -649,6 +649,7 @@ let init = () => {
             return false;
         }
         constructor(port, privateKey = null) {
+            super();
             let me = this;
             this.port = port;
             this.net = new NetNode(port, this);
