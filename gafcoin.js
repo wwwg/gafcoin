@@ -1013,6 +1013,7 @@
     }
     if (IS_NODEJS) init(); // safe to init immediately if node
     else {
+        const LOAD_TIME = 1000;
         // load all nessacary modules
         let scripts = [
             'https://cdn.rawgit.com/emn178/js-sha3/master/build/sha3.min.js',
@@ -1026,7 +1027,7 @@
             if (loadedScripts === scripts.length) {
                 setTimeout(() => {
                     init(); // everything ready to go
-                }, 100);
+                }, LOAD_TIME);
             }
         }
         for (let i = 0; i < scripts.length; ++i) {
