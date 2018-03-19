@@ -3,8 +3,11 @@ body {
     background-color: black;
     color: white;
 }
-#log {
+.box {
 	padding: 8px;
 	display: inline-block;
 	border: 1px solid white;
+}
+#log {
+	
 }
