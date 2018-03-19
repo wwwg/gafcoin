@@ -733,8 +733,12 @@ let init = () => {
                     }
                 }
             });
-            if (!process.env['IS_INIT_NODE']) {
-                console.log(chalk.green('connecting to INIT_NODE'));
+            if (IS_NODEJS) {
+                if (!process.env['IS_INIT_NODE']) {
+                    console.log(chalk.green('connecting to INIT_NODE'));
+                    me.net.connectPeer(INIT_NODE);
+                }
+            } else {
                 me.net.connectPeer(INIT_NODE);
             }
         }
