@@ -314,10 +314,10 @@ let init = () => {
                         data.value ||
                         data.t ||
                         data.sig
-                        )) {
-                            // invalid data
-                            shutdown(peer);
-                            return;
+                    )) {
+                        // invalid data
+                        shutdown(peer);
+                        return;
                     }
                     let tx = Transaction.from(data);
                     me.emit('tx', tx);
