@@ -9,6 +9,9 @@ window.updateStats = () => {
     document.getElementById('bcHeight').textContent = node.bc.height();
     document.getElementById('address').textContent = node.wallet.address;
 }
+window.getprivate = () => {
+    window.prompt('your private key:', node.wallet.private);
+}
 setTimeout(() => {
     window.node = new GafNode();
     node.on('connection', peer => {
