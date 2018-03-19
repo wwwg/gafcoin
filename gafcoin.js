@@ -716,6 +716,7 @@ let init = () => {
             return this.bc.balance(this.wallet.address);
         }
         transfer(dest, amount) {
+            if (!dest || !amount) throw new Error('invalid args');
             let me = this,
                 tx = new Transaction(me.wallet.address, dest, amount, Date.now());
             tx.sign(me.wallet.private); // sign tx to verify we made it
