@@ -305,6 +305,11 @@ let init = () => {
                             return;
                     }
                     let blk = Block.from(data);
+                    if (!blk) {
+                        // invalid data
+                        shutdown(peer);
+                        return;
+                    }
                     me.emit('block', blk);
                     break;
                 case 'tx':
@@ -354,6 +359,11 @@ let init = () => {
                     break;
                 case 'gotblk':
                     let recvBlock = Block.from(data);
+                    if (!recvBlock) {
+                        // invalid data
+                        shutdown(peer);
+                        return;
+                    }
                     me.emit('recievedBlock', recvBlock);
                     break;
                 default:
@@ -465,6 +475,16 @@ let init = () => {
         static from(data) {
             let txs = [];
             for (let i = 0; i < data.txs.length; ++i) {
+                if (!(
+                    data[i].i ||
+                    data[i].o ||
+                    data[i].value ||
+                    data[i].t ||
+                    data[i].sig
+                )) {
+                    // invalid data
+                    return null;
+                }
                 let tx = Transaction.from(data.txs[i]);
                 txs.push(tx);
             }
