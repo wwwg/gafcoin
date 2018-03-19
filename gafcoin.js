@@ -258,6 +258,10 @@ let init = () => {
                         shutdown(peer);
                     }
                     break;
+                case 'outdated':
+                    // todo : validate authenticity of outdated packets
+                    console.warn('peer claims node is outdated!');
+                    break;
                 case 'listenport':
                     // if (me.isConnectedTo(peer.ip + ':' + data.port)) me.shutdown(peer);
                     if (!data.port) {
