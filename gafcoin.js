@@ -883,6 +883,9 @@ let init = () => {
         }
         module.exports = GafNode;
     }
+    if (IS_BROWSER) {
+        window.GafNode = GafNode;
+    }
 }
 if (IS_NODEJS) init(); // safe to init immediately if node
 else {
