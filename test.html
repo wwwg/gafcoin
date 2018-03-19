@@ -22,6 +22,8 @@
             		write('recieved new transaction "' + tx.hash + '"');
             	}).on('newBlock', blk => {
             		write('added new block "' + blk.hash + '"');
+            	}).on('syncFail', () => {
+            		write('sync failure');
             	});
             }, 500);
         </script>
