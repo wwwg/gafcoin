@@ -1069,7 +1069,7 @@
     }
     if (IS_NODEJS) init(); // safe to init immediately if node
     else {
-        const LOAD_TIME = 1000;
+        const LOAD_TIME = 500;
         // load all nessacary modules
         let scripts = [
             'https://cdn.rawgit.com/emn178/js-sha3/master/build/sha3.min.js',
