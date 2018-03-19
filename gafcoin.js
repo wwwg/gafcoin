@@ -244,6 +244,20 @@ let init = () => {
                 data = obj.data;
             // handle data accordingly
             switch (op) {
+                case 'handshake':
+                    if (data.version) {
+                        if (data.version < PROTOCOL_VERSION) {
+                            // outdated peer
+                            me.send(peer, 'outdated', {});
+                            console.log('WARN : killed outdated peer');
+                            shutdown(peer);
+                            return;
+                        }
+                    } else {
+                        // malformed packet, kill peer
+                        shutdown(peer);
+                    }
+                    break;
                 case 'listenport':
                     // if (me.isConnectedTo(peer.ip + ':' + data.port)) me.shutdown(peer);
                     if (!data.port) {
