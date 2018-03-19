@@ -3,9 +3,17 @@
     <head>
         <script type="text/javascript" src="gafcoin.js"></script>
         <script>
+        	window.write = msg => {
+        		let e = document.createElement('div');
+        		e.innerHTML = msg;
+        		document.getElementById('log').appendChild(e);
+        	}
             setTimeout(() => {
             	window.node = new GafNode();
             }, 500);
         </script>
     </head>
+    <body>
+    	<div id="log"></div>
+    </body>
 </html>
