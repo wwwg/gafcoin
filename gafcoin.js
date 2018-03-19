@@ -677,6 +677,14 @@
                 for (let i = 0; i < this.chain.length; ++i) {
                     out.push(this.chain[i].serialize());
                 }
+                let strOut = JSON.stringify(out);
+                // deflate with pako
+                strOut = pako.deflate(strOut, {
+                    to: 'string'
+                });
+                out = {
+                    'bc': strOut
+                }
                 return out;
             }
             hash() {
