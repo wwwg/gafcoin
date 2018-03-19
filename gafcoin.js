@@ -674,10 +674,12 @@ let init = () => {
                     if (IS_NODEJS) console.log(chalk.green.bold(`validated and added block #${me.bc.chain.length}`));
                     me.bc.globalDiff = me.bc.calcDiff();
                     me.bc.blockReward = me.bc.calcReward();
+                    me.emit('newBlock', blk);
                 } else {
                     if (IS_NODEJS) console.log(chalk.red.bold('WARN : Recieved invalid block from peer!'));
                     if (IS_NODEJS) console.log(chalk.red.bold('Reason block is invalid: ') + valid);
                     if (IS_NODEJS) console.log(chalk.red.bold('block number: ') + (me.bc.chain.length + 1));
+                    me.emit('rejectedBlock', blk);
                 }
             }).on('tx', tx => {
                 if (!tx.validate()) {
