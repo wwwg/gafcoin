@@ -1,10 +1,11 @@
-// constants (may make configurable later)
+// network constants (may make configurable later)
 const BLOCK_SIZE = 20, // number of transactions that make a block
     BLOCK_REWARD_HALF_AT = 100, // block reward will half every x blocks
     DIFF_DOUBLE_AT = 200, // network difficulty will double every x blocks
     INIT_NODE = 'ws://198.58.119.239:9284'; // original node; hard coded into every node
 
-// imports
+// local constants
+const IS_BROWSER = typeof window !== 'undefined';
 const crypto = require('crypto'),
     net = require('net'),
     uws = require("uws"),
@@ -15,9 +16,10 @@ const crypto = require('crypto'),
     readline = require("readline"),
     minimist = require("minimist"),
     chalk = require("chalk"),
-    EC = require('elliptic').ec;
-let ec = new EC('secp256k1');
-const rl = readline.createInterface(process.stdin, process.stdout);
+    EC = require('elliptic').ec,
+    ec = new EC('secp256k1'),
+    rl = readline.createInterface(process.stdin, process.stdout);
+
 // hook console.log to support my cool ass prompt
 let _log = console.log.bind(console);
 console.log = function() {
