@@ -720,6 +720,24 @@
                 }
                 return khash.digest('hex');
             }
+            hasTransaction(tx) {
+                let hash;
+                if (tx instanceof Transaction) {
+                    hash = tx.hash;
+                } else if (typeof tx === 'string') {
+                    hash = tx;
+                } else {
+                    throw new Error('invalid args');
+                }
+                for (let x = 0; x < this.chain.length; ++x) {
+                    let blk = this.chain[x];
+                    for (let y = 0; y < blk.length; ++y) {
+                        let _tx = blk.transactions[y];
+                        if (_tx.hash == hash) return true;
+                    }
+                }
+                return false;
+            }
             equals(bc2) {
                 // compare two block chains using their hashes
                 return this.hash() === bc2.hash();
