@@ -916,7 +916,7 @@ else {
     let loadedScripts = 0;
     let onScriptLoad = () => {
         loadedScripts++;
-        if (loadedScripts >= scripts.length) {
+        if (loadedScripts === scripts.length) {
             setTimeout(() => {
                 init(); // everything ready to go
             }, 100);
