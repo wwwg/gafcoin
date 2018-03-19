@@ -680,8 +680,8 @@
             hash() {
                 // hash blockchain for easy comparison
                 let khash = createKeccakHash('keccak256');
-                for (const blk in this.chain) {
-                    khash.update(blk.hash);
+                for (let i = 0; i < this.chain.length; ++i) {
+                    khash.update(this.chain[i].hash);
                 }
                 return khash.digest('hex');
             }
