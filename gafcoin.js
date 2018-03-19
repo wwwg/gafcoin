@@ -832,15 +832,15 @@
                         return;
                     }
                     if (me.bc.hasTransaction(tx)) return;
+                    if (me.isTxPending(tx)) return; // duplicate
                     me.net.announceTx(tx); // let everyone know about this new transaction
                     me.emit('newTransaction', tx);
-                    if (!me.isMiner) return; // we dont care about new transactions if we're not a miner
-                    if (me.isTxPending(tx)) {
-                        // duplicate transaction, ignore
-                        return;
-                    }
                     me.pendingTxs.push(tx);
                     if (me.pendingTxs.length === (BLOCK_SIZE - 1)) {
+                        if (!me.isMiner) {
+                            me.pendingTxs = []; // if we're not a miner we can clear the tx cache
+                            return; // no more needs to be done
+                        }
                         if (me.lastMinedBlock && me.lastMinedBlock == me.bc.chain.length + 1) {
                             // we've already mined this block
                             return;
