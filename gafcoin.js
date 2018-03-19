@@ -109,9 +109,7 @@ let init = () => {
                     ws.family = ws._socket.remoteFamily;
                     console.log(chalk.green.bold('new outboud peer "' + ws.ip + ":" + ws.port + '"'));
                     me.emit('newPeer', ws);
-                    me.send(ws, 'listenport', {
-                        port: me._port
-                    });
+                    me.send(ws, 'listenport', {});
                     this.outPeers.push(ws);
                     ws.peerType = 'out';
                     ws.id = uuidv4();
