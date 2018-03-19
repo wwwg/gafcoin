@@ -39,6 +39,10 @@ if (IS_NODEJS) {
 
 // nest entire program inside function for async library loading
 let init = () => {
+    let EE;
+    if (IS_BROWSER) EE = window.EventEmitter;
+    else EE = EventEmitter;
+
     let ec = new EC('secp256k1');
     // make crypto easier
     const keccak = str => {
@@ -64,7 +68,7 @@ let init = () => {
     }
     
     // net
-    class NetNode extends EventEmitter {
+    class NetNode extends EE {
         log(...args) {
             args.unshift((this.name || 'very sad node without a name'));
             args[0] += ' : ';
