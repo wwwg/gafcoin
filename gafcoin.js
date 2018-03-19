@@ -547,6 +547,7 @@
             let tx = new Transaction('genesis', '0435ef20199d5d2c434b57359af163271c9835c58094b101688978c5f9b478036e873af47d12c75e5d7cc02ff0d62ef8b04e4965d4f65214d87823696728761fdc', 1000, 1514764801);
             genesisTxs.push(tx);
         }
+        // TODO : multiply genesis block timestamp by 1000 to account for ms
         const GENESIS_BLOCK = new Block(1514764800, '', genesisTxs, 0);
         delete genesisTxs;
         
