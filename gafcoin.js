@@ -120,7 +120,7 @@ let init = () => {
                     ws.ip = urlParser.hostname;
                     ws.port = (parseInt(urlParser.port) || null);
                     ws.family = '';
-                    console.log('new outboud peer "' + ws.ip + ":" + ws.port + '"');
+                    // console.log('new outboud peer "' + ws.ip + ":" + ws.port + '"');
                     me.emit('newPeer', ws);
                     me.send(ws, 'listenport', {});
                     this.outPeers.push(ws);
