@@ -1,6 +1,6 @@
 window.write = msg => {
     let e = document.createElement('div');
-    e.innerHTML = msg;
+    e.textContent = msg;
     document.getElementById('log').appendChild(e);
 };
 window.updateStats = () => {
@@ -8,6 +8,15 @@ window.updateStats = () => {
     document.getElementById('peerCount').textContent = node.net.outPeers.length;
     document.getElementById('bcHeight').textContent = node.bc.height();
     document.getElementById('balance').textContent = node.balance();
+}
+window.transfer = () => {
+    let dest = document.getElementById('destAddr').value;
+    let amount = parseInt(document.getElementById('value').value);
+    if (isNaN(amount)) return alert('wrong amount');
+    let myBalance = node.balance();
+    if (myBalance - amount < 0) return alert('you can\'t afford that');
+    node.transfer(dest, amount);
+    write('broadcasted transaction');
 }
 window.getprivate = () => {
     let oldKey = node.wallet.private;
