@@ -907,10 +907,16 @@ else {
         "https://wzrd.in/standalone/node-uuid@latest",
         'https://cdn.rawgit.com/Olical/EventEmitter/master/EventEmitter.min.js'
     ];
+    let loadedScripts = 0;
+    let onScriptLoad = () => {
+        loadedScripts++;
+        if (loadedScripts >= scripts.length) init(); // everything ready to go
+    }
     for (let i = 0; i < scripts.length; ++i) {
         let scr = document.createElement('script');
         scr.src = scripts[i];
         scr.type = 'text/javascript';
+        scr.onload = onScriptLoad();
         document.head.appendChild(scr);
     }
 }
