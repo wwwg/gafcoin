@@ -734,8 +734,10 @@ let init = () => {
                 }
                 if (IS_NODEJS) console.log(chalk.green.bold('connected to peer, requesting for more peers'));
                 me.net.getPeerPeers(peer);
-            }).on('lostPeer', () => {
+                me.emit('connection', peer);
+            }).on('lostPeer', peer => {
                 me.peerCount--;
+                me.emit('disconnection', peer);
             }).on('peerList', list => {
                 if (IS_NODEJS) {
                     console.log(chalk.green.bold('recieved list of nodes from peer, attempting to connect to all of them.'));
