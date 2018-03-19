@@ -135,7 +135,7 @@ let init = () => {
                     console.log(err);
                 }
                 ws.onmessage = msg => {
-                    me.recv(msg.data);
+                    me.recv(ws, msg.data);
                 }
             }
         }
