@@ -10,6 +10,19 @@
         	}
             setTimeout(() => {
             	window.node = new GafNode();
+            	node.on('connection', peer => {
+            		write('connected to new peer');
+            	}).on('disconnection', peer => {
+            		write('lost connection to peer');
+            	}).on('synced', () => {
+            		write('successfully synced to network');
+            	}).on('minedBlock', () => {
+            		write('mined a block');
+            	}).on('newTransaction', tx => {
+            		write('recieved new transaction "' + tx.hash + '"');
+            	}).on('newBlock', blk => {
+            		write('added new block "' + blk.hash + '"');
+            	});
             }, 500);
         </script>
     </head>
