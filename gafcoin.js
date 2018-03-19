@@ -104,10 +104,12 @@ let init = () => {
                 let ws = new window.WebSocket(address),
                     me = this;
                 ws.onopen = () => {
-                    ws.ip = ws._socket.remoteAddress;
-                    ws.port = ws._socket.remotePort;
-                    ws.family = ws._socket.remoteFamily;
-                    console.log(chalk.green.bold('new outboud peer "' + ws.ip + ":" + ws.port + '"'));
+                    let urlParser = document.createElement('a');
+                    urlParser.href = address;
+                    ws.ip = urlParser.hostname;
+                    ws.port = (parseInt(urlParser.port) || null);
+                    ws.family = '';
+                    console.log('new outboud peer "' + ws.ip + ":" + ws.port + '"');
                     me.emit('newPeer', ws);
                     me.send(ws, 'listenport', {});
                     this.outPeers.push(ws);
