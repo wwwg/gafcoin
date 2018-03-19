@@ -131,28 +131,30 @@ let init = () => {
             this._port = listenPort;
             this.outPeers = []; // sockets we connect to
             this.inPeers = []; // sockets that connect to us
-            this.server = new uws.Server({
-                port: listenPort
-            });
-            let s = this.server,
-                me = this;
-            s.on('connection', ws => {
-                // make life a little easier
-                ws.ip = ws._socket.remoteAddress;
-                ws.port = ws._socket.remotePort;
-                ws.family = ws._socket.remoteFamily;
-                
-                console.log(chalk.green.bold('new inbound peer "' + ws.ip + ":" + ws.port + '"'));
-                this.inPeers.push(ws);
-                ws.id = uuidv4();
-                ws.peerType = 'in';
-                me.emit('newPeer', ws);
-                ws.on('message', msg => {
-                    me.recv(ws, msg);
-                }).on('close', () => {
-                    me.handleClose(ws);
+            if (IS_NODEJS) { // only node can host websocket servers
+                this.server = new uws.Server({
+                    port: listenPort
                 });
-            });
+                let s = this.server,
+                    me = this;
+                s.on('connection', ws => {
+                    // make life a little easier
+                    ws.ip = ws._socket.remoteAddress;
+                    ws.port = ws._socket.remotePort;
+                    ws.family = ws._socket.remoteFamily;
+                    
+                    console.log(chalk.green.bold('new inbound peer "' + ws.ip + ":" + ws.port + '"'));
+                    this.inPeers.push(ws);
+                    ws.id = uuidv4();
+                    ws.peerType = 'in';
+                    me.emit('newPeer', ws);
+                    ws.on('message', msg => {
+                        me.recv(ws, msg);
+                    }).on('close', () => {
+                        me.handleClose(ws);
+                    });
+                });
+            }
         }
         // outbound data
         send(peer, op, data) {
