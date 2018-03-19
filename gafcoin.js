@@ -1017,6 +1017,23 @@
                         case 'broadconn':
                             node.net.broadcast('getaddr', {});
                             break;
+                        case 'printblk':
+                            if (!smsg[1] || isNaN(parseInt(smsg[1]))) {
+                                console.log(chalk.red('invalid arg'));
+                                break;
+                            }
+                            let blkpos = parseInt(smsg[1]),
+                                blk = node.bc.at(blkpos);
+                            if (!blk) {
+                                console.log(chalk.red('block doesn\'t exist'));
+                                break;
+                            }
+                            console.log(chalk.white('Block ') + chalk.white.bold('"' + blk.hash + '":'));
+                            console.log(chalk.white('\t- number: ' + blk.pos));
+                            console.log(chalk.white('\t- reward: ' + node.bc.calcRewardAt(blk.pos)));
+                            console.log(chalk.white('\t- difficulty: ' + node.bc.calcDiffAt(blk.pos)));
+                            console.log(chalk.white('\t- nonce: ' + blk.nonce));
+                            break;
                         default:
                             console.log(chalk.red('invalid command, use "help" for a list'));
                             break;
