@@ -14,7 +14,6 @@ body {
 	width: 200px;
 	overflow-y: scroll;
 	overflow-x: auto;
-	float: left;
 }
 button, input {
 	background: none;
