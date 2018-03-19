@@ -20,7 +20,6 @@ let uws,
 if (IS_NODEJS) {
     uws = require("uws");
     createKeccakHash = require("keccak");
-    uuidv4 = require('uuid/v4');
     EventEmitter = require('events');
     fs = require("fs");
     readline = require("readline");
@@ -39,6 +38,7 @@ if (IS_NODEJS) {
 
 // nest entire program inside function for async library loading
 let init = () => {
+    // browser-node stuff
     let EE;
     if (IS_BROWSER) EE = window.EventEmitter;
     else EE = EventEmitter;
@@ -48,6 +48,12 @@ let init = () => {
         ec = new window.elliptic.ec('secp256k1');
     } else {
         ec = new EC('secp256k1');
+    }
+    let uuidv4;
+    if (IS_NODEJS) {
+        uuidv4 = require('uuid/v4');
+    } else {
+        uuidv4 = nodeUuid.v4;
     }
     // make crypto easier
     const keccak = str => {
