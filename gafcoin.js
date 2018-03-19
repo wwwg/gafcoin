@@ -476,11 +476,11 @@ let init = () => {
             let txs = [];
             for (let i = 0; i < data.txs.length; ++i) {
                 if (!(
-                    data[i].i ||
-                    data[i].o ||
-                    data[i].value ||
-                    data[i].t ||
-                    data[i].sig
+                    data.txs[i].i ||
+                    data.txs[i].o ||
+                    data.txs[i].value ||
+                    data.txs[i].t ||
+                    data.txs[i].sig
                 )) {
                     // invalid data
                     return null;
