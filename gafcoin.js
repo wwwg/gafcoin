@@ -693,151 +693,152 @@ class GafNode {
         }
     }
 }
-process.on('uncaughtException', err => {
-    console.error(err);
-    process.exit(1);
-});
-// make the node actually usable
-let args = minimist(process.argv.slice(2)),
-    pkey = null;
-if (args['help'] || !args['p']) {
-    console.log('usage:');
-    console.log('node gafcoin.js  [ -k <key> ] -p <port>');
-    console.log('where <port> is a tcp port to listen on');
-    console.log('and <key> is optionally a private key to use for your wallet.');
-    process.exit(0);
-}
-let port = parseInt(args['p']);
-if (isNaN(port)) {
-    console.error('invalid tcp port');
-    process.exit(1);
-}
-if (args['k']) {
-    pkey = args['k'];
-}
-let handleCmd = msg => {
-    let smsg = msg.split(' '),
-        cmd = smsg[0];
-    try {
-        switch (cmd) {
-            case 'help':
-                console.log(chalk.white('commands:'));
-                console.log('clear - clears the screen');
-                console.log('mine - toggles new block mining');
-                console.log('height - displays current blockchain height');
-                console.log('conn / connect [address] - connect to node listening on [address]');
-                console.log('peers - list all active peers');
-                console.log('sync - update blockchain with the network');
-                console.log('address - display wallet address');
-                console.log('private_key - display wallet private key');
-                console.log('balance - display your balance');
-                console.log('transfer [amount] [dest] - transfer [amount] to wallet address [dest]');
-                console.log('port - log the current port the node is listening on');
-                console.log('export [filename] - export blockchain to [filename]');
-                console.log('import [filename] - import blockchain from [filename]');
-                break;
-            case 'clear':
-                console.clear();
-                break;
-            case 'mine':
-                node.isMiner = !node.isMiner;
-                console.log(chalk.yellow('mining set to ' + node.isMiner));
-                break;
-            case 'height':
-                console.log(chalk.yellow('current blockchain height: ' + node.bc.chain.length));
-                break;
-            case 'connect':
-            case 'conn':
-                let ip = smsg[1];
-                if (!ip.startsWith('ws://')) ip = 'ws://' + ip;
-                console.log(chalk.yellow('attempting to connect to peer "' + ip + '"'));
-                node.net.connectPeer(ip);
-                break;
-            case 'peers':
-                let totalPeers = node.net.outPeers.concat(node.net.inPeers);
-                console.log(chalk.yellow('current active peers: ' + (totalPeers).length) + ':');
-                for (let i = 0; i < totalPeers.length; ++i) {
-                    console.log(chalk.white(totalPeers[i].ip + ':' + totalPeers[i].port));
-                }
-                break;
-            case 'sync':
-                console.log(chalk.yellow('starting node syncronization..'));
-                node.sync();
-                break;
-            case 'address':
-                console.log(chalk.green(node.wallet.address));
-                break;
-            case 'private_key':
-                console.log(chalk.green(node.wallet.private));
-                break;
-            case 'balance':
-                console.log(chalk.yellow(node.bc.balance(node.wallet.address)));
-                break;
-            case 'transfer':
-                let amount = parseFloat(smsg[1]),
-                    dest = smsg[2];
-                if (node.bc.balance(node.wallet.address) - amount > 0) {
-                    console.log(chalk.green('trasfering ' + amount + ' to "' + dest + '"'));
-                    node.transfer(dest, amount);
-                } else {
-                    console.log(chalk.red('you cant afford that'));
-                }
-                break;
-            case 'port':
-                console.log('currently listening on tcp port ' + port);
-                break;
-            case 'eval':
-                let expr = msg.split('eval ')[1];
-                let res;
-                try {
-                    res = eval(expr);
-                } catch (e) {
-                    res = e.toString();
-                }
-                console.log(res);
-                break;
-            case 'export':
-                let epath = smsg[1];
-                console.log('writing blockchain to file "' + epath + '"');
-                fs.writeFileSync(epath, JSON.stringify(node.bc.serialize()), 'utf8');
-                console.log('write complete');
-                break;
-            case 'import':
-                let ipath = smsg[1];
-                console.log('reading blockchain from file "' + ipath + '"');
-                const bc = fs.readFileSync(ipath, 'utf8');
-                node.bc = BlockChain.from(JSON.parse(bc));
-                console.log('blockchain imported successfully.');
-                break;
-            case 'broadconn':
-                node.net.broadcast('getaddr', {});
-                break;
-            default:
-                console.log(chalk.red('invalid command, use "help" for a list'));
-                break;
+if (IS_NODEJS) {
+    process.on('uncaughtException', err => {
+        console.error(err);
+        process.exit(1);
+    });
+    // make the node actually usable
+    let args = minimist(process.argv.slice(2)),
+        pkey = null;
+    if (args['help'] || !args['p']) {
+        console.log('usage:');
+        console.log('node gafcoin.js  [ -k <key> ] -p <port>');
+        console.log('where <port> is a tcp port to listen on');
+        console.log('and <key> is optionally a private key to use for your wallet.');
+        process.exit(0);
+    }
+    let port = parseInt(args['p']);
+    if (isNaN(port)) {
+        console.error('invalid tcp port');
+        process.exit(1);
+    }
+    if (args['k']) {
+        pkey = args['k'];
+    }
+    let handleCmd = msg => {
+        let smsg = msg.split(' '),
+            cmd = smsg[0];
+        try {
+            switch (cmd) {
+                case 'help':
+                    console.log(chalk.white('commands:'));
+                    console.log('clear - clears the screen');
+                    console.log('mine - toggles new block mining');
+                    console.log('height - displays current blockchain height');
+                    console.log('conn / connect [address] - connect to node listening on [address]');
+                    console.log('peers - list all active peers');
+                    console.log('sync - update blockchain with the network');
+                    console.log('address - display wallet address');
+                    console.log('private_key - display wallet private key');
+                    console.log('balance - display your balance');
+                    console.log('transfer [amount] [dest] - transfer [amount] to wallet address [dest]');
+                    console.log('port - log the current port the node is listening on');
+                    console.log('export [filename] - export blockchain to [filename]');
+                    console.log('import [filename] - import blockchain from [filename]');
+                    break;
+                case 'clear':
+                    console.clear();
+                    break;
+                case 'mine':
+                    node.isMiner = !node.isMiner;
+                    console.log(chalk.yellow('mining set to ' + node.isMiner));
+                    break;
+                case 'height':
+                    console.log(chalk.yellow('current blockchain height: ' + node.bc.chain.length));
+                    break;
+                case 'connect':
+                case 'conn':
+                    let ip = smsg[1];
+                    if (!ip.startsWith('ws://')) ip = 'ws://' + ip;
+                    console.log(chalk.yellow('attempting to connect to peer "' + ip + '"'));
+                    node.net.connectPeer(ip);
+                    break;
+                case 'peers':
+                    let totalPeers = node.net.outPeers.concat(node.net.inPeers);
+                    console.log(chalk.yellow('current active peers: ' + (totalPeers).length) + ':');
+                    for (let i = 0; i < totalPeers.length; ++i) {
+                        console.log(chalk.white(totalPeers[i].ip + ':' + totalPeers[i].port));
+                    }
+                    break;
+                case 'sync':
+                    console.log(chalk.yellow('starting node syncronization..'));
+                    node.sync();
+                    break;
+                case 'address':
+                    console.log(chalk.green(node.wallet.address));
+                    break;
+                case 'private_key':
+                    console.log(chalk.green(node.wallet.private));
+                    break;
+                case 'balance':
+                    console.log(chalk.yellow(node.bc.balance(node.wallet.address)));
+                    break;
+                case 'transfer':
+                    let amount = parseFloat(smsg[1]),
+                        dest = smsg[2];
+                    if (node.bc.balance(node.wallet.address) - amount > 0) {
+                        console.log(chalk.green('trasfering ' + amount + ' to "' + dest + '"'));
+                        node.transfer(dest, amount);
+                    } else {
+                        console.log(chalk.red('you cant afford that'));
+                    }
+                    break;
+                case 'port':
+                    console.log('currently listening on tcp port ' + port);
+                    break;
+                case 'eval':
+                    let expr = msg.split('eval ')[1];
+                    let res;
+                    try {
+                        res = eval(expr);
+                    } catch (e) {
+                        res = e.toString();
+                    }
+                    console.log(res);
+                    break;
+                case 'export':
+                    let epath = smsg[1];
+                    console.log('writing blockchain to file "' + epath + '"');
+                    fs.writeFileSync(epath, JSON.stringify(node.bc.serialize()), 'utf8');
+                    console.log('write complete');
+                    break;
+                case 'import':
+                    let ipath = smsg[1];
+                    console.log('reading blockchain from file "' + ipath + '"');
+                    const bc = fs.readFileSync(ipath, 'utf8');
+                    node.bc = BlockChain.from(JSON.parse(bc));
+                    console.log('blockchain imported successfully.');
+                    break;
+                case 'broadconn':
+                    node.net.broadcast('getaddr', {});
+                    break;
+                default:
+                    console.log(chalk.red('invalid command, use "help" for a list'));
+                    break;
+            }
+        } catch (e) {
+            console.log(chalk.red('failed to execute command:'));
+            console.log(chalk.white(e.toString()));
         }
-    } catch (e) {
-        console.log(chalk.red('failed to execute command:'));
-        console.log(chalk.white(e.toString()));
     }
+    if (require.main === module) {
+        let question = () => {
+            rl.question(chalk.yellow.bold('gaf> '), msg => {
+                handleCmd(msg);
+                question();
+            });
+        }
+        console.log(chalk.white.bold('initializing gafcoin..'));
+        console.log(chalk.white.bold(`listening on tcp port ${port}`));
+        if (pkey) {
+            console.log(chalk.white.bold(`using private key "${pkey}"`));
+        } else {
+            console.log(chalk.white.bold(`no private key provided, will generate new wallet.`));
+        }
+        node = new GafNode(port, pkey);
+        console.log(chalk.green('successfully opened wallet "' + node.wallet.address + '"'));
+        question();
+    }
+    module.exports = GafNode;
 }
-if (require.main === module) {
-    let question = () => {
-        rl.question(chalk.yellow.bold('gaf> '), msg => {
-            handleCmd(msg);
-            question();
-        });
-    }
-    console.log(chalk.white.bold('initializing gafcoin..'));
-    console.log(chalk.white.bold(`listening on tcp port ${port}`));
-    if (pkey) {
-        console.log(chalk.white.bold(`using private key "${pkey}"`));
-    } else {
-        console.log(chalk.white.bold(`no private key provided, will generate new wallet.`));
-    }
-    node = new GafNode(port, pkey);
-    console.log(chalk.green('successfully opened wallet "' + node.wallet.address + '"'));
-    question();
-}
-
-module.exports = GafNode;
