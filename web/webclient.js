@@ -8,6 +8,7 @@ window.updateStats = () => {
     document.getElementById('peerCount').textContent = node.net.outPeers.length;
     document.getElementById('bcHeight').textContent = node.bc.height();
     document.getElementById('balance').textContent = node.balance();
+    document.getElementById('pendingTxs').textContent = node.pendingTxs.length;
 }
 window.transfer = () => {
     let dest = document.getElementById('destAddr').value;
