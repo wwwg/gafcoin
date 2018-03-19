@@ -6,7 +6,7 @@ const BLOCK_SIZE = 20, // number of transactions that make a block
 
 // local constants
 const IS_BROWSER = typeof window !== 'undefined',
-    IS_NODE = !IS_BROWSER; // im lazy
+    IS_NODEJS = !IS_BROWSER; // im lazy
 // modules
 let uws,
     createKeccakHash,
@@ -17,7 +17,7 @@ let uws,
     minimist,
     chalk,
     EC;
-if (IS_NODE) {
+if (IS_NODEJS) {
     uws = require("uws");
     createKeccakHash = require("keccak");
     uuidv4 = require('uuid/v4');
