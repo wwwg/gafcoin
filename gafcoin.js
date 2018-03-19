@@ -910,7 +910,7 @@ else {
     let scripts = [
         'https://cdn.rawgit.com/emn178/js-sha3/master/build/sha3.min.js',
         'https://cdn.rawgit.com/indutny/elliptic/master/dist/elliptic.min.js',
-        "https://wzrd.in/standalone/node-uuid@latest",
+        "https://cdnjs.cloudflare.com/ajax/libs/node-uuid/1.4.8/uuid.min.js",
         'https://cdn.rawgit.com/Olical/EventEmitter/master/EventEmitter.min.js'
     ];
     let loadedScripts = 0;
