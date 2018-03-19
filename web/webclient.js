@@ -19,6 +19,10 @@ window.transfer = () => {
     node.transfer(dest, amount);
     write('broadcasted transaction');
 }
+window.sync = () => {
+    write('attempting to sync with network..');
+    node.sync();
+}
 window.getprivate = () => {
     let oldKey = node.wallet.private;
     let newKey = window.prompt('your private key (changing will update your wallet):', node.wallet.private);
