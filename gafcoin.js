@@ -277,7 +277,7 @@ let init = () => {
                     for (let i = 0; i < totalPeers.length; ++i) {
                         if (totalPeers[i].peerType == 'out' && !totalPeers[i].listenPort) continue;
                         const port = (totalPeers[i].listenPort || totalPeers[i].port);
-                        const strPeer = totalPeers[i].ip + ':' + port;
+                        let strPeer = totalPeers[i].ip + ':' + port;
                         strPeer = strPeer.replace('::ffff:', '');
                         if (totalPeers[i].ip == peer.ip && port == peer.port) continue;
                         if (!peerList.includes(strPeer)) {
