@@ -945,7 +945,13 @@
                             let totalPeers = node.net.outPeers.concat(node.net.inPeers);
                             console.log(chalk.yellow('current active peers: ' + (totalPeers).length) + ':');
                             for (let i = 0; i < totalPeers.length; ++i) {
-                                console.log(chalk.white(totalPeers[i].ip + ':' + totalPeers[i].port));
+                                process.stdout.write(chalk.white(totalPeers[i].ip + ':' + totalPeers[i].port));
+                                process.stdout.write(' ');
+                                if (totalPeers[i].isWeb) {
+                                    process.stdout.write('(web node)\n');
+                                } else {
+                                    process.stdout.write('(listening on port ' + totalPeers[i].listenPort + ')\n');
+                                }
                             }
                             break;
                         case 'sync':
