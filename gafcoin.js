@@ -995,7 +995,7 @@
                             let amount = parseFloat(smsg[1]),
                                 dest = smsg[2];
                             if (node.bc.balance(node.wallet.address) - amount > 0) {
-                                console.log(chalk.green('trasfering ' + amount + ' to "' + dest + '"'));
+                                console.log(chalk.green('transfering ' + amount + ' to "' + dest + '"'));
                                 node.transfer(dest, amount);
                             } else {
                                 console.log(chalk.red('you cant afford that'));
