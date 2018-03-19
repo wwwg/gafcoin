@@ -934,6 +934,10 @@ let init = () => {
                         console.log(chalk.yellow(node.bc.balance(node.wallet.address)));
                         break;
                     case 'transfer':
+                        if (!smsg[1] || !smsg[2]) {
+                            console.log(chalk.red('invalid arguments'));
+                            break;
+                        }
                         let amount = parseFloat(smsg[1]),
                             dest = smsg[2];
                         if (node.bc.balance(node.wallet.address) - amount > 0) {
