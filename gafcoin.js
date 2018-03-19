@@ -845,3 +845,4 @@ let init = () => {
         module.exports = GafNode;
     }
 }
+if (IS_NODEJS) init(); // safe to init immediately if node
