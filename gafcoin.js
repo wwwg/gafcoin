@@ -627,6 +627,9 @@ let init = () => {
         }
     }
     class GafNode extends EE {
+        balance() {
+            return this.bc.balance(this.wallet.address);
+        }
         transfer(dest, amount) {
             let me = this,
                 tx = new Transaction(me.wallet.address, dest, amount, Date.now());
