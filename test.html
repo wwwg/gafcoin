@@ -16,6 +16,7 @@
             		write('lost connection to peer');
             	}).on('synced', () => {
             		write('successfully synced to network');
+            		write('blockchain height: ' + node.bc.height());
             	}).on('minedBlock', () => {
             		write('mined a block');
             	}).on('newTransaction', tx => {
