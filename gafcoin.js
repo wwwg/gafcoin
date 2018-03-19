@@ -134,6 +134,9 @@ let init = () => {
                     console.log('WARN: got an outbound peer socket error:');
                     console.log(err);
                 }
+                ws.onmessage = msg => {
+                    me.recv(msg.data);
+                }
             }
         }
         constructor(listenPort, node) {
