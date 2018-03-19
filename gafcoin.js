@@ -253,12 +253,12 @@
                                 // outdated peer
                                 me.send(peer, 'outdated', {});
                                 console.log('WARN : killed outdated peer');
-                                shutdown(peer);
+                                me.shutdown(peer);
                                 return;
                             }
                         } else {
                             // malformed packet, kill peer
-                            shutdown(peer);
+                            me.shutdown(peer);
                         }
                         break;
                     case 'outdated':
@@ -306,13 +306,13 @@
                               data.nonce ||
                               data.hash)) {
                                 // invalid data
-                                shutdown(peer);
+                                me.shutdown(peer);
                                 return;
                         }
                         let blk = Block.from(data);
                         if (!blk) {
                             // invalid data
-                            shutdown(peer);
+                            me.shutdown(peer);
                             return;
                         }
                         me.emit('block', blk);
@@ -326,7 +326,7 @@
                             data.sig
                         )) {
                             // invalid data
-                            shutdown(peer);
+                            me.shutdown(peer);
                             return;
                         }
                         let tx = Transaction.from(data);
@@ -346,13 +346,13 @@
                     case 'gotbc':
                         if (!data instanceof Array) {
                             // invalid data
-                            shutdown(peer);
+                            me.shutdown(peer);
                             return;
                         }
                         let bc = BlockChain.from(data);
                         if (!bc) {
                             // invalid data
-                            shutdown(peer);
+                            me.shutdown(peer);
                             return;
                         }
                         me.emit('blockchain', bc);
@@ -366,7 +366,7 @@
                         let recvBlock = Block.from(data);
                         if (!recvBlock) {
                             // invalid data
-                            shutdown(peer);
+                            me.shutdown(peer);
                             return;
                         }
                         me.emit('recievedBlock', recvBlock);
