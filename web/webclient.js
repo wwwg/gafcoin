@@ -26,6 +26,7 @@ window.getprivate = () => {
         return;
     }
     node.wallet = new (node.wallet.constructor)(newKey);
+    window.updateStats();
 }
 window.getwalletaddr = () => {
     window.prompt('your wallet address:', node.wallet.address);
