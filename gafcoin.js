@@ -45,7 +45,7 @@ let init = () => {
 
     let ec;
     if (IS_BROWSER) {
-        ec = new elliptic.ec('secp256k1');
+        ec = new window.elliptic.ec('secp256k1');
     } else {
         ec = new EC('secp256k1');
     }
@@ -910,7 +910,11 @@ else {
     let loadedScripts = 0;
     let onScriptLoad = () => {
         loadedScripts++;
-        if (loadedScripts >= scripts.length) init(); // everything ready to go
+        if (loadedScripts >= scripts.length) {
+            setTimeout(() => {
+                init(); // everything ready to go
+            }, 100);
+        }
     }
     for (let i = 0; i < scripts.length; ++i) {
         let scr = document.createElement('script');
