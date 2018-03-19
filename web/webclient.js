@@ -3,6 +3,12 @@ window.write = msg => {
     e.innerHTML = msg;
     document.getElementById('log').appendChild(e);
 };
+window.updateStats = () => {
+    const stats = document.getElementById('stats');
+    document.getElementById('peerCount').textContent = node.net.outPeers.length;
+    document.getElementById('bcHeight').textContent = node.bc.height();
+    document.getElementById('address').textContent = node.wallet.address;
+}
 setTimeout(() => {
     window.node = new GafNode();
     node.on('connection', peer => {
@@ -12,6 +18,7 @@ setTimeout(() => {
     }).on('synced', () => {
         write('successfully synced to network');
         write('blockchain height: ' + node.bc.height());
+        updateStats();
     }).on('minedBlock', () => {
         write('mined a block');
     }).on('newTransaction', tx => {
