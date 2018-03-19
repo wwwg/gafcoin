@@ -7,7 +7,7 @@ const BLOCK_SIZE = 20, // number of transactions that make a block
 // local constants
 const IS_BROWSER = typeof window !== 'undefined',
     IS_NODEJS = !IS_BROWSER; // im lazy
-// modules
+// modules for node
 let uws,
     createKeccakHash,
     uuidv4,
