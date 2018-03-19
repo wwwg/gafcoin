@@ -16,8 +16,9 @@ body {
 	overflow-x: auto;
 	float: left;
 }
-button {
+button, input {
 	background: none;
 	border: 1px solid white;
 	color: white;
+	font-size: 100%;
 }
