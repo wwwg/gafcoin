@@ -719,7 +719,7 @@ let init = () => {
                         me.sync();
                     }, 500);
                 }
-                console.log(chalk.green.bold('connected to peer, requesting for more peers'));
+                if (IS_NODEJS) console.log(chalk.green.bold('connected to peer, requesting for more peers'));
                 me.net.getPeerPeers(peer);
             }).on('lostPeer', () => {
                 me.peerCount--;
