@@ -4,7 +4,7 @@
         BLOCK_REWARD_HALF_AT = 100, // block reward will half every x blocks
         DIFF_DOUBLE_AT = 200, // network difficulty will double every x blocks
         INIT_NODE = 'ws://198.58.119.239:9284', // original node; hard coded into every node
-        PROTOCOL_VERSION = 2; // proto version; versions lower than this are rejected by nodes
+        PROTOCOL_VERSION = 3; // proto version; versions lower than this are rejected by nodes
 
     // local constants
     const IS_BROWSER = typeof window !== 'undefined',
@@ -547,8 +547,7 @@
             let tx = new Transaction('genesis', '0435ef20199d5d2c434b57359af163271c9835c58094b101688978c5f9b478036e873af47d12c75e5d7cc02ff0d62ef8b04e4965d4f65214d87823696728761fdc', 1000, 1514764801);
             genesisTxs.push(tx);
         }
-        // TODO : multiply genesis block timestamp by 1000 to account for ms
-        const GENESIS_BLOCK = new Block(1514764800, '', genesisTxs, 0);
+        const GENESIS_BLOCK = new Block(1514764800 * 1000, '', genesisTxs, 0);
         delete genesisTxs;
         
         class BlockChain {
