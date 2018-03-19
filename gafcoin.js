@@ -2,7 +2,8 @@
 const BLOCK_SIZE = 20, // number of transactions that make a block
     BLOCK_REWARD_HALF_AT = 100, // block reward will half every x blocks
     DIFF_DOUBLE_AT = 200, // network difficulty will double every x blocks
-    INIT_NODE = 'ws://198.58.119.239:9284'; // original node; hard coded into every node
+    INIT_NODE = 'ws://198.58.119.239:9284', // original node; hard coded into every node
+    PROTOCOL_VERSION = 1; // proto version; versions lower than this are rejected by nodes
 
 // local constants
 const IS_BROWSER = typeof window !== 'undefined',
@@ -209,6 +210,11 @@ let init = () => {
         }
         getPeerPeers(peer) {
             this.send(peer, 'getaddr', {});
+        }
+        handshake(peer) {
+            this.send(peer, 'handshake', {
+                version: PROTOCOL_VERSION
+            });
         }
         isConnectedTo(ip) {
             let totalPeers = this.outPeers.concat(this.inPeers);
