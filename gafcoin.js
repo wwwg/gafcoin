@@ -5,20 +5,31 @@ const BLOCK_SIZE = 20, // number of transactions that make a block
     INIT_NODE = 'ws://198.58.119.239:9284'; // original node; hard coded into every node
 
 // local constants
-const IS_BROWSER = typeof window !== 'undefined';
-const crypto = require('crypto'),
-    net = require('net'),
-    uws = require("uws"),
-    createKeccakHash = require("keccak"),
-    uuidv4 = require('uuid/v4'),
-    EventEmitter = require('events'),
-    fs = require("fs"),
-    readline = require("readline"),
-    minimist = require("minimist"),
-    chalk = require("chalk"),
-    EC = require('elliptic').ec,
-    ec = new EC('secp256k1'),
+const IS_BROWSER = typeof window !== 'undefined',
+    IS_NODE = !IS_BROWSER; // im lazy
+// modules
+let uws,
+    createKeccakHash,
+    uuidv4,
+    EventEmitter,
+    fs,
+    readline,
+    minimist,
+    chalk,
+    EC;
+if (IS_NODE) {
+    uws = require("uws");
+    createKeccakHash = require("keccak");
+    uuidv4 = require('uuid/v4');
+    EventEmitter = require('events');
+    fs = require("fs");
+    readline = require("readline");
+    minimist = require("minimist");
+    chalk = require("chalk");
+    EC = require('elliptic').ec;
+    ec = new EC('secp256k1');
     rl = readline.createInterface(process.stdin, process.stdout);
+}
 
 // hook console.log to support my cool ass prompt
 let _log = console.log.bind(console);
@@ -177,7 +188,7 @@ class NetNode extends EventEmitter {
         // handle data accordingly
         switch (op) {
             case 'listenport':
-                if (me.isConnectedTo(peer.ip + ':' + data.port)) me.shutdown(peer);
+                // if (me.isConnectedTo(peer.ip + ':' + data.port)) me.shutdown(peer);
                 peer.listenPort = data.port;
                 break;
             case 'getaddr':
