@@ -77,7 +77,7 @@ let init = () => {
         log(...args) {
             args.unshift((this.name || 'very sad node without a name'));
             args[0] += ' : ';
-            console.log.apply(console, args);
+            if (IS_NODEJS) console.log.apply(console, args);
         }
         connectPeer(address) {
             // create an outgoing websocket connection to address
@@ -299,12 +299,12 @@ let init = () => {
         }
         // force close peer
         shutdown(peer) {
-            console.log(chalk.red.bold("shutting down remote peer '" + peer.ip + ':' + peer.port + "'"));
+            if (IS_NODEJS) console.log(chalk.red.bold("shutting down remote peer '" + peer.ip + ':' + peer.port + "'"));
             peer.close();
         }
         // handle peer close
         handleClose(peer) {
-            console.log(chalk.red('lost connection to peer "' + peer.ip + ':' + peer.port));
+            if (IS_NODEJS) console.log(chalk.red('lost connection to peer "' + peer.ip + ':' + peer.port));
             // remove peer from it's respective array
             let found = false;
             let key = peer.peerType + 'Peers';
@@ -658,17 +658,17 @@ let init = () => {
                 let valid = me.bc.validateBlock(blk);
                 if (valid === true) {
                     me.bc.add(blk);
-                    console.log(chalk.green.bold(`validated and added block #${me.bc.chain.length}`));
+                    if (IS_NODEJS) console.log(chalk.green.bold(`validated and added block #${me.bc.chain.length}`));
                     me.bc.globalDiff = me.bc.calcDiff();
                     me.bc.blockReward = me.bc.calcReward();
                 } else {
-                    console.log(chalk.red.bold('WARN : Recieved invalid block from peer!'));
-                    console.log(chalk.red.bold('Reason block is invalid: ') + valid);
-                    console.log(chalk.red.bold('block number: ') + (me.bc.chain.length + 1));
+                    if (IS_NODEJS) console.log(chalk.red.bold('WARN : Recieved invalid block from peer!'));
+                    if (IS_NODEJS) console.log(chalk.red.bold('Reason block is invalid: ') + valid);
+                    if (IS_NODEJS) console.log(chalk.red.bold('block number: ') + (me.bc.chain.length + 1));
                 }
             }).on('tx', tx => {
                 if (!tx.validate()) {
-                    console.log(chalk.red.bold('WARN : Recieved invalid transaction from peer!'));
+                    if (IS_NODEJS) console.log(chalk.red.bold('WARN : Recieved invalid transaction from peer!'));
                     return;
                 }
                 me.net.announceTx(tx); // let everyone know about this new transaction
@@ -683,14 +683,14 @@ let init = () => {
                         // we've already mined this block
                         return;
                     }
-                    console.log(chalk.yellow.bold(`found new block ${me.bc.chain.length + 1}, mining...`));
+                    if (IS_NODEJS) console.log(chalk.yellow.bold(`found new block ${me.bc.chain.length + 1}, mining...`));
                     // create coinbase transaction and add it
                     let coinbaseTx = new Transaction('reward', me.wallet.address, me.bc.blockReward, Date.now());
                     me.pendingTxs.unshift(coinbaseTx);
                     // create a new block and mine it
                     let newBlk = new Block(Date.now(), me.bc.top().calcHash(), me.pendingTxs, me.bc.chain.length);
                     newBlk.mine(me.bc.globalDiff);
-                    console.log(chalk.green.bold(`block ${me.bc.chain.length + 1} mined successfully. resyncronizing in a few seconds..`));
+                    if (IS_NODEJS) console.log(chalk.green.bold(`block ${me.bc.chain.length + 1} mined successfully. resyncronizing in a few seconds..`));
                     me.net.announceBlock(newBlk);
                     // clear pending transactions
                     me.pendingTxs = [];
@@ -704,10 +704,10 @@ let init = () => {
                     let isChainValid = bc.validate(); // validate the integrity of the chain
                     if (isChainValid) {
                         // this blockchain is superior and we need to update ours
-                        console.log(chalk.green.bold('Switched to newer valid blockchain recieved from peer'));
+                        if (IS_NODEJS) console.log(chalk.green.bold('Switched to newer valid blockchain recieved from peer'));
                         me.bc = bc;
                     } else {
-                        console.log(chalk.red.bold('Rejected invalid blockchain from peer.'));
+                        if (IS_NODEJS) console.log(chalk.red.bold('Rejected invalid blockchain from peer.'));
                     }
                 }
             }).on('newPeer', peer => {
@@ -715,7 +715,7 @@ let init = () => {
                 if (!me.gotFirstPeer) {
                     me.gotFirstPeer = true;
                     setTimeout(() => {
-                        console.log(chalk.green.bold('syncing with network'));
+                        if (IS_NODEJS) console.log(chalk.green.bold('syncing with network'));
                         me.sync();
                     }, 500);
                 }
@@ -724,7 +724,9 @@ let init = () => {
             }).on('lostPeer', () => {
                 me.peerCount--;
             }).on('peerList', list => {
-                console.log(chalk.green.bold('recieved list of nodes from peer, attempting to connect to all of them.'));
+                if (IS_NODEJS) {
+                    console.log(chalk.green.bold('recieved list of nodes from peer, attempting to connect to all of them.'));
+                }
                 for (let i = 0; i < list.length; ++i) {
                     if (!me.net.isConnectedTo(list[i])) {
                         if (list[i].startsWith('::1')) list[i] = list[i].replace('::1', '127.0.0.1');
