@@ -750,7 +750,8 @@
             }
         }
         class GafNode extends EE {
-            balance() {
+            balance(addr) {
+                if (addr) return this.bc.balance(addr);
                 return this.bc.balance(this.wallet.address);
             }
             transfer(dest, amount) {
