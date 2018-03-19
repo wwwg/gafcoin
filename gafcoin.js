@@ -27,7 +27,6 @@ if (IS_NODEJS) {
     minimist = require("minimist");
     chalk = require("chalk");
     EC = require('elliptic').ec;
-    ec = new EC('secp256k1');
     rl = readline.createInterface(process.stdin, process.stdout);
     // hook console.log to support my cool ass prompt
     let _log = console.log.bind(console);
@@ -40,6 +39,7 @@ if (IS_NODEJS) {
 
 // nest entire program inside function for async library loading
 let init = () => {
+    ec = new EC('secp256k1');
     // make crypto easier
     const keccak = str => {
         let hash = createKeccakHash('keccak256');
@@ -849,7 +849,10 @@ if (IS_NODEJS) init(); // safe to init immediately if node
 else {
     // load all nessacary modules
     let scripts = [
-        'https://cdn.rawgit.com/emn178/js-sha3/master/build/sha3.min.js'
+        'https://cdn.rawgit.com/emn178/js-sha3/master/build/sha3.min.js',
+        'https://cdn.rawgit.com/indutny/elliptic/master/dist/elliptic.min.js',
+        "http://wzrd.in/standalone/uuid%2Fv4@latest",
+        'https://cdn.rawgit.com/Olical/EventEmitter/master/EventEmitter.min.js'
     ];
     for (let i = 0; i < scripts.length; ++i) {
         let scr = document.createElement('script');
