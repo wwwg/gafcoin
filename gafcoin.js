@@ -685,6 +685,7 @@ let init = () => {
                     return;
                 }
                 me.net.announceTx(tx); // let everyone know about this new transaction
+                me.emit('newTransaction', tx);
                 if (!me.isMiner) return; // we dont care about new transactions if we're not a miner
                 if (me.isTxPending(tx)) {
                     // duplicate transaction, ignore
@@ -705,6 +706,7 @@ let init = () => {
                     newBlk.mine(me.bc.globalDiff);
                     if (IS_NODEJS) console.log(chalk.green.bold(`block ${me.bc.chain.length + 1} mined successfully. resyncronizing in a few seconds..`));
                     me.net.announceBlock(newBlk);
+                    me.emit('minedBlock');
                     // clear pending transactions
                     me.pendingTxs = [];
                     me.lastMinedBlock = me.bc.chain.length + 1;
