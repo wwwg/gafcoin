@@ -226,6 +226,10 @@ let init = () => {
             switch (op) {
                 case 'listenport':
                     // if (me.isConnectedTo(peer.ip + ':' + data.port)) me.shutdown(peer);
+                    if (!data.port) {
+                        peer.listenPort = null;
+                        peer.isWeb = true;
+                    }
                     peer.listenPort = data.port;
                     break;
                 case 'getaddr':
