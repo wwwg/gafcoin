@@ -294,6 +294,16 @@ let init = () => {
                     }
                     break;
                 case 'newblk':
+                    if (!(data.ts ||
+                          data.last ||
+                          data.txs ||
+                          data.pos ||
+                          data.nonce ||
+                          data.hash)) {
+                            // invalid data
+                            shutdown(peer);
+                            return;
+                    }
                     let blk = Block.from(data);
                     me.emit('block', blk);
                     break;
