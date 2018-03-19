@@ -7,10 +7,18 @@ window.updateStats = () => {
     const stats = document.getElementById('stats');
     document.getElementById('peerCount').textContent = node.net.outPeers.length;
     document.getElementById('bcHeight').textContent = node.bc.height();
-    document.getElementById('address').textContent = node.wallet.address;
 }
 window.getprivate = () => {
-    window.prompt('your private key:', node.wallet.private);
+    let oldKey = node.wallet.private;
+    let newKey = window.prompt('your private key (changing will update your wallet):', node.wallet.private);
+    if (oldKey == newKey) {
+        // private key was not set
+        return;
+    }
+    node.wallet = new (node.wallet.constructor)(newKey);
+}
+window.getwalletaddr = () => {
+    window.prompt('your wallet address:', node.wallet.address);
 }
 setTimeout(() => {
     window.node = new GafNode();
