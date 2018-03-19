@@ -6,6 +6,7 @@ a fully functional blockchain coin in a single javascript file
 npm i
 node gafcoin.js -p <PORT>
 ```
+you can also clone this repo and open index.html to run a web node
 
 # saving and re-using your wallet
 you can get your wallet private key with the private_key command on the node.
