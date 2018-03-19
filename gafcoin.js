@@ -53,7 +53,7 @@ let init = () => {
     if (IS_NODEJS) {
         uuidv4 = require('uuid/v4');
     } else {
-        uuidv4 = window.nodeUuid.v4;
+        uuidv4 = uuid.v4;
     }
     // make crypto easier
     const keccak = str => {
