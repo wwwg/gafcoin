@@ -43,7 +43,12 @@ let init = () => {
     if (IS_BROWSER) EE = window.EventEmitter;
     else EE = EventEmitter;
 
-    let ec = new EC('secp256k1');
+    let ec;
+    if (IS_BROWSER) {
+        ec = new elliptic.ec('secp256k1');
+    } else {
+        ec = new EC('secp256k1');
+    }
     // make crypto easier
     const keccak = str => {
         if (IS_NODEJS) {
