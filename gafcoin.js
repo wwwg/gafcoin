@@ -559,6 +559,7 @@ let init = () => {
                         return null;
                 }
                 let blk = Block.from(data[i]);
+                if (!blk) return null;
                 chain.push(blk);
             }
             return new BlockChain(chain);
