@@ -552,6 +552,19 @@
         
         class BlockChain {
             static from(data) {
+                if (!data.bc) return;
+                if (typeof data.bc !== 'string') return;
+                let strChain;
+                try {
+                    strChain = pako.inflate(data.bc, {
+                        to: 'string'
+                    });
+                } catch (e) {
+                    // inflation failed
+                    return null;
+                }
+                // parse inflated string into usable object
+                data = JSON.parse(strChain);
                 let chain = [];
                 for (let i = 0; i < data.length; ++i) {
                     if (!(data[i].ts ||
