@@ -556,9 +556,15 @@
                 if (typeof data.bc !== 'string') return;
                 let strChain;
                 try {
-                    strChain = pako.inflate(data.bc, {
-                        to: 'string'
-                    });
+                    if (IS_NODEJS) {
+                        strChain = pako.inflate(data.bc, {
+                            to: 'string'
+                        });
+                    } else {
+                        strChain = window.pako.inflate(data.bc, {
+                            to: 'string'
+                        });
+                    }
                 } catch (e) {
                     // inflation failed
                     return null;
@@ -692,9 +698,15 @@
                 }
                 let strOut = JSON.stringify(out);
                 // deflate with pako
-                strOut = pako.deflate(strOut, {
-                    to: 'string'
-                });
+                if (IS_NODEJS) {
+                    strOut = pako.deflate(strOut, {
+                        to: 'string'
+                    });
+                } else {
+                    strOut = window.pako.deflate(strOut, {
+                        to: 'string'
+                    });
+                }
                 out = {
                     'bc': strOut
                 }
