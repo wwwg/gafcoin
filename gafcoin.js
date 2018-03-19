@@ -18,6 +18,7 @@
         readline,
         minimist,
         chalk,
+        pako,
         EC;
     if (IS_NODEJS) {
         uws = require("uws");
@@ -29,6 +30,7 @@
         chalk = require("chalk");
         EC = require('elliptic').ec;
         rl = readline.createInterface(process.stdin, process.stdout);
+        pako = require('pako');
         // hook console.log to support my cool ass prompt
         let _log = console.log.bind(console);
         console.log = function() {
@@ -1022,6 +1024,7 @@
             'https://cdn.rawgit.com/emn178/js-sha3/master/build/sha3.min.js',
             'https://cdn.rawgit.com/indutny/elliptic/master/dist/elliptic.min.js',
             "https://cdnjs.cloudflare.com/ajax/libs/node-uuid/1.4.8/uuid.min.js",
+            'https://cdnjs.cloudflare.com/ajax/libs/pako/1.0.6/pako.min.js',
             'https://cdn.rawgit.com/Olical/EventEmitter/master/EventEmitter.min.js'
         ];
         let loadedScripts = 0;
