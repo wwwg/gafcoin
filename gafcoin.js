@@ -39,7 +39,7 @@ if (IS_NODEJS) {
 
 // nest entire program inside function for async library loading
 let init = () => {
-    ec = new EC('secp256k1');
+    let ec = new EC('secp256k1');
     // make crypto easier
     const keccak = str => {
         let hash = createKeccakHash('keccak256');
