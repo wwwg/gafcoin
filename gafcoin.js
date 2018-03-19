@@ -831,6 +831,7 @@
                         if (IS_NODEJS) console.log(chalk.red.bold('WARN : Recieved invalid transaction from peer!'));
                         return;
                     }
+                    if (me.bc.hasTransaction(tx)) return;
                     me.net.announceTx(tx); // let everyone know about this new transaction
                     me.emit('newTransaction', tx);
                     if (!me.isMiner) return; // we dont care about new transactions if we're not a miner
