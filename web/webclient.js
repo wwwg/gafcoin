@@ -40,14 +40,17 @@ setTimeout(() => {
     window.node = new GafNode();
     node.on('connection', peer => {
         write('connected to new peer');
+        updateStats();
     }).on('disconnection', peer => {
         write('lost connection to peer');
+        updateStats();
     }).on('synced', () => {
         write('successfully synced to network');
         write('blockchain height: ' + node.bc.height());
         updateStats();
     }).on('minedBlock', () => {
         write('mined a block');
+        updateStats();
     }).on('newTransaction', tx => {
         write('recieved new transaction "' + tx.hash + '"');
         window.updateStats();
@@ -56,5 +59,6 @@ setTimeout(() => {
         window.updateStats();
     }).on('syncFail', () => {
         write('sync failure');
+        updateStats();
     });
 }, 2000);
