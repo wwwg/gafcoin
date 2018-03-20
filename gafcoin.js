@@ -4,7 +4,7 @@
         BLOCK_REWARD_HALF_AT = 100, // block reward will half every x blocks
         DIFF_DOUBLE_AT = 200, // network difficulty will double every x blocks
         INIT_NODE = 'ws://198.58.119.239:9284', // original node; hard coded into every node
-        PROTOCOL_VERSION = 3; // proto version; versions lower than this are rejected by nodes
+        PROTOCOL_VERSION = 4; // proto version; versions lower than this are rejected by nodes
 
     // local constants
     const IS_BROWSER = typeof window !== 'undefined',
