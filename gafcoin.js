@@ -459,7 +459,6 @@
                     'i': this.source,
                     'o': this.dest,
                     'value': this.value,
-                    'hash': this.hash,
                     'sig': this.sig,
                     't': this.ts
                 }
