@@ -791,7 +791,7 @@
                 return this.calcRewardAt(this.height());
             }
             calcRewardAt(height) {
-                let baseReward = 100;
+                let baseReward = 1000;
                 for (let i = 0; i < height; ++i) {
                     if (i % BLOCK_REWARD_HALF_AT == 0) {
                         baseReward /= 2; // half every BLOCK_REWARD_HALF_AT blocks
