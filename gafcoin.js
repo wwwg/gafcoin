@@ -379,7 +379,6 @@
                         break;
                     case 'getblk':
                         if (typeof data.n === "undefined" || data.n > me.node.bc.height() - 1) {
-                            me.shutdown(peer);
                             break;
                         }
                         let rBlock = me.node.bc.at(data.n);
