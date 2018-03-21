@@ -382,14 +382,17 @@
                             me.shutdown(peer);
                             break;
                         }
-                        let requestedBlock = me.node.bc.at(data.n);
-                        requestedBlock = requestedBlock.serialize();
+                        let rBlock = me.node.bc.at(data.n);
+                        let requestedBlock = rBlock.serialize();
                         requestedBlock = JSON.stringify(requestedBlock);
                         // compress for network
                         let outData = {
                             'blk': ''
                         };
                         outData.blk = compress(requestedBlock);
+                        if (rBlock.pos == me.node.bc.height() - 1) {
+                            outData.isTop = 1;
+                        }
                         me.send(peer, 'gotblk', outData);
                         break;
                     case 'gotblk':
@@ -810,8 +813,9 @@
                 this.net.announceBlock(blk);
             }
             sync() {
-                // syncronize node with the network
-                this.net.reqBlockChain(); // asks every connected peer for their copy of the blockchain
+                this.blkPosNeeded = this.bc.height();
+                // request for needed block
+                this.net.reqBlock(this.blkPosNeededeeded);
             }
             isTxPending(tx) {
                 let h = tx.hash;
@@ -831,6 +835,7 @@
                 this.isSyncronized = false;
                 this.pendingTxs = [];
                 this.peerCount = 0;
+                this.blkPosNeeded = 0;
                 this.gotFirstPeer = false;
                 this.lastMinedBlock = null;
                 this.net.on('block', blk => {
@@ -935,6 +940,7 @@
                             console.log(chalk.red.bold("rejected block: " + valid));
                         }
                         me.emit('invalidBlock', blk);
+                        me.net.reqBlock(me.blkPosNeeded);
                         return;
                     }
                     me.bc.add(blk);
@@ -942,6 +948,8 @@
                         console.log(chalk.green("validated new block #" + blk.pos));
                     }
                     me.emit('addedBlock', blk);
+                    me.blkPosNeeded = me.bc.height();
+                    me.net.reqBlock(me.blkPosNeeded);
                 });
                 if (IS_NODEJS) {
                     if (!process.env['IS_INIT_NODE']) {
