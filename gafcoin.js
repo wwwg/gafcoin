@@ -378,7 +378,7 @@
                         me.emit('blockchain', bc);
                         break;
                     case 'getblk':
-                        if (!data.n || data.n > me.node.bc.height() - 1) {
+                        if (typeof data.n === "undefined" || data.n > me.node.bc.height() - 1) {
                             me.shutdown(peer);
                             break;
                         }
