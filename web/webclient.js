@@ -60,5 +60,8 @@ setTimeout(() => {
     }).on('syncFail', () => {
         write('sync failure');
         updateStats();
+    }).on('addedBlock', blk => {
+        write('added new block "' + blk.hash + '"');
+        updateStats();
     });
 }, 2000);
