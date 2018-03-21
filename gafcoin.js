@@ -378,8 +378,10 @@
                         me.emit('blockchain', bc);
                         break;
                     case 'getblk':
-                        if (!data.n) break;
-                        if (data.n > me.node.bc.height() - 1) break;
+                        if (!data.n || data.n > me.node.bc.height() - 1) {
+                            me.shutdown(peer);
+                            break;
+                        }
                         let requestedBlock = me.node.bc.at(data.n);
                         requestedBlock = requestedBlock.serialize();
                         requestedBlock = JSON.stringify(requestedBlock);
