@@ -80,7 +80,27 @@
         }, ECVerify = (pubKey, msg, signature) => {
             let key = ec.keyFromPublic(pubKey, 'hex');
             return key.verify(msg, signature);
-        }
+        }, compress = data => {
+            if (IS_NODEJS) {
+                return pako.deflate(data, {
+                    'to': 'string'
+                });
+            } else {
+                return window.pako.deflate(data, {
+                    'to': 'string'
+                });
+            }
+        }, decompress = data => {
+            if (IS_NODEJS) {
+                return pako.inflate(data, {
+                    'to': 'string'
+                });
+            } else {
+                return window.pako.inflate(data, {
+                    'to': 'string'
+                });
+            }
+        };
         
         // net
         class NetNode extends EE {
@@ -360,10 +380,30 @@
                     case 'getblk':
                         if (!data.n) break;
                         let requestedBlock = me.node.bc.at(data.n);
-                        me.send(peer, 'gotblk', requestedBlock.serialize());
+                        requestedBlock = requestedBlock.serialize();
+                        requestedBlock = JSON.stringify(requestedBlock);
+                        // compress for network
+                        let outData = {
+                            'blk': ''
+                        };
+                        outData.blk = compress(requestedBlock);
+                        me.send(peer, 'gotblk', outData);
                         break;
                     case 'gotblk':
-                        let recvBlock = Block.from(data);
+                        if (!data.blk) {
+                            me.shutdown(peer);
+                            return;
+                        }
+                        let blkData = data.blk;
+                        try {
+                            blkData = decompress(blkData);
+                        } catch(e) {
+                            // invalid data
+                            me.shutdown(peer);
+                            return;
+                        }
+                        blkData = JSON.parse(blkData);
+                        let recvBlock = Block.from(blkData);
                         if (!recvBlock) {
                             // invalid data
                             me.shutdown(peer);
@@ -555,15 +595,7 @@
                 if (typeof data.bc !== 'string') return;
                 let strChain;
                 try {
-                    if (IS_NODEJS) {
-                        strChain = pako.inflate(data.bc, {
-                            to: 'string'
-                        });
-                    } else {
-                        strChain = window.pako.inflate(data.bc, {
-                            to: 'string'
-                        });
-                    }
+                    strChain = decompress(data.bc);
                 } catch (e) {
                     // inflation failed
                     return null;
@@ -697,15 +729,7 @@
                 }
                 let strOut = JSON.stringify(out);
                 // deflate with pako
-                if (IS_NODEJS) {
-                    strOut = pako.deflate(strOut, {
-                        to: 'string'
-                    });
-                } else {
-                    strOut = window.pako.deflate(strOut, {
-                        to: 'string'
-                    });
-                }
+                strOut = compress(strOut);
                 out = {
                     'bc': strOut
                 }
