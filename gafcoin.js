@@ -1065,6 +1065,10 @@
                             console.log(chalk.white('\t- difficulty: ' + node.bc.calcDiffAt(blk.pos)));
                             console.log(chalk.white('\t- nonce: ' + blk.nonce));
                             break;
+                        case "cleartxs":
+                            node.pendingTxs = [];
+                            console.log(chalk.green('Cleared pending transactions'));
+                            break;
                         default:
                             console.log(chalk.red('invalid command, use "help" for a list'));
                             break;
