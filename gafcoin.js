@@ -927,6 +927,21 @@
                             me.net.connectPeer(ip);
                         }
                     }
+                }).on('recievedBlock', blk => {
+                    // validate and add to top of the chain
+                    let valid = me.bc.validateBlock(blk);
+                    if (!valid) {
+                        if (IS_NODEJS) {
+                            console.log(chalk.red.bold("rejected block: " + valid));
+                        }
+                        me.emit('invalidBlock', blk);
+                        return;
+                    }
+                    me.bc.add(blk);
+                    if (IS_NODEJS) {
+                        console.log(chalk.green("validated new block #" + blk.pos));
+                    }
+                    me.emit('addedBlock', blk);
                 });
                 if (IS_NODEJS) {
                     if (!process.env['IS_INIT_NODE']) {
