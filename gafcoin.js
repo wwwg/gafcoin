@@ -712,6 +712,11 @@
                         return 'transaction withdrawing too much';
                     }
                 }
+                let _hash = blk.hash;
+                for (let i = 0; i < this.chain.length; ++i) {
+                    let thisBlk = this.chain[i];
+                    if (thisBlk.hash == _hash) return 'duplicate block';
+                }
                 return true;
             }
             balance(addr) {
