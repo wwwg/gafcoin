@@ -814,7 +814,7 @@
             sync() {
                 this.blkPosNeeded = this.bc.height();
                 // request for needed block
-                this.net.reqBlock(this.blkPosNeededeeded);
+                this.net.reqBlock(this.blkPosNeeded);
             }
             isTxPending(tx) {
                 let h = tx.hash;
