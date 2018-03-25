@@ -10,8 +10,8 @@ body {
 	margin: 10px;
 	float: left;
 }
-h3 {
-	font-size: 80%;
+#peerheader {
+	font-size: 110%;
 }
 #log {
 	font-size: 80%;
