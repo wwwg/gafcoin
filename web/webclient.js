@@ -9,6 +9,12 @@ window.updateStats = () => {
     document.getElementById('bcHeight').textContent = node.bc.height();
     document.getElementById('balance').textContent = node.balance();
     document.getElementById('pendingTxs').textContent = node.pendingTxs.length;
+    let peers = '';
+    for (let i = 0; i < node.net.outPeers.length; ++i) {
+        peers += node.net.outPeers[i].address;
+        peers += "<br>";
+    }
+    document.getElementById('peers').innerHTML = peers;
 }
 window.transfer = () => {
     let dest = document.getElementById('destAddr').value;
