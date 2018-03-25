@@ -11,6 +11,7 @@ window.updateStats = () => {
     document.getElementById('pendingTxs').textContent = node.pendingTxs.length;
     document.getElementById('reward').textContent = node.bc.blockReward;
     document.getElementById('diff').textContent = node.bc.globalDiff;
+    document.getElementById('isMiner').textContent = node.isMiner;
     let peers = '';
     for (let i = 0; i < node.net.outPeers.length; ++i) {
         peers += node.net.outPeers[i].ip;
