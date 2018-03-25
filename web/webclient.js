@@ -21,6 +21,10 @@ window.updateStats = () => {
     }
     document.getElementById('peers').innerHTML = peers;
 }
+window.togglemine = () => {
+    node.isMiner = !node.isMiner;
+    window.updateStats();
+}
 window.transfer = () => {
     let dest = document.getElementById('destAddr').value;
     let amount = parseInt(document.getElementById('value').value);
