@@ -1024,6 +1024,7 @@
                             console.log('export [filename] - export blockchain to [filename]');
                             console.log('import [filename] - import blockchain from [filename]');
                             console.log('printblk [blknum] - print block # [blknum]');
+                            console.log('cleartxs - clear pending transaction cache');
                             break;
                         case 'clear':
                             console.clear();
