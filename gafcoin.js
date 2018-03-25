@@ -2,7 +2,7 @@
     // network constants (may make configurable later)
     const BLOCK_SIZE = 20, // number of transactions that make a block
         BLOCK_REWARD_HALF_AT = 100, // block reward will half every x blocks
-        DIFF_DOUBLE_AT = 75, // network difficulty will double every x blocks
+        DIFF_DOUBLE_AT = 150, // network difficulty will double every x blocks
         INIT_NODE = 'ws://198.58.119.239:9284', // original node; hard coded into every node
         PROTOCOL_VERSION = 6; // proto version; versions lower than this are rejected by nodes
 
@@ -783,7 +783,7 @@
                 return this.hash() === bc2.hash();
             }
             calcDiffAt(height) {
-                let baseDiff = 2;
+                let baseDiff = 1;
                 for (let i = 0; i < height; ++i) {
                     if (i % DIFF_DOUBLE_AT == 0) {
                         baseDiff *= 2; // half every BLOCK_REWARD_HALF_AT blocks
@@ -798,7 +798,7 @@
                 return this.calcRewardAt(this.height());
             }
             calcRewardAt(height) {
-                let baseReward = 1000;
+                let baseReward = 50;
                 for (let i = 0; i < height; ++i) {
                     if (i % BLOCK_REWARD_HALF_AT == 0) {
                         baseReward /= 2; // half every BLOCK_REWARD_HALF_AT blocks
