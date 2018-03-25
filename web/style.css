@@ -23,6 +23,9 @@ body {
 #stats {
 	font-size: 110%;
 }
+#title {
+	margin: 1px;
+}
 button, input {
 	background: none;
 	border: 1px solid white;
