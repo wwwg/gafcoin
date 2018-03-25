@@ -889,7 +889,7 @@
                         }
                         if (IS_NODEJS) console.log(chalk.yellow.bold(`found new block ${me.bc.chain.length + 1}, mining...`));
                         // create coinbase transaction and add it
-                        let coinbaseTx = new Transaction('reward', me.wallet.address, me.bc.blockReward, Date.now());
+                        let coinbaseTx = new Transaction('', me.wallet.address, me.bc.blockReward, Date.now());
                         me.pendingTxs.unshift(coinbaseTx);
                         // create a new block and mine it
                         let newBlk = new Block(Date.now(), me.bc.top().calcHash(), me.pendingTxs, me.bc.chain.length);
