@@ -754,11 +754,11 @@
             }
             hash() {
                 // hash blockchain for easy comparison
-                let khash = createKeccakHash('keccak256');
+                let hashSum = '';
                 for (let i = 0; i < this.chain.length; ++i) {
-                    khash.update(this.chain[i].hash);
+                    hashSum += (this.chain[i].hash);
                 }
-                return khash.digest('hex');
+                return keccak(hashSum);
             }
             hasTransaction(tx) {
                 let hash;
