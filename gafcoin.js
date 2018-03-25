@@ -287,8 +287,7 @@
                         }
                         break;
                     case 'outdated':
-                        // todo : validate authenticity of outdated packets
-                        console.warn('peer claims node is outdated!');
+                        me.emit('outdated');
                         break;
                     case 'listenport':
                         // if (me.isConnectedTo(peer.ip + ':' + data.port)) me.shutdown(peer);
@@ -964,6 +963,8 @@
                     me.emit('addedBlock', blk);
                     me.blkPosNeeded = me.bc.height();
                     me.net.reqBlock(me.blkPosNeeded);
+                }).on('outdated', () => {
+                    me.emit('outdated');
                 });
                 if (IS_NODEJS) {
                     if (!process.env['IS_INIT_NODE']) {
