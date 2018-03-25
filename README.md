@@ -1,4 +1,4 @@
-# gafcoin
+# gafcoin - magic internet money
 a fully functional blockchain coin in a single javascript file
 
 # installing and using
