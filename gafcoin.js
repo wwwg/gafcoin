@@ -698,7 +698,7 @@
                     return 'wrong last hash';
                 }
                 
-                if (blk.transactions[0].source !== 'reward' ||
+                if (blk.transactions[0].source !== '' ||
                     blk.transactions[0].value !== this.calcRewardAt(blk.pos)) {
                     return 'wrong coinbase transaction';
                 }
