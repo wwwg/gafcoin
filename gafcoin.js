@@ -504,6 +504,7 @@
                 // Source address is the public key
                 if (!ECVerify(this.source, this.hash, this.sig)) return false;
                 if (this.source == this.dest) return false;
+                return true;
             }
             serialize() {
                 return {
