@@ -10,6 +10,9 @@ body {
 	margin: 10px;
 	float: left;
 }
+h3 {
+	font-size: 80%;
+}
 #log {
 	font-size: 80%;
 	height: 200px;
