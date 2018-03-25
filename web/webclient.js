@@ -12,7 +12,7 @@ window.updateStats = () => {
     let peers = '';
     for (let i = 0; i < node.net.outPeers.length; ++i) {
         peers += node.net.outPeers[i].ip;
-        if (node.net.outPeers[i].ip == GafNode.INIT_NODE)
+        if (node.net.outPeers[i].ip == "198.58.119.239")
             peers += " (genesis node)";
         peers += "<br>";
     }
