@@ -1023,6 +1023,7 @@
                             console.log('port - log the current port the node is listening on');
                             console.log('export [filename] - export blockchain to [filename]');
                             console.log('import [filename] - import blockchain from [filename]');
+                            console.log('printblk [blknum] - print block # [blknum]');
                             break;
                         case 'clear':
                             console.clear();
