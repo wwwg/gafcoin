@@ -813,7 +813,7 @@
             }
             transfer(dest, amount) {
                 if (!dest || !amount) throw new Error('invalid args');
-                if (dest == this.wallet.address) throw ner Error('source and dest cant be the same');
+                if (dest == this.wallet.address) throw new Error('source and dest cant be the same');
                 let me = this,
                     tx = new Transaction(me.wallet.address, dest, amount, Date.now());
                 tx.sign(me.wallet.private); // sign tx to verify we made it
