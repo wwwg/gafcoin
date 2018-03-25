@@ -502,7 +502,8 @@
             validate() {
                 if (!this.sig) throw new Error("Unable to validate unsigned transaction");
                 // Source address is the public key
-                return ECVerify(this.source, this.hash, this.sig);
+                if (!ECVerify(this.source, this.hash, this.sig)) return false;
+                if (this.source == this.dest) return false;
             }
             serialize() {
                 return {
@@ -812,6 +813,7 @@
             }
             transfer(dest, amount) {
                 if (!dest || !amount) throw new Error('invalid args');
+                if (dest == this.wallet.address) throw ner Error('source and dest cant be the same');
                 let me = this,
                     tx = new Transaction(me.wallet.address, dest, amount, Date.now());
                 tx.sign(me.wallet.private); // sign tx to verify we made it
@@ -954,7 +956,7 @@
                     }
                     me.bc.add(blk);
                     if (IS_NODEJS) {
-                        console.log(chalk.green("validated new block #" + blk.pos));
+                        console.log(chalk.green(`new block #${blk.pos}, hash "${blk.hash}"`));
                     }
                     me.emit('addedBlock', blk);
                     me.blkPosNeeded = me.bc.height();
