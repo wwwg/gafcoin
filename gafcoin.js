@@ -116,6 +116,7 @@
                         me = this;
                     ws.on('open', () => {
                         // make life a little easier
+                        if (!me.firstPeer) me.firstPeer = ws;
                         ws.ip = ws._socket.remoteAddress;
                         ws.port = ws._socket.remotePort;
                         ws.family = ws._socket.remoteFamily;
@@ -139,6 +140,7 @@
                     let ws = new window.WebSocket(address),
                         me = this;
                     ws.onopen = () => {
+                        if (!me.firstPeer) me.firstPeer = ws;
                         let urlParser = document.createElement('a');
                         urlParser.href = address;
                         ws.ip = urlParser.hostname;
@@ -166,6 +168,7 @@
             constructor(listenPort, node) {
                 super();
                 this.node = node;
+                this.firstPeer = null;
                 this._port = listenPort;
                 this.outPeers = []; // sockets we connect to
                 this.inPeers = []; // sockets that connect to us
@@ -180,6 +183,7 @@
                         ws.ip = ws._socket.remoteAddress;
                         ws.port = ws._socket.remotePort;
                         ws.family = ws._socket.remoteFamily;
+                        if (!me.firstPeer) me.firstPeer = ws;
                         
                         console.log(chalk.green.bold('new inbound peer "' + ws.ip + ":" + ws.port + '"'));
                         this.inPeers.push(ws);
@@ -227,7 +231,8 @@
                 this.broadcast('getbc', {});
             }
             reqBlock(blockNum) {
-                this.broadcast('getblk', {
+                if (!this.firstPeer) return;
+                this.send(this.firstPeer, 'getblk', {
                     n: blockNum
                 });
             }
