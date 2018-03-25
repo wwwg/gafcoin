@@ -42,13 +42,17 @@ window.getprivate = () => {
         return;
     }
     node.wallet = new (node.wallet.constructor)(newKey);
+    localStorage.priv = newKey;
     window.updateStats();
 }
 window.getwalletaddr = () => {
     window.prompt('your wallet address:', node.wallet.address);
 }
 setTimeout(() => {
-    window.node = new GafNode();
+    let pkey;
+    if (localStorage.priv) pkey = localStorage.priv;
+    window.node = new GafNode(null, pkey);
+    if (!localStorage.priv) localStorage.priv = node.wallet.private;
     node.on('connection', peer => {
         write('connected to new peer');
         updateStats();
