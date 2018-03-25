@@ -11,7 +11,7 @@ window.updateStats = () => {
     document.getElementById('pendingTxs').textContent = node.pendingTxs.length;
     let peers = '';
     for (let i = 0; i < node.net.outPeers.length; ++i) {
-        peers += node.net.outPeers[i].address;
+        peers += node.net.outPeers[i].ip;
         peers += "<br>";
     }
     document.getElementById('peers').innerHTML = peers;
