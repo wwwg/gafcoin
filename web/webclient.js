@@ -52,9 +52,11 @@ setTimeout(() => {
     node.on('connection', peer => {
         write('connected to new peer');
         updateStats();
+        setTimeout(updateStats, 1000);
     }).on('disconnection', peer => {
         write('lost connection to peer');
         updateStats();
+        setTimeout(updateStats, 1000);
     }).on('synced', () => {
         write('successfully synced to network');
         write('blockchain height: ' + node.bc.height());
