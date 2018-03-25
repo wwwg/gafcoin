@@ -1131,6 +1131,9 @@
                             node.pendingTxs = [];
                             console.log(chalk.green('Cleared pending transactions'));
                             break;
+                        case "pending":
+                            console.log(chalk.yellow(`pending txs: ${node.pendingTxs.length}`));
+                            break;
                         default:
                             console.log(chalk.red('invalid command, use "help" for a list'));
                             break;
