@@ -12,6 +12,8 @@ window.updateStats = () => {
     let peers = '';
     for (let i = 0; i < node.net.outPeers.length; ++i) {
         peers += node.net.outPeers[i].ip;
+        if (node.net.outPeers[i].ip == GafNode.INIT_NODE)
+            peers += " (genesis node)";
         peers += "<br>";
     }
     document.getElementById('peers').innerHTML = peers;
