@@ -906,6 +906,7 @@
                         }, 5000);
                     }
                 }).on('blockchain', bc => {
+                    /*
                     if (bc.height() > me.bc.height()) {
                         let isChainValid = bc.validate(); // validate the integrity of the chain
                         if (isChainValid) {
@@ -918,6 +919,7 @@
                             me.emit('syncFail');
                         }
                     }
+                    */
                 }).on('newPeer', peer => {
                     me.peerCount++;
                     if (!me.gotFirstPeer) {
