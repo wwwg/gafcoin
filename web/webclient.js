@@ -9,6 +9,8 @@ window.updateStats = () => {
     document.getElementById('bcHeight').textContent = node.bc.height();
     document.getElementById('balance').textContent = node.balance();
     document.getElementById('pendingTxs').textContent = node.pendingTxs.length;
+    document.getElementById('reward').textContent = node.bc.blockReward;
+    document.getElementById('diff').textContent = node.bc.globalDiff;
     let peers = '';
     for (let i = 0; i < node.net.outPeers.length; ++i) {
         peers += node.net.outPeers[i].ip;

@@ -10,7 +10,7 @@ body {
 	margin: 10px;
 	float: left;
 }
-#peerheader {
+.header {
 	font-size: 110%;
 }
 #log {

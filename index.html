@@ -14,7 +14,6 @@
                 <h3>this node</h3>
                 wallet balance: <span id="balance">loading...</span><br>
                 connected nodes: <span id="peerCount">loading...</span><br>
-                blockchain height: <span id="bcHeight">loading...</span><br>
                 pending transactions: <span id="pendingTxs">loading...</span><br>
                 <br>
                 <button id="privkey" onclick="getwalletaddr()">get wallet address</button><br><br>
@@ -28,10 +27,16 @@
                 <button onclick="transfer()">transfer</button>
             </div>
             <div class="box">
-                <h3 id="peerheader">connected peers</h3>
+                <h3 class="header">connected peers</h3>
                 <div id="peers">
                     <!-- peers will go here -->
                 </div>
+            </div>
+            <div class="net">
+                <h3 class="header">network</h3>
+                difficulty: <span id="diff">loading...</span><br>
+                block reward: <span id="reward">loading...</span><br>
+                blockchain height: <span id="bcHeight">loading...</span><br>
             </div>
             <div id="log" class="box">
                 <h3>debug log</h3>
