@@ -85,5 +85,7 @@ setTimeout(() => {
     }).on('addedBlock', blk => {
         write('added new block "' + blk.hash + '"');
         updateStats();
-    });
+    }).on('outdated', () => {
+        alert(`the network has deemed this node outdated. please refresh the page to use the latest version`);
+    })
 }, 2000);
