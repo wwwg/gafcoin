@@ -1025,6 +1025,7 @@
                             console.log('import [filename] - import blockchain from [filename]');
                             console.log('printblk [blknum] - print block # [blknum]');
                             console.log('cleartxs - clear pending transaction cache');
+                            console.log('pending - print number of pending txs');
                             break;
                         case 'clear':
                             console.clear();
