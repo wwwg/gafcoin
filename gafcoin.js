@@ -1168,7 +1168,20 @@
                         res.status(404).send('not found');
                         return;
                     } else {
-                        // todo 
+                        let blk;
+                        for (let i = 0; i < node.bc.height(); ++i) {
+                            let thisBlk = node.bc.at(i);
+                            if (thisBlk.hash == blkHash) {
+                                blk = thisBlk;
+                                break;
+                            }
+                        }
+                        if (!blk) {
+                            res.status(404).send('not found');
+                            return;
+                        } else {
+                            res.send(blk.serialize());
+                        }
                     }
                 });
                 if (httpPort) {
