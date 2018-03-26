@@ -1178,11 +1178,11 @@
         const LOAD_TIME = 1000;
         // load all nessacary modules
         let scripts = [
-            'https://cdn.rawgit.com/emn178/js-sha3/master/build/sha3.min.js',
-            'https://cdn.rawgit.com/indutny/elliptic/master/dist/elliptic.min.js',
-            "https://cdnjs.cloudflare.com/ajax/libs/node-uuid/1.4.8/uuid.min.js",
-            'https://cdnjs.cloudflare.com/ajax/libs/pako/1.0.6/pako.min.js',
-            'https://cdn.rawgit.com/Olical/EventEmitter/master/EventEmitter.min.js'
+            'scripts/sha3.min.js',
+            'scripts/elliptic.min.js',
+            "scripts/uuid.min.js",
+            'scripts/pako.min.js',
+            'scripts/EventEmitter.min.js'
         ];
         let loadedScripts = 0;
         let onScriptLoad = () => {
