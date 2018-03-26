@@ -1214,6 +1214,8 @@
                         txs.push(node.pendingTxs[i].serialize());
                     }
                     res.send(txs);
+                }).post('/transact', (req, res) => {
+                    // console.log(req.body);
                 });
                 if (httpPort) {
                     app.listen(httpPort);
