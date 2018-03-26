@@ -995,9 +995,10 @@
                 pkey = null;
             if (args['help'] || !args['p']) {
                 console.log('usage:');
-                console.log('node gafcoin.js  [ -k <key> ] -p <port>');
+                console.log('node gafcoin.js  [ -k <key> --http-port <http port>] -p <port>');
                 console.log('where <port> is a tcp port to listen on');
                 console.log('and <key> is optionally a private key to use for your wallet.');
+                console.log('if an http port is provided, an http server will be started on port <http port> and will allow you to use the gafcoin http api.');
                 process.exit(0);
             }
             let port = parseInt(args['p']);
