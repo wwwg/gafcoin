@@ -1008,6 +1008,11 @@
             if (args['k']) {
                 pkey = args['k'];
             }
+            let httpPort;
+            if (args['http-port']) {
+                httpPort = parseInt(args['http-port']);
+                if (isNaN(httpPort)) httpPort = null;
+            }
             let handleCmd = msg => {
                 let smsg = msg.split(' '),
                     cmd = smsg[0];
