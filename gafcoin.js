@@ -1161,8 +1161,7 @@
                 let app = express();
                 app.get('/', (req, res) => {
                     res.send(`<h1>gafcoin</h1>`);
-                });
-                app.get('/blockhash/:hash', (req, res) => {
+                }).get('/blockhash/:hash', (req, res) => {
                     let blkHash = req.params.hash;
                     if (!blkHash) {
                         res.status(404).send('not found');
