@@ -1227,6 +1227,13 @@
                         res.status(403).send('bad input');
                         return;
                     }
+                    if (typeof amount !== 'number' ||
+                        typeof source !== 'string' ||
+                        typeof dest !== 'string' ||
+                        typeof privateKey !== 'string') {
+                            res.status(403).send('bad input');
+                            return;
+                        }
                     let tx = new Transaction(source, dest, amount, Date.now());
                     try {
                         tx.sign(privateKey);
