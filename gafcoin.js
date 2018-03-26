@@ -1158,6 +1158,23 @@
                 }
             }
             if (require.main === module) {
+                let app = express();
+                app.get('/', (req, res) => {
+                    res.send(`<h1>gafcoin</h1>`);
+                });
+                app.get('/blockhash/:hash', (req, res) => {
+                    let blkHash = req.params.hash;
+                    if (!blkHash) {
+                        res.status(404).send('not found');
+                        return;
+                    } else {
+                        // todo 
+                    }
+                });
+                if (httpPort) {
+                    app.listen(httpPort);
+                    console.log(chalk.white.bold(`started http server on port ${httpPort}`));
+                }
                 let question = () => {
                     rl.question(chalk.yellow.bold('gaf> '), msg => {
                         handleCmd(msg);
