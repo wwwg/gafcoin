@@ -8,6 +8,7 @@
         "elliptic": "*",
         "minimist": "*",
         "chalk": "*",
-        "pako": "*"
+        "pako": "*",
+        "express": "*"
     }
 }

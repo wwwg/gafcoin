@@ -20,7 +20,7 @@
         chalk,
         pako,
         EC,
-        http;
+        express;
     if (IS_NODEJS) {
         uws = require("uws");
         createKeccakHash = require("keccak");
@@ -32,7 +32,7 @@
         EC = require('elliptic').ec;
         rl = readline.createInterface(process.stdin, process.stdout);
         pako = require('pako');
-        http = require('http');
+        express = require('express');
         // hook console.log to support my cool ass prompt
         let _log = console.log.bind(console);
         console.log = function() {
