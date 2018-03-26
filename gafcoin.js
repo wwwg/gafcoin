@@ -20,7 +20,8 @@
         chalk,
         pako,
         EC,
-        express;
+        express,
+        bodyParser;
     if (IS_NODEJS) {
         uws = require("uws");
         createKeccakHash = require("keccak");
@@ -33,6 +34,7 @@
         rl = readline.createInterface(process.stdin, process.stdout);
         pako = require('pako');
         express = require('express');
+        bodyParser = require('body-parser');
         // hook console.log to support my cool ass prompt
         let _log = console.log.bind(console);
         console.log = function() {
@@ -1159,6 +1161,8 @@
             }
             if (require.main === module) {
                 let app = express();
+                app.use(bodyParser.json());
+                app.use(bodyParser.urlencoded({ extended: true }));
                 app.get('/', (req, res) => {
                     res.send(`<h1>gafcoin</h1>`);
                 }).get('/blockhash/:hash', (req, res) => {

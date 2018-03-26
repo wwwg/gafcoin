@@ -9,6 +9,7 @@
         "minimist": "*",
         "chalk": "*",
         "pako": "*",
-        "express": "*"
+        "express": "*",
+        "body-parser": "*"
     }
 }
