@@ -1243,7 +1243,7 @@
                     }
                     node.net.announceTx(tx);
                     res.send('success');
-                }).get('/balance/:address'. (req, res) => {
+                }).get('/balance/:address', (req, res) => {
                     let addr = req.params.address;
                     if (!addr) {
                         res.send('wrong address');
