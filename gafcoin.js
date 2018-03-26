@@ -1208,7 +1208,13 @@
                         reward: node.bc.blockReward,
                         pendingTxs: node.pendingTxs.length
                     });
-                })
+                }).get('/txpool', (req, res) => {
+                    let txs = [];
+                    for (let i = 0; i < node.pendingTxs.length; ++i) {
+                        txs.push(node.pendingTxs[i].serialize());
+                    }
+                    res.send(txs);
+                });
                 if (httpPort) {
                     app.listen(httpPort);
                     console.log(chalk.white.bold(`started http server on port ${httpPort}`));
