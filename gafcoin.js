@@ -1182,7 +1182,26 @@
                             res.send(blk.serialize());
                         }
                     }
-                });
+                }).get('/block/:number', (req, res) => {
+                    let num = req.params.number;
+                    if (!num) {
+                        res.status(404).send('not found');
+                        return;
+                    }
+                    let blk;
+                    try {
+                        blk = node.bc.at(num);
+                    } catch (e) {
+                        res.status(404).send('not found');
+                        return;
+                    }
+                    if (blk) {
+                        res.send(blk.serialize());
+                    } else {
+                        res.status(404).send('not found');
+                        return;
+                    }
+                })
                 if (httpPort) {
                     app.listen(httpPort);
                     console.log(chalk.white.bold(`started http server on port ${httpPort}`));
