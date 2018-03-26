@@ -1204,8 +1204,8 @@
                 }).get('/network', (req, res) => {
                     res.send({
                         height: node.bc.height(),
-                        difficulty: node.globalDiff,
-                        reward: node.blockReward,
+                        difficulty: node.bc.globalDiff,
+                        reward: node.bc.blockReward,
                         pendingTxs: node.pendingTxs.length
                     });
                 })
