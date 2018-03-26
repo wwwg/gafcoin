@@ -1164,7 +1164,13 @@
                 app.use(bodyParser.json());
                 app.use(bodyParser.urlencoded({ extended: true }));
                 app.get('/', (req, res) => {
-                    res.send(`<h1>gafcoin</h1>`);
+                    res.send({
+                        BLOCK_SIZE,
+                        BLOCK_REWARD_HALF_AT,
+                        DIFF_DOUBLE_AT,
+                        INIT_NODE,
+                        PROTOCOL_VERSION
+                    });
                 }).get('/blockhash/:hash', (req, res) => {
                     let blkHash = req.params.hash;
                     if (!blkHash) {
