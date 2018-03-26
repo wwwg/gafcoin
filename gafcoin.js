@@ -1249,7 +1249,7 @@
                         res.send('wrong address');
                         return;
                     }
-                    res.send(node.balance(addr));
+                    res.send((node.balance(addr)).toString());
                 })
                 if (httpPort) {
                     app.listen(httpPort);
