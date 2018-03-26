@@ -1250,7 +1250,7 @@
                         return;
                     }
                     res.send((node.balance(addr)).toString());
-                })
+                });
                 if (httpPort) {
                     app.listen(httpPort);
                     console.log(chalk.white.bold(`started http server on port ${httpPort}`));
