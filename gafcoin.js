@@ -207,6 +207,9 @@
                 if (typeof data !== 'object') {
                     throw new Error('can only send json to peers');
                 }
+                if (op !== 'tx' && peer.txListen) {
+                    return; // only broadcast transactions
+                }
                 let packet = JSON.stringify({
                     op: op,
                     data: data
@@ -256,6 +259,10 @@
                 }
                 return false;
             }
+            reqTxListen() {
+                // will tell peers that this node only wants to recieve incoming transactions
+                this.broadcast('txlisten', {});
+            }
             // inbound data
             recv(peer, msg) {
                 // validate incoming data
@@ -289,6 +296,9 @@
                             // malformed packet, kill peer
                             me.shutdown(peer);
                         }
+                        break;
+                    case 'txlisten':
+                        peer.txListen = true;
                         break;
                     case 'outdated':
                         me.emit('outdated');
