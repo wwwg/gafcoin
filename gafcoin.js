@@ -1219,7 +1219,23 @@
                     }
                     res.send(txs);
                 }).post('/transact', (req, res) => {
-                    // console.log(req.body);
+                    let source = req.body.wallet,
+                        dest = req.body.to,
+                        privateKey = req.body.privateKey,
+                        amount = req.body.amount;
+                    if (!source || !privateKey || !amount || !dest) {
+                        res.status(403).send('bad input');
+                        return;
+                    }
+                    let tx = new Transaction(source, dest, amount, Date.now());
+                    try {
+                        tx.sign(privateKey);
+                    } catch (e) {
+                        res.status(403).send('failed to sign transaction');
+                        return;
+                    }
+                    node.net.announceTx(tx);
+                    res.send('success');
                 });
                 if (httpPort) {
                     app.listen(httpPort);
