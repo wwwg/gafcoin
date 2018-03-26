@@ -1201,6 +1201,13 @@
                         res.status(404).send('not found');
                         return;
                     }
+                }).get('/network', (req, res) => {
+                    res.send({
+                        height: node.bc.height(),
+                        difficulty: node.globalDiff,
+                        reward: node.blockReward,
+                        pendingTxs: node.pendingTxs.length
+                    });
                 })
                 if (httpPort) {
                     app.listen(httpPort);
