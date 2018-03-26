@@ -1256,6 +1256,44 @@
                         return;
                     }
                     res.send((node.balance(addr)).toString());
+                }).post('/submitblock', (req, res) => {
+                    let ts = req.body.timestamp,
+                        last = req.body.lastHash,
+                        rawTxs = req.body.transactions,
+                        pos = req.body.position,
+                        nonce = req.body.nonce;
+                    if (!ts || !last || !rawTxs || !pos || !nonce) {
+                        res.status(403).send('bad input');
+                        return;
+                    }
+                    let txs = [];
+                    for (let i = 0; i < data.txs.length; ++i) {
+                        if (!(
+                            rawTxs[i].i ||
+                            rawTxs[i].o ||
+                            rawTxs[i].value ||
+                            rawTxs[i].t ||
+                            rawTxs[i].sig
+                        )) {
+                            // invalid data
+                            res.status(403).send('bad transaction');
+                            return;
+                        }
+                        let tx = Transaction.from(rawTxs[i]);
+                        txs.push(tx);
+                    }
+                    let blk = Block.from(ts, last, txs, pos, nonce);
+                    if (!blk) {
+                        res.status(403).send('bad block');
+                        return;
+                    }
+                    let validation = node.bc.validateBlock(blk);
+                    if (validation !== true) {
+                        res.status(403).send(`failed to verify block: ${validation}`);
+                        return;
+                    }
+                    node.net.announceBlock(blk);
+                    res.send('success');
                 });
                 if (httpPort) {
                     app.listen(httpPort);
