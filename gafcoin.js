@@ -1234,7 +1234,8 @@
                         txs.push(node.pendingTxs[i].serialize());
                     }
                     res.send(txs);
-                }).post('/transact', (req, res) => {
+                }).post('/utransact', (req, res) => {
+                    // unsigned transaction
                     let source = req.body.wallet,
                         dest = req.body.to,
                         privateKey = req.body.privateKey,
@@ -1255,6 +1256,30 @@
                         tx.sign(privateKey);
                     } catch (e) {
                         res.status(403).send('failed to sign transaction');
+                        return;
+                    }
+                    node.net.announceTx(tx);
+                    res.send('success');
+                }).post('/transact', (req, res) => {
+                    // presigned transaction ; no private key needed
+                    let source = req.body.wallet,
+                        dest = req.body.to,
+                        sig = req.body.signature,
+                        amount = req.body.amount;
+                    if (!source || !sig || !amount || !dest) {
+                        res.status(403).send('bad input');
+                        return;
+                    }
+                    if (typeof amount !== 'number' ||
+                        typeof source !== 'string' ||
+                        typeof dest !== 'string' ||
+                        typeof sig !== 'string') {
+                            res.status(403).send('bad input');
+                            return;
+                        }
+                    let tx = new Transaction(source, dest, amount, Date.now(), sig);
+                    if (!tx.validate()) {
+                        res.status(403).send('invalid signature');
                         return;
                     }
                     node.net.announceTx(tx);
