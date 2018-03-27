@@ -27,7 +27,7 @@ window.togglemine = () => {
 }
 window.transfer = () => {
     let dest = document.getElementById('destAddr').value;
-    let amount = parseInt(document.getElementById('value').value);
+    let amount = parseFloat(document.getElementById('value').value);
     if (isNaN(amount)) return alert('wrong amount');
     if (dest == node.wallet.address) return alert(`source and destination can't be the same`);
     let myBalance = node.balance();
