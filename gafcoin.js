@@ -1258,6 +1258,10 @@
                         res.status(403).send('failed to sign transaction');
                         return;
                     }
+                    if (!tx.validate()) {
+                        res.send('invalid transaction');
+                        return;
+                    }
                     node.net.announceTx(tx);
                     res.send('success');
                 }).post('/transact', (req, res) => {
