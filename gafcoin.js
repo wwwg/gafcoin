@@ -1043,7 +1043,7 @@
                         me.emit('newBlock', blk);
                         // share valid new block with rest of the network
                         me.net.announceBlock(blk);
-                        if (me.bc.height() > GENESIS_REBIRTH && me.isMiner) {
+                        if (me.bc.height() >= GENESIS_REBIRTH && me.isMiner) {
                             me.rebirth();
                         }
                     } else {
