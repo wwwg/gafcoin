@@ -970,6 +970,11 @@
                 // returns the size of the blockchain in bytes
                 return JSON.stringify(this.serialize()).length;
             }
+            swapWith(blk) {
+                this.chain = [blk];
+                this.globalDiff = this.calcDiff();
+                this.blockReward = this.calcReward();
+            }
         }
         class GafNode extends EE {
             balance(addr) {
@@ -1152,6 +1157,8 @@
                             if (IS_NODEJS) console.log(chalk.red.bold('rejected invalid rebirth block'));
                             return;
                         };
+                        // blockchain can be replaced with this block
+                        node.bc.swapWith(rblk);
                     }
                 })
                 if (IS_NODEJS) {
