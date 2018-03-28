@@ -966,6 +966,9 @@
                 let genesis = Block.genesisChain(this.bc);
                 let diff = this.bc.globalDiff * 2; // block with the most work put into it will be chosen
                 genesis.mine(diff);
+                let blk = RebirthBlock.fromBlock(genesis, this.wallet.address);
+                blk.sign(this.wallet.privateKey);
+                return blk;
             }
             constructor(port, privateKey = null) {
                 super();
