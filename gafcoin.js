@@ -539,6 +539,10 @@
                     console.log(e);
                 }
             }
+            size() {
+                // returns the size of the transaction in bytes
+                return JSON.stringify(this.serialize()).length;
+            }
         }
         class Block {
             static genesisChain(bc) {
@@ -636,6 +640,10 @@
                     'txs': txs,
                     'hash': this.hash
                 }
+            }
+            size() {
+                // returns the size of the block in bytes
+                return JSON.stringify(this.serialize()).length;
             }
         }
         // create genesis block, which is hardcoded into every client
@@ -852,6 +860,10 @@
                     }
                 }
                 return Math.ceil(baseReward);
+            }
+            byteLength() {
+                // returns the size of the blockchain in bytes
+                return JSON.stringify(this.serialize()).length;
             }
         }
         class GafNode extends EE {
