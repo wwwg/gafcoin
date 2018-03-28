@@ -1138,7 +1138,7 @@
                 }).on('outdated', () => {
                     me.emit('outdated');
                 }).on('rebirthBlock', rblk => {
-                    me.announceRebirth(rblk); // spread the block throughout the network
+                    me.net.announceRebirth(rblk); // spread the block throughout the network
                     if (me.bc.height() >= GENESIS_REBIRTH) {
                         // block can be considered valid
                         let isValid = rblk.verifyWithChain(node.bc);
