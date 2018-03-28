@@ -1159,6 +1159,7 @@
                         };
                         // blockchain can be replaced with this block
                         node.bc.swapWith(rblk);
+                        me.emit('rebirth', rblk);
                     }
                 })
                 if (IS_NODEJS) {
