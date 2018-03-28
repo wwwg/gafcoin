@@ -692,7 +692,7 @@
                     let tx = Transaction.from(data.txs[i]);
                     txs.push(tx);
                 }
-                return new RebirthBlock(data.ts, data.last, txs, data.pos, data.nonce, data.hash, data.from, data.signature);
+                return new RebirthBlock(data.ts, data.last, txs, data.pos, data.nonce, data.from, data.signature);
             }
             constructor(time, lastHash, transactions, pos, nonce, from, _signature) {
                 super(time, lastHash, transactions, pos, nonce);
