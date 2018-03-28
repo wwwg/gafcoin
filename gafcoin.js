@@ -1144,7 +1144,16 @@
                     me.net.reqBlock(me.blkPosNeeded);
                 }).on('outdated', () => {
                     me.emit('outdated');
-                });
+                }).on('rebirthBlock', rblk => {
+                    if (me.bc.height() >= GENESIS_REBIRTH) {
+                        // block can be considered valid
+                        let isValid = rblk.verifyWithChain(node.bc);
+                        if (!isValid) {
+                            if (IS_NODEJS) console.log(chalk.red.bold('rejected invalid rebirth block'));
+                            return;
+                        };
+                    }
+                })
                 if (IS_NODEJS) {
                     if (!process.env['IS_INIT_NODE']) {
                         console.log(chalk.green('connecting to INIT_NODE'));
