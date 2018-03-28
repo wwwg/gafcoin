@@ -896,6 +896,11 @@
                 }
                 return false;
             }
+            createRebirthBlk() {
+                let genesis = Block.genesisChain(this.bc);
+                let diff = this.bc.globalDiff * 2; // block with the most work put into it will be chosen
+                genesis.mine(diff);
+            }
             constructor(port, privateKey = null) {
                 super();
                 let me = this;
