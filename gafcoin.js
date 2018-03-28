@@ -651,6 +651,24 @@
             static fromBlock(blk) {
                 return new RebirthBlock(blk.time, blk.lastHash, blk.transactions, blk.pos, blk.nonce);
             }
+            static from(data) {
+                let txs = [];
+                for (let i = 0; i < data.txs.length; ++i) {
+                    if (!(
+                        data.txs[i].i ||
+                        data.txs[i].o ||
+                        data.txs[i].value ||
+                        data.txs[i].t ||
+                        data.txs[i].sig
+                    )) {
+                        // invalid data
+                        return null;
+                    }
+                    let tx = Transaction.from(data.txs[i]);
+                    txs.push(tx);
+                }
+                return new RebirthBlock(data.ts, data.last, txs, data.pos, data.nonce, data.hash, data.from, data.signature);
+            }
             constructor(time, lastHash, transactions, pos, nonce, from, _signature) {
                 super(time, lastHash, transactions, pos, nonce);
                 if (!from) throw new Error('address needed to sign block');
