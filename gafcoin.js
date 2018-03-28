@@ -321,6 +321,7 @@
                             return;
                         }
                         let newBlk = RebirthBlock.from(JSON.parse(decompressedBlk));
+                        me.emit('rebirthBlock', newBlk);
                         break;
                     case 'txlisten':
                         peer.txListen = true;
