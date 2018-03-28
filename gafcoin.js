@@ -4,7 +4,7 @@
         BLOCK_REWARD_HALF_AT = 100, // block reward will half every x blocks
         DIFF_DOUBLE_AT = 150, // network difficulty will double every x blocks
         INIT_NODE = 'ws://198.58.119.239:9284', // original node; hard coded into every node
-        GENESIS_REBIRTH = 10, // height at which to perform a blockchain rebirth
+        GENESIS_REBIRTH = 3, // height at which to perform a blockchain rebirth
         PROTOCOL_VERSION = 7; // proto version; versions lower than this are rejected by nodes
 
     // local constants
