@@ -647,6 +647,30 @@
                 return JSON.stringify(this.serialize()).length;
             }
         }
+        class RebirthBlock extends Block {
+            static fromBlock(blk) {
+                return new RebirthBlock(blk.time, blk.lastHash, blk.transactions, blk.pos, blk.nonce);
+            }
+            constructor(time, lastHash, transactions, pos, nonce, from) {
+                super(time, lastHash, transactions, pos, nonce);
+                if (!from) throw new Error('address needed to sign block');
+                this.signedBy = from;
+                this.signature = null;
+                this.signed = false;
+                this.hash = this.calcHash();
+            }
+            sign(privateKey) {
+                if (this.signed) throw new Error('already signed block');
+                this.hash = this.calcHash();
+                this.signature = ECSign(privKey, this.hash);
+                this.signed = true;
+                return this.signature;
+            }
+            verify() {
+                if (!this.signed) throw new Error('unsigned block');
+                return ECVerify(this.signedBy, this.hash, this.signature);
+            }
+        }
         // create genesis block, which is hardcoded into every client
         let genesisTxs = [];
         for (let i = 0; i < BLOCK_SIZE; ++i) {
