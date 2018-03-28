@@ -708,7 +708,7 @@
                 this.hash = this.calcHash();
             }
             verifyWithChain(blockchain) {
-                if (!this.verify) return false;
+                if (!this.verify()) return false;
                 for (let i = 0; i < this.transactions.length; ++i) {
                     let tx = this.transactions[i],
                         thisAddr = tx.dest,
