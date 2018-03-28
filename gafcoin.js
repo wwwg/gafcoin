@@ -1030,6 +1030,12 @@
         GafNode.DIFF_DOUBLE_AT = DIFF_DOUBLE_AT;
         GafNode.INIT_NODE = INIT_NODE;
         GafNode.PROTOCOL_VERSION = PROTOCOL_VERSION;
+        // network objects
+        GafNode.Block = Block;
+        GafNode.Transaction = Transaction;
+        GafNode.BlockChain = BlockChain;
+        GafNode.Wallet = Wallet;
+        GafNode.Network = NetNode;
         
         if (IS_NODEJS) {
             process.on('uncaughtException', err => {
