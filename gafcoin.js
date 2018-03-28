@@ -595,7 +595,7 @@
                 this.pos = pos; // position on the chain
                 this.time = time;
                 this.lastHash = lastHash;
-                this.isGenesis = false;
+                this.isGenesis = (blk.lastHash === '');
                 if (nonce) {
                     this.nonce = nonce;
                 } else {
