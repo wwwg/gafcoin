@@ -235,6 +235,15 @@
                 let stx = tx.serialize();
                 this.broadcast('tx', stx);
             }
+            announceRebirth(genesisBlock) {
+                let blk = genesisBlock.serialize();
+                // compress for network
+                let outData = {
+                    'blk': ''
+                };
+                outData.blk = compress(JSON.stringify(blk));
+                this.broadcast('rebirthblk', outData);
+            }
             reqBlockChain() {
                 this.broadcast('getbc', {});
             }
