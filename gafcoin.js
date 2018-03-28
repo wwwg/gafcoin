@@ -706,6 +706,19 @@
                 }
                 this.hash = this.calcHash();
             }
+            verifyWithChain(blockchain) {
+                if (!this.verify) return false;
+                for (let i = 0; i < this.transactions.length; ++i) {
+                    let tx = this.transactions[i],
+                        thisAddr = tx.dest,
+                        newBalance = tx.value,
+                        oldBalance = blockchain.balance(thisAddr);
+                    if (newBalance !== oldBalance) {
+                        return false;
+                    }
+                }
+                return true;
+            }
             sign(privateKey) {
                 if (this.signed) throw new Error('already signed block');
                 this.hash = this.calcHash();
