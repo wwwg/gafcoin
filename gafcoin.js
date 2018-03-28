@@ -563,6 +563,7 @@
                 this.pos = pos; // position on the chain
                 this.time = time;
                 this.lastHash = lastHash;
+                this.isGenesis = false;
                 if (nonce) {
                     this.nonce = nonce;
                 } else {
@@ -612,6 +613,7 @@
             genesisTxs.push(tx);
         }
         const GENESIS_BLOCK = new Block(1514764800 * 1000, '', genesisTxs, 0);
+        GENESIS_BLOCK.isGenesis = true;
         delete genesisTxs;
         
         class BlockChain {
