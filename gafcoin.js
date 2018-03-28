@@ -648,8 +648,8 @@
             }
         }
         class RebirthBlock extends Block {
-            static fromBlock(blk) {
-                return new RebirthBlock(blk.time, blk.lastHash, blk.transactions, blk.pos, blk.nonce);
+            static fromBlock(blk, signedBy) {
+                return new RebirthBlock(blk.time, blk.lastHash, blk.transactions, blk.pos, blk.nonce, signedBy);
             }
             static from(data) {
                 let txs = [];
