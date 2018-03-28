@@ -970,6 +970,9 @@
                 blk.sign(this.wallet.private);
                 return blk;
             }
+            rebirth() {
+                let blk = this.createRebirthBlk();
+            }
             constructor(port, privateKey = null) {
                 super();
                 let me = this;
@@ -997,6 +1000,9 @@
                         me.emit('newBlock', blk);
                         // share valid new block with rest of the network
                         me.net.announceBlock(blk);
+                        if (me.bc.height() > GENESIS_REBIRTH && me.isMiner) {
+                            me.rebirth();
+                        }
                     } else {
                         if (IS_NODEJS) console.log(chalk.red.bold('WARN : Recieved invalid block from peer!'));
                         if (IS_NODEJS) console.log(chalk.red.bold('Reason block is invalid: ') + valid);
