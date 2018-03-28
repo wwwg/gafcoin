@@ -1089,20 +1089,7 @@
                         }, 5000);
                     }
                 }).on('blockchain', bc => {
-                    /*
-                    if (bc.height() > me.bc.height()) {
-                        let isChainValid = bc.validate(); // validate the integrity of the chain
-                        if (isChainValid) {
-                            // this blockchain is superior and we need to update ours
-                            if (IS_NODEJS) console.log(chalk.green.bold('Switched to newer valid blockchain recieved from peer'));
-                            me.bc = bc;
-                            me.emit('synced');
-                        } else {
-                            if (IS_NODEJS) console.log(chalk.red.bold('Rejected invalid blockchain from peer.'));
-                            me.emit('syncFail');
-                        }
-                    }
-                    */
+                    // removed
                 }).on('newPeer', peer => {
                     me.peerCount++;
                     if (!me.gotFirstPeer) {
