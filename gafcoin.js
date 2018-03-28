@@ -651,12 +651,17 @@
             static fromBlock(blk) {
                 return new RebirthBlock(blk.time, blk.lastHash, blk.transactions, blk.pos, blk.nonce);
             }
-            constructor(time, lastHash, transactions, pos, nonce, from) {
+            constructor(time, lastHash, transactions, pos, nonce, from, _signature) {
                 super(time, lastHash, transactions, pos, nonce);
                 if (!from) throw new Error('address needed to sign block');
                 this.signedBy = from;
-                this.signature = null;
-                this.signed = false;
+                if (_signature) {
+                    this.signature = _signature;
+                    this.signed = true;
+                } else {
+                    this.signature = null;
+                    this.signed = false;
+                }
                 this.hash = this.calcHash();
             }
             sign(privateKey) {
@@ -669,6 +674,25 @@
             verify() {
                 if (!this.signed) throw new Error('unsigned block');
                 return ECVerify(this.signedBy, this.hash, this.signature);
+            }
+            serialize() {
+                if (!this.signed) throw new Error('unsigned block');
+                this.hash = this.calcHash(); // just in case
+                let txs = [];
+                for (let i = 0; i < this.transactions.length; ++i) {
+                    let stx = this.transactions[i].serialize();
+                    txs.push(stx);
+                }
+                return {
+                    'pos': this.pos,
+                    'ts': this.time,
+                    'last': this.lastHash,
+                    'nonce': this.nonce,
+                    'txs': txs,
+                    'hash': this.hash,
+                    'signature': this.signature,
+                    'from': this.signedBy
+                }
             }
         }
         // create genesis block, which is hardcoded into every client
