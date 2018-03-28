@@ -541,6 +541,38 @@
             }
         }
         class Block {
+            static genesisChain(bc) {
+                // analyzes blockchain and compresses it into a single block
+                let addressMap = {}; // A map of addresses to their balance
+                // perform address mapping
+                for (let x = 0; x < bc.height(); ++x) {
+                    let blk = bc.at(x);
+                    for (let y = 0; y < blk.transactions.length; ++y) {
+                        let tx = blk.transactions[y];
+                        if (!addressMap[tx.source]) {
+                            let srcBalance = bc.balance(tx.source);
+                            if (srcBalance > 0)
+                                addressMap[tx.source] = srcBalance;
+                        }
+                        if (!addressMap[tx.dest]) {
+                            let destBalance = bc.balance(tx.dest);
+                            if (destBalance > 0)
+                                addressMap[tx.dest] = destBalance;
+                        }
+                    }
+                }
+                let genesisTxs = [];
+                let now = Date.now();
+                // convert address map into array of transactions
+                for (const addr in addressMap) {
+                    const balance = addressMap[addr];
+                    let tx = new Transaction('', addr, balance, now);
+                    genesisTxs.push(tx);
+                }
+                // create block from transaction array
+                let gblk = new Block(now, '', genesisTxs, 0);
+                return gblk;
+            }
             static from(data) {
                 let txs = [];
                 for (let i = 0; i < data.txs.length; ++i) {
