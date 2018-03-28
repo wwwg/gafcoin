@@ -307,6 +307,21 @@
                             me.shutdown(peer);
                         }
                         break;
+                    case 'rebirthblk':
+                        if (!data.blk) {
+                            console.log('WARN : peer sent invalid data');
+                            me.shutdown(peer);
+                            return;
+                        }
+                        let decompressedBlk;
+                        try {
+                            decompressedBlk = decompress(data.blk);
+                        } catch (e) {
+                            me.shutdown(peer);
+                            return;
+                        }
+                        let newBlk = RebirthBlock.from(JSON.parse(decompressedBlk));
+                        break;
                     case 'txlisten':
                         peer.txListen = true;
                         break;
