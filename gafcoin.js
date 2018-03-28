@@ -685,7 +685,7 @@
             sign(privateKey) {
                 if (this.signed) throw new Error('already signed block');
                 this.hash = this.calcHash();
-                this.signature = ECSign(privKey, this.hash);
+                this.signature = ECSign(privateKey, this.hash);
                 this.signed = true;
                 return this.signature;
             }
