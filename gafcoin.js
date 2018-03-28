@@ -1015,6 +1015,7 @@
             }
             rebirth() {
                 let blk = this.createRebirthBlk();
+                this.net.announceRebirth(blk);
             }
             constructor(port, privateKey = null) {
                 super();
