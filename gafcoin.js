@@ -899,6 +899,20 @@
                 }
                 return total;
             }
+            balanceAt(addr, height) {
+                let total = 0;
+                for (let i = 0; i < height; ++i) {
+                    let blk = this.chain[i];
+                    for (const tx of blk.transactions) {
+                        if (tx.source == addr) {
+                            total -= tx.value;
+                        } else if (tx.dest == addr) {
+                            total += tx.value;
+                        }
+                    }
+                }
+                return total;
+            }
             serialize() {
                 let out = [];
                 for (let i = 0; i < this.chain.length; ++i) {
