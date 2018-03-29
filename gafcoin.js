@@ -1018,12 +1018,12 @@
                     for (let y = 0; y < blk.transactions.length; ++y) {
                         let tx = blk.transactions[y];
                         if (!addressMap[tx.source]) {
-                            let srcBalance = this.balance(tx.source);
+                            let srcBalance = this.balanceAt(tx.source, height);
                             if (srcBalance > 0)
                                 addressMap[tx.source] = srcBalance;
                         }
                         if (!addressMap[tx.dest]) {
-                            let destBalance = this.balance(tx.dest);
+                            let destBalance = this.balanceAt(tx.dest, height);
                             if (destBalance > 0)
                                 addressMap[tx.dest] = destBalance;
                         }
