@@ -1217,8 +1217,6 @@
         }
         // network constants
         GafNode.BLOCK_SIZE = BLOCK_SIZE;
-        GafNode.BLOCK_REWARD_HALF_AT = BLOCK_REWARD_HALF_AT;
-        GafNode.DIFF_DOUBLE_AT = DIFF_DOUBLE_AT;
         GafNode.INIT_NODE = INIT_NODE;
         GafNode.PROTOCOL_VERSION = PROTOCOL_VERSION;
         // network objects
