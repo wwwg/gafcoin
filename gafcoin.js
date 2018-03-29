@@ -1,10 +1,10 @@
 (() => {
     // network constants (may make configurable later)
-    const BLOCK_SIZE = 10, // number of transactions that make a block
+    const BLOCK_SIZE = 30, // number of transactions that make a block
         BLOCK_REWARD_HALF_AT = 100, // block reward will half every x blocks
         DIFF_DOUBLE_AT = 150, // network difficulty will double every x blocks
         INIT_NODE = 'ws://198.58.119.239:9284', // original node; hard coded into every node
-        GENESIS_REBIRTH = 2, // height at which to perform a blockchain rebirth
+        GENESIS_REBIRTH = 20, // height at which to perform a blockchain rebirth
         PROTOCOL_VERSION = 7; // proto version; versions lower than this are rejected by nodes
 
     // local constants
@@ -974,6 +974,34 @@
                 this.chain = [blk];
                 this.globalDiff = this.calcDiff();
                 this.blockReward = this.calcReward();
+            }
+            get circulatingCoins() {
+                // analyzes blockchain to find how many coins are in circulation
+                let addressMap = {}; // A map of addresses to their balance
+                // perform address mapping
+                for (let x = 0; x < this.height(); ++x) {
+                    let blk = this.at(x);
+                    for (let y = 0; y < blk.transactions.length; ++y) {
+                        let tx = blk.transactions[y];
+                        if (!addressMap[tx.source]) {
+                            let srcBalance = this.balance(tx.source);
+                            if (srcBalance > 0)
+                                addressMap[tx.source] = srcBalance;
+                        }
+                        if (!addressMap[tx.dest]) {
+                            let destBalance = this.balance(tx.dest);
+                            if (destBalance > 0)
+                                addressMap[tx.dest] = destBalance;
+                        }
+                    }
+                }
+                // sum every value in the address map to get the total coins in the network
+                let sum = 0;
+                for (let addr in addressMap) {
+                    let balance = addressMap[addr];
+                    sum += balance;
+                }
+                return sum;
             }
         }
         class GafNode extends EE {
