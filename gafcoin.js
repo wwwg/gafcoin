@@ -1039,6 +1039,7 @@
             }
             transfer(dest, amount) {
                 if (!dest || !amount) throw new Error('invalid args');
+                amount = round(amount);
                 if (dest == this.wallet.address) throw new Error('source and dest cant be the same');
                 let me = this,
                     tx = new Transaction(me.wallet.address, dest, amount, Date.now());
