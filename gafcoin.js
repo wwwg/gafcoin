@@ -1,8 +1,6 @@
 (() => {
     // network constants (may make configurable later)
     const BLOCK_SIZE = 30, // number of transactions that make a block
-        BLOCK_REWARD_HALF_AT = 100, // block reward will half every x blocks
-        DIFF_DOUBLE_AT = 150, // network difficulty will double every x blocks
         INIT_NODE = 'ws://198.58.119.239:9284', // original node; hard coded into every node
         GENESIS_REBIRTH = 10, // height at which to perform a blockchain rebirth
         PROTOCOL_VERSION = 8; // proto version; versions lower than this are rejected by nodes
@@ -945,13 +943,7 @@
                 return this.hash() === bc2.hash();
             }
             calcDiffAt(height) {
-                let baseDiff = 1;
-                for (let i = 0; i < height; ++i) {
-                    if (i % DIFF_DOUBLE_AT == 0) {
-                        baseDiff *= 2; // half every BLOCK_REWARD_HALF_AT blocks
-                    }
-                }
-                return Math.ceil(baseDiff);
+                return Math.floor(1 / (-0.0099 * (height - 40)));
             }
             calcDiff() {
                 return this.calcDiffAt(this.height());
