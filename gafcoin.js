@@ -1140,7 +1140,7 @@
                 }).on('rebirthBlock', rblk => {
                     if (me.bc.height() >= GENESIS_REBIRTH) {
                         // block can be considered valid
-                        let isValid = rblk.verifyWithChain(node.bc);
+                        let isValid = rblk.verifyWithChain(me.bc);
                         if (!isValid) {
                             if (IS_NODEJS) console.log(chalk.red.bold('rejected invalid rebirth block'));
                             return;
