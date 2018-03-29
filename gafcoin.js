@@ -958,13 +958,10 @@
                 return this.calcRewardAt(this.height());
             }
             calcRewardAt(height) {
-                let baseReward = 50;
-                for (let i = 0; i < height; ++i) {
-                    if (i % BLOCK_REWARD_HALF_AT == 0) {
-                        baseReward /= 2; // half every BLOCK_REWARD_HALF_AT blocks
-                    }
-                }
-                return Math.ceil(baseReward);
+                let supply = this.totalSupplyAt(height);
+                // block reward is a function of the amount of coins in circulation
+                let reward = 1.0007 ** (-(supply - 15000));
+                return reward;
             }
             byteLength() {
                 // returns the size of the blockchain in bytes
