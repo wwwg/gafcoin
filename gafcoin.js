@@ -5,7 +5,7 @@
         DIFF_DOUBLE_AT = 150, // network difficulty will double every x blocks
         INIT_NODE = 'ws://198.58.119.239:9284', // original node; hard coded into every node
         GENESIS_REBIRTH = 20, // height at which to perform a blockchain rebirth
-        PROTOCOL_VERSION = 7; // proto version; versions lower than this are rejected by nodes
+        PROTOCOL_VERSION = 8; // proto version; versions lower than this are rejected by nodes
 
     // local constants
     const IS_BROWSER = typeof window !== 'undefined',
