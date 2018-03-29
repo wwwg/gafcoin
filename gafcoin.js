@@ -1070,7 +1070,7 @@
             }
             createRebirthBlk() {
                 let genesis = Block.genesisChain(this.bc);
-                let diff = this.bc.globalDiff * 2; // block with the most work put into it will be chosen
+                let diff = this.bc.globalDiff; // block with the most work put into it will be chosen
                 genesis.mine(diff);
                 let blk = RebirthBlock.fromBlock(genesis, this.wallet.address);
                 blk.sign(this.wallet.private);
