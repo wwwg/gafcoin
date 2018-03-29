@@ -963,6 +963,7 @@
                 let supply = this.totalSupplyAt(height);
                 // block reward is a function of the amount of coins in circulation
                 let reward = 1.0007 ** (-(supply - 15000));
+                reward = round(reward);
                 return reward;
             }
             byteLength() {
