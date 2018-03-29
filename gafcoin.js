@@ -1146,7 +1146,7 @@
                             return;
                         };
                         // blockchain can be replaced with this block
-                        node.bc.swapWith(rblk);
+                        me.bc.swapWith(rblk);
                         me.emit('rebirth', rblk);
                         me.net.announceRebirth(rblk); // spread the block throughout the network
                     }
