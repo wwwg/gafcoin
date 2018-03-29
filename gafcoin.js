@@ -1053,7 +1053,8 @@
                         if (IS_NODEJS) console.log(chalk.red.bold('block number: ') + (me.bc.chain.length + 1));
                         me.emit('rejectedBlock', blk);
                     }
-                }).on('tx', tx => {
+                })
+                .on('tx', tx => {
                     if (!tx.validate()) {
                         if (IS_NODEJS) console.log(chalk.red.bold('WARN : Recieved invalid transaction from peer!'));
                         return;
@@ -1089,9 +1090,8 @@
                             me.sync();
                         }, 5000);
                     }
-                }).on('blockchain', bc => {
-                    // removed
-                }).on('newPeer', peer => {
+                })
+                .on('newPeer', peer => {
                     me.peerCount++;
                     if (!me.gotFirstPeer) {
                         me.gotFirstPeer = true;
@@ -1103,10 +1103,12 @@
                     if (IS_NODEJS) console.log(chalk.green.bold('connected to peer, requesting for more peers'));
                     me.net.getPeerPeers(peer);
                     me.emit('connection', peer);
-                }).on('lostPeer', peer => {
+                })
+                .on('lostPeer', peer => {
                     me.peerCount--;
                     me.emit('disconnection', peer);
-                }).on('peerList', list => {
+                })
+                .on('peerList', list => {
                     if (IS_NODEJS) {
                         console.log(chalk.green.bold('recieved list of nodes from peer, attempting to connect to all of them.'));
                     }
@@ -1117,7 +1119,8 @@
                             me.net.connectPeer(ip);
                         }
                     }
-                }).on('recievedBlock', blk => {
+                })
+                .on('recievedBlock', blk => {
                     // validate and add to top of the chain
                     let valid = me.bc.validateBlock(blk);
                     if (!valid) {
@@ -1135,9 +1138,11 @@
                     me.emit('addedBlock', blk);
                     me.blkPosNeeded = me.bc.height();
                     me.net.reqBlock(me.blkPosNeeded);
-                }).on('outdated', () => {
+                })
+                .on('outdated', () => {
                     me.emit('outdated');
-                }).on('rebirthBlock', rblk => {
+                })
+                .on('rebirthBlock', rblk => {
                     if (me.bc.height() >= GENESIS_REBIRTH) {
                         // block can be considered valid
                         let isValid = rblk.verifyWithChain(me.bc);
@@ -1150,7 +1155,7 @@
                         me.emit('rebirth', rblk);
                         me.net.announceRebirth(rblk); // spread the block throughout the network
                     }
-                })
+                });
                 if (IS_NODEJS) {
                     if (!process.env['IS_INIT_NODE']) {
                         console.log(chalk.green('connecting to INIT_NODE'));
