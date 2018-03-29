@@ -105,6 +105,8 @@
                     'to': 'string'
                 });
             }
+        }, round = x => {
+            return parseFloat(x.toFixed(8));
         };
         
         // net
