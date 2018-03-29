@@ -551,7 +551,7 @@
                 return {
                     'i': this.source,
                     'o': this.dest,
-                    'value': this.value,
+                    'value': round(this.value),
                     'sig': this.sig,
                     't': this.ts
                 }
