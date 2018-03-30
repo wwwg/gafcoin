@@ -763,7 +763,7 @@
         
         class BlockChain {
             static reward(x) {
-                return 10 * Math.pow(x, -0.5);
+                return round(10 * Math.pow(x, -0.5));
             }
             static from(data) {
                 if (!data.bc) return;
@@ -1142,8 +1142,8 @@
                         if (IS_NODEJS) console.log(chalk.yellow.bold(`found new block ${me.bc.chain.length + 1}, mining...`));
                         // create coinbase transaction and add it
                         let newSupply = me.bc.totalSupplyAt(me.bc.height()) + BlockChain.reward(me.bc.totalSupplyAt(me.bc.height())),
-                            reward = BlockChain.reward(newSupply);
-                        let coinbaseTx = new Transaction('', me.wallet.address, reward, Date.now());
+                            reward = BlockChain.reward(newSupply),
+                            coinbaseTx = new Transaction('', me.wallet.address, reward, Date.now());
                         me.pendingTxs.unshift(coinbaseTx);
                         // create a new block and mine it
                         let newBlk = new Block(Date.now(), me.bc.top().calcHash(), me.pendingTxs, me.bc.chain.length);
