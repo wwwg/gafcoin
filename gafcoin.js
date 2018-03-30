@@ -1,8 +1,8 @@
 (() => {
     // network constants (may make configurable later)
-    const BLOCK_SIZE = 30, // number of transactions that make a block
+    const BLOCK_SIZE = 5, // number of transactions that make a block
         INIT_NODE = 'ws://198.58.119.239:9284', // original node; hard coded into every node
-        GENESIS_REBIRTH = 10, // height at which to perform a blockchain rebirth
+        GENESIS_REBIRTH = 3, // height at which to perform a blockchain rebirth
         PROTOCOL_VERSION = 8; // proto version; versions lower than this are rejected by nodes
 
     // local constants
