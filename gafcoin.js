@@ -762,6 +762,9 @@
         delete genesisTxs;
         
         class BlockChain {
+            static reward(x) {
+                return 10 * Math.pow(x, -0.5);
+            }
             static from(data) {
                 if (!data.bc) return;
                 if (typeof data.bc !== 'string') return;
@@ -968,7 +971,7 @@
             calcRewardAt(height) {
                 let supply = this.totalSupplyAt(height);
                 // block reward is a function of the amount of coins in circulation
-                let reward = 10 * Math.pow(supply, -0.5);
+                let reward = BlockChain.reward(supply);
                 reward = round(reward);
                 return reward;
             }
@@ -1138,7 +1141,9 @@
                         }
                         if (IS_NODEJS) console.log(chalk.yellow.bold(`found new block ${me.bc.chain.length + 1}, mining...`));
                         // create coinbase transaction and add it
-                        let coinbaseTx = new Transaction('', me.wallet.address, me.bc.blockReward, Date.now());
+                        let newSupply = me.bc.totalSupplyAt(me.bc.height()) + BlockChain.reward(me.bc.totalSupplyAt(me.bc.height())),
+                            reward = BlockChain.reward(newSupply);
+                        let coinbaseTx = new Transaction('', me.wallet.address, reward, Date.now());
                         me.pendingTxs.unshift(coinbaseTx);
                         // create a new block and mine it
                         let newBlk = new Block(Date.now(), me.bc.top().calcHash(), me.pendingTxs, me.bc.chain.length);
